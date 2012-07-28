@@ -8,26 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
-@class Accelerators, Ball, Destinaton, Traps, Walls, Whirls;
+#import "Jupiter.h"
 
 @interface Level : NSManagedObject 
 {
 }
 @property (nonatomic, retain) NSDate * Creation_Date;
-@property (nonatomic, retain) NSNumber * Level_ID;
-@property (nonatomic, retain) Whirls * Whirls;
-@property (nonatomic, retain) Destinaton * Destination;
-@property (nonatomic, retain) Ball * Ball;
-@property (nonatomic, retain) Walls * Walls;
-@property (nonatomic, retain) Accelerators * Accelerators;
-@property (nonatomic, retain) Traps * Traps;
-
-// Getting levels
-- (NSArray*)getLevels:(NSError*)pError;
-- (NSArray*)getLevelWithID:(double)level error:(NSError*)pError;
-
-// Saving levels
-- (void)saveLevel:(double)level;
+@property (nonatomic, retain) NSString * Level_ID;
+@property (nonatomic, retain) NSNumber * Rating;
+@property (nonatomic, retain) NSArray * Accelerators;
+@property (nonatomic, assign) NSString * Ball;
+@property (nonatomic, retain) NSArray * Dests;
+@property (nonatomic, retain) NSArray * Traps;
+@property (nonatomic, retain) NSArray * Whirls;
+@property (nonatomic, retain) NSArray * Walls;
 
 @end

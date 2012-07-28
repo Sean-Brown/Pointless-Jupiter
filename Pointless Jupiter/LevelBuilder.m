@@ -10,11 +10,12 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "LevelBuilder.h"
+#import "Pointless_JupiterAppDelegate.h"
 #import "Constants.h"
 
-#define WALL_RECT CGRectMake(300,300,300,10)
+#define WALL_RECT CGRectMake(300,300,10,500)
 #define TRAP_RECT CGRectMake(300,300,50,50)
-#define ACCEL_RECT CGRectMake(300,300,50,50)
+#define ACCEL_RECT CGRectMake(300,300,60,20)
 #define WHIRL_RECT CGRectMake(300,300,50,50)
 #define JUPI_RECT CGRectMake(300,300,50,50)
 #define DEST_RECT CGRectMake(300,300,50,50)
@@ -51,11 +52,19 @@ typedef enum
         [self initGestures];
         [self initSaveQuit];
         
-        m_pLevelID = [[UITextField alloc] initWithFrame:CGRectMake(LANDSCAPE_WIDTH - 100, 450, 100, 20)];
+        UILabel* pLabel = [[UILabel alloc] initWithFrame:CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 150, 100, 10)];
+        pLabel.textColor = [UIColor purpleColor];
+        pLabel.backgroundColor = [UIColor clearColor];
+        pLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:14];
+        pLabel.text = @"Level Name";
+        m_pLevelID = [[UITextField alloc] initWithFrame:CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 120, 100, 20)];
         m_pLevelID.backgroundColor = [UIColor whiteColor];
         m_pLevelID.delegate = self;
         m_pLevelID.font = [UIFont fontWithName:@"AmericanTypewriter" size:14];
+        [self addSubview: pLabel];
         [self addSubview: m_pLevelID];
+        [pLabel setNeedsDisplay];
+        [pLabel release];
     }
     return self;
 }
@@ -73,6 +82,7 @@ typedef enum
     [m_pLevelID setFont: [UIFont fontWithName:@"AmericanTypewriter" size:60]];
     [m_pLevelID setTextAlignment: UITextAlignmentCenter];
     m_pLevelID.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    [[m_pLevelID layer] setZPosition: 100000];
     [m_pLevelID setNeedsDisplay];
     
     return YES;
@@ -80,7 +90,7 @@ typedef enum
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    m_pLevelID.frame = CGRectMake(LANDSCAPE_WIDTH - 100, 450, 100, 20);
+    m_pLevelID.frame = CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 150, 100, 20);
     [m_pLevelID setFont: [UIFont fontWithName:@"AmericanTypeWriter" size:18]];
     [m_pLevelID setNeedsDisplay];
 }
@@ -88,17 +98,15 @@ typedef enum
 - (void)initSaveQuit
 {
     m_pSave = [UIButton buttonWithType: UIButtonTypeRoundedRect];
-    m_pSave.frame = CGRectMake(LANDSCAPE_WIDTH - 100, 500, 50, 50);
+    m_pSave.frame = CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 100, 100, 30);
     [m_pSave setTitle:@"Save" forState:UIControlStateNormal];
     [m_pSave setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
-    [m_pSave setBackgroundColor: [UIColor darkGrayColor]];
     [m_pSave addTarget:self action:@selector(saveLevel) forControlEvents:UIControlEventTouchUpInside];
     
     m_pQuit = [UIButton buttonWithType: UIButtonTypeRoundedRect];
-    m_pQuit.frame = CGRectMake(LANDSCAPE_WIDTH - 100, 550, 50, 50);
+    m_pQuit.frame = CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 50, 100, 30);
     [m_pQuit setTitle:@"Quit" forState:UIControlStateNormal];
     [m_pQuit setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [m_pQuit setBackgroundColor: [UIColor darkGrayColor]];
     [m_pQuit addTarget:self action:@selector(quitLevelBuilder) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview: m_pSave];
@@ -159,7 +167,7 @@ typedef enum
     [m_pAccel setImage:[UIImage imageNamed: @"Accelerator.jpg"] forState: UIControlStateNormal];
     [m_pWhirl setImage:[UIImage imageNamed: @"Whirl.jpg"] forState:UIControlStateNormal];
     [m_pJupi setImage: [UIImage imageNamed:@"Jupiter.jpg"] forState:UIControlStateNormal];
-    [m_pDest setImage: [UIImage imageNamed:@"Dest.jpg"] forState: UIControlStateNormal];
+    [m_pDest setImage: [UIImage imageNamed:@"Destination.jpg"] forState: UIControlStateNormal];
     [m_pRemove setImage: [UIImage imageNamed:@"Remove.jpg"] forState:UIControlStateNormal];
     
     [m_pWallImg setImage: [UIImage imageNamed: @"Wall.jpg"] forState: UIControlStateHighlighted];
@@ -167,9 +175,15 @@ typedef enum
     [m_pAccel setImage:[UIImage imageNamed: @"Accelerator.jpg"] forState: UIControlStateHighlighted];
     [m_pWhirl setImage:[UIImage imageNamed: @"Whirl.jpg"] forState: UIControlStateHighlighted];
     [m_pJupi setImage: [UIImage imageNamed:@"Jupiter.jpg"] forState: UIControlStateHighlighted];
-    [m_pDest setImage: [UIImage imageNamed:@"Dest.jpg"] forState: UIControlStateNormal];
+    [m_pDest setImage: [UIImage imageNamed:@"Destination.jpg"] forState: UIControlStateNormal];
     [m_pRemove setImage: [UIImage imageNamed:@"Remove.jpg"] forState:UIControlStateHighlighted];
     
+    // Clip the corners
+    [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pJupi];
+    [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pTrap];
+    [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pWhirl];
+    [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pDest];
+        
     [sender addSubview: m_pWallImg];
     [sender addSubview: m_pTrap];
     [sender addSubview: m_pAccel];
@@ -204,27 +218,72 @@ typedef enum
 #pragma mark -
 #pragma SAVE_QUIT
 
+- (void) saveLevelWithID:(NSString*)level
+{
+    NSMutableArray* walls = [[NSMutableArray alloc] init];
+    NSMutableArray* accels = [[NSMutableArray alloc] init];
+    NSMutableArray* traps = [[NSMutableArray alloc] init];
+    NSMutableArray* whirls = [[NSMutableArray alloc] init];
+    NSMutableArray* jupiter = [[NSMutableArray alloc] init];
+    NSMutableArray* dest = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [m_pItems count]; i++) 
+    {
+        id object = [m_pItems objectAtIndex:i];
+        switch ([object tag]) 
+        {
+            case WALL:
+                [walls addObject: object];
+                break;
+            case TRAP:
+                [traps addObject: object];
+                break;
+            case ACCELERATOR:
+                [accels addObject: object];
+                break;
+            case WHIRL:
+                [whirls addObject: object];
+                break;
+            case JUPITER:
+                [jupiter addObject: object];
+                break;
+            case DESTINATION:
+                [dest addObject: object];
+                break;
+            default: 
+                break;
+        }
+    }
+    NSNumber* pRating = [NSNumber numberWithInt: 0];
+    [[DataManager getDataManager] saveLevel:level traps:traps whirls:whirls accels:accels walls:walls dests:dest jupiter:[jupiter objectAtIndex:0] rating:pRating];
+}
+
 - (void) saveLevel
 {
     NSString* pText = m_pLevelID.text;
-    if ([pText length] > 0) 
-    { // Try and save it
-        
+    if ([pText length] < 1) 
+    { 
+        UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Enter A Name" message:@"You must first enter a (unique) name for your level" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
+        pAlert.frame = CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3);
+        [pAlert show];
+        [pAlert release];
+    }
+    else if (m_pJupiter == NULL || m_pDest == NULL)
+    { 
+        UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Map" message:@"You must have Jupiter and a Destination" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
+        pAlert.frame = CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3);
+        [pAlert show];
+        [pAlert release];
     }
     else
-    { // Tell them to enter one
-        UIAlertView* pAlert = [[UIAlertView alloc] initWithFrame: CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3)];
-        [pAlert setTitle:@"Gimme A Name"];
-        [pAlert setMessage:@"Enter a (unique) name for your level"];
-        [pAlert setDelegate: self];;
-        [self addSubview: pAlert];
-        [pAlert release];
+    { // Try and save it
+        [self saveLevelWithID:pText];
     }
 }
 
 - (void) quitLevelBuilder
 {
-    
+    [m_pMyVC toMainMenu];
+    [self removeFromSuperview];
 }
 
 #pragma mark -
@@ -243,21 +302,27 @@ typedef enum
             // NSLog(@"WALL Selected");
             pNewImage = [[UIImageView alloc] initWithFrame: WALL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Wall.jpg"]];
+            [pNewImage setTag: WALL];
             break;
         case TRAP:
             // NSLog(@"TRAP Selected");
             pNewImage = [[UIImageView alloc] initWithFrame: TRAP_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Trap.jpg"]];
+            [pNewImage setTag: TRAP];
+            [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
         case ACCELERATOR:
             // NSLog(@"ACCELERATOR Selected");
             pNewImage = [[UIImageView alloc] initWithFrame: ACCEL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Accelerator.jpg"]];
+            [pNewImage setTag: ACCELERATOR];
             break;
         case WHIRL:
             // NSLog(@"WHIRL Selected");
             pNewImage = [[UIImageView alloc] initWithFrame: WHIRL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Whirl.jpg"]];
+            [pNewImage setTag: WHIRL];
+            [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
         case JUPITER:
             // NSLog(@"JUPITER Selected");
@@ -267,16 +332,13 @@ typedef enum
                 m_pJupiter.m_pMyVC = m_pMyVC;
                 UIImage* pImage = [UIImage imageNamed: @"Jupiter.jpg"];
                 m_pJupiter.image = pImage;
+                [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pJupiter];
                 [pImage release];
-                
-                m_pJupiter.opaque = YES;
-                m_pJupiter.layer.cornerRadius = 25.0;
-                m_pJupiter.layer.masksToBounds = YES;
-                m_pJupiter.layer.borderColor = [UIColor blackColor].CGColor;
-                m_pJupiter.layer.borderWidth = 1.0;
                 
                 [m_pJupiter setUserInteractionEnabled: YES];
                 [m_pJupiter setMultipleTouchEnabled: YES];
+                
+                [m_pJupiter setTag: JUPITER];
                 
                 m_pSelectedItemImage = m_pJupiter;
                 
@@ -290,8 +352,10 @@ typedef enum
             if (m_destCount < 1) 
             {
                 pNewImage = [[UIImageView alloc] initWithFrame: DEST_RECT];
-                [pNewImage setImage: [UIImage imageNamed: @"Dest.jpg"]];
+                [pNewImage setImage: [UIImage imageNamed: @"Destination.jpg"]];
                 ++m_destCount;
+                [pNewImage setTag: DESTINATION];
+                [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             }
             else
                 return;
@@ -318,11 +382,6 @@ typedef enum
     // NSLog(@"Touches began");
     CGPoint touchPoint = [[touches anyObject] locationInView:self];
     
-    //our image views are direct decendents of our main view
-    //the following method returns the farthest decendent from the target 
-    //in the point, so make sure you dont have any intersecting subviews!
-    //pretty sure you dont need event
-    //
     UIView *v = [self hitTest:touchPoint withEvent:event];
     if ([v isKindOfClass: [UIWindow class]] || [v isKindOfClass: [MyViewController class]] || [v isKindOfClass: [self class]]) 
     {
@@ -486,17 +545,17 @@ typedef enum
 
 - (void)dealloc
 {
+    [m_pSelectedItemImage release];
+    [m_pJupi release];
+    [m_pJupiter release];
+    [m_pItems release];
+    [m_pAccel release];
+    [m_pTrap release];
+    [m_pWallImg release];
+    [m_pWhirl release];
+    [m_pDest release];
+    [m_pLevelID release];
     [super dealloc];
-    [m_pSelectedItemImage dealloc];
-    [m_pJupi dealloc];
-    [m_pJupiter dealloc];
-    [m_pItems dealloc];
-    [m_pAccel dealloc];
-    [m_pTrap dealloc];
-    [m_pWallImg dealloc];
-    [m_pWhirl dealloc];
-    [m_pDest dealloc];
-    [m_pLevelID dealloc];
 }
 
 @end

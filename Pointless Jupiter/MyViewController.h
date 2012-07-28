@@ -8,15 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class MainView, GameBoard;
+@class MainView, GameBoard, DataManager;
 
 @interface MyViewController : UIViewController < UIAccelerometerDelegate > 
 {
-    UIView* m_pCurrentView;
     UIAcceleration* m_pLastAcceleration;
 }
 
-@property (nonatomic, assign) UIView* m_pCurrentView;
 @property (nonatomic, assign) UIAcceleration* m_pLastAcceleration;
 
 - (void)calcNextPosition: fromAcceleration:(UIAcceleration*)acceleration;
@@ -26,5 +24,6 @@
 - (void) buildLevel;
 - (void) setUserAccount;
 - (void) quitApp;
+- (void) toMainMenu;
 
 @end

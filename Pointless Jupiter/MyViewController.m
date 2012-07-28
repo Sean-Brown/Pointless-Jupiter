@@ -14,11 +14,12 @@
 #import "Jupiter.h"
 #import "Wall.h"
 #import "Constants.h" 
+#import "DataManager.h"
 #import "Util.h"
 
 @implementation MyViewController
 
-@synthesize m_pCurrentView, m_pLastAcceleration;
+@synthesize m_pLastAcceleration;
 
 - (void)didReceiveMemoryWarning
 {
@@ -43,7 +44,6 @@
 	MainView* mv = [[MainView alloc] initWithFrame: newFrame];
     mv.m_pMyVC = self;
 	self.view = mv;
-    m_pCurrentView = (UIView*)mv;
     [mv release];
 }
 
@@ -82,17 +82,15 @@
     
     // Initialize the new view w/ view controller
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
-    GameBoard* pGB = [[GameBoard alloc] initWithFrame: newFrame];
+    GameBoard* pGB = [[GameBoard alloc] initWithFrame:newFrame];
     pGB.m_pMyVC = self;
     
     // Add it as subview, remove old view
-    [self.view insertSubview:(UIView*)pGB atIndex:0];
-    NSUInteger i = [self.view.subviews count] - 1;
-    while (i > 0)
-        [[[self.view subviews] objectAtIndex: i--] removeFromSuperview];
+    [self.view addSubview: (UIView*)pGB];
+//    NSUInteger i = [self.view.subviews count] - 1;
+//    while (i > 0)
+//        [[[self.view subviews] objectAtIndex: i--] removeFromSuperview];
     
-    // Set the current view to the game board
-    m_pCurrentView = pGB;
     [pGB release];
 }
 
@@ -109,14 +107,7 @@
     LevelBuilder* pLB = [[LevelBuilder alloc] initWithFrame:newFrame];
     pLB.m_pMyVC = self;
     
-    // Add subview, remove old subviews
-    [self.view insertSubview:(UIView*)pLB atIndex:0];
-    NSUInteger i = [self.view.subviews count] - 1;
-    while (i > 0)
-        [[[self.view subviews] objectAtIndex: i--] removeFromSuperview];
-    
-    // Set the current view to the level builder
-    m_pCurrentView = (UIView*)pLB;
+    [self.view addSubview: (UIView*)pLB];
     [pLB release];
 }
 
@@ -128,6 +119,21 @@
 - (void) quitApp
 {
     // NSLog(@"Quit App");
+}
+
+- (void) toMainMenu
+{
+    CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
+    MainView* mv = [[MainView alloc] initWithFrame: newFrame];
+    mv.m_pMyVC = self;
+    [self.view addSubview:(UIView*)mv];
+    [mv release];
+}
+
+- (void) dealloc
+{
+    [super dealloc];
+//    [m_pLastAcceleration dealloc];
 }
 
 @end

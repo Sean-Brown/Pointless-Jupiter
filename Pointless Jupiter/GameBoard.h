@@ -11,12 +11,16 @@
 #import "BoardItem.h"
 #import "Wall.h"
 #import "MyViewController.h"
+#import "DataManager.h"
+#import "LevelPicker.h"
+#import "MyTableViewController.h"
 
 @interface GameBoard : UIView 
 {
+    MyTableViewController* m_pMyTVC;
     MyViewController* m_pMyVC;
     
-    int m_iLevelId; 
+    NSString* m_pstrLevelID; 
     NSString* m_pstUser;
     
     Jupiter* m_pJupiter; // The game Jupiter
@@ -25,20 +29,24 @@
     
     UIImageView* m_pJupiterImg;
     
-    UIButton* m_pbtStart;
-    UIButton* m_pbtRestart;
-    UIButton* m_pbtQuit;
+    UIButton* m_pStart;
+    UIButton* m_pRestart;
+    UIButton* m_pQuit;
 }
 
 @property (nonatomic, retain) Jupiter* m_pJupiter;
 @property (nonatomic, retain) NSArray* m_pObstacles;
 @property (nonatomic, retain) NSArray* m_pWalls;
 
+@property (nonatomic, assign) NSString* m_pstrLevelID;
 @property (nonatomic, copy) NSString* m_pstrUser;
-@property (nonatomic, retain) UIButton* m_pbtStart,* m_pbtRestart,* m_pbtQuit;
+@property (nonatomic, retain) UIButton* m_pStart,* m_pRestart,* m_pQuit;
 
 @property (nonatomic, assign) MyViewController* m_pMyVC;
 
+- (void) initLabel:(UILabel*)pLabel;
+- (void) initButtons;
+- (void) quitPlaying;
 - (void) redraw:(int)levelID; // Redraw the board with the given id, usually in response to a Restart
 
 -(BOOL) JupiterHitWall:(Point) JupiterPos; // Tells if the Jupiter hits a wall

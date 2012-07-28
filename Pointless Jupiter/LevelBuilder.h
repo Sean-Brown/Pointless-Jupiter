@@ -11,6 +11,7 @@
 #import "Jupiter.h"
 #import "BoardItem.h"
 #import "Wall.h"
+#import "DataManager.h"
 
 @interface LevelBuilder : UIView <UIGestureRecognizerDelegate,UITextFieldDelegate>
 {
@@ -39,7 +40,7 @@
 
 @property (nonatomic, assign) MyViewController* m_pMyVC;
 
-@property (nonatomic, assign) NSMutableArray* m_pItems;
+@property (nonatomic, retain) NSMutableArray* m_pItems;
 @property (nonatomic, retain) Jupiter* m_pJupiter;
 
 @property (nonatomic, retain) UIButton* m_pWallImg, * m_pTrap, * m_pAccel,* m_pWhirl,* m_pJupi,* m_pRemove,* m_pDest,* m_pSave,* m_pQuit;
@@ -57,6 +58,7 @@
 - (void)removeItem:(id)sender;
 - (void)snapToGrid;
 - (void)checkOverlap;
+- (void)saveLevelWithID:(NSString*)level;
 - (void)saveLevel;
 - (void)quitLevelBuilder;
 

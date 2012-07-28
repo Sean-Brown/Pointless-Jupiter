@@ -14,35 +14,70 @@
 
 @implementation GameBoard
 
-@synthesize m_pJupiter, m_pObstacles, m_pWalls, m_pstrUser, m_pMyVC, m_pbtStart, m_pbtRestart, m_pbtQuit; // accelerometer;
+@synthesize m_pJupiter, m_pObstacles, m_pWalls, m_pstrUser, m_pMyVC, m_pStart, m_pRestart, m_pQuit, m_pstrLevelID;
 
 - (id) initWithFrame:(CGRect)frame
 {
     if (self == [super initWithFrame:frame]) 
     {
         NSLog(@"Initializing GameBoard");
-        self.backgroundColor = [UIColor whiteColor];
-        // For testing purposes, put down a Jupiter
-        m_pJupiter = [[UIImageView alloc] initWithFrame: CGRectMake(200, 200, 50, 50)];
-
-        [self addSubview: m_pJupiter];
+        UIImageView* pBackground = [[UIImageView alloc] initWithFrame: self.frame];
+        pBackground.image = [UIImage imageNamed:@"Night.jpg"];
+        [self addSubview:pBackground];
+        [pBackground release];
+        
+        UILabel* pLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, 0, LANDSCAPE_WIDTH, LANDSCAPE_HEIGHT/6)];
+        [self initLabel: pLabel];
+        [self addSubview: pLabel];
+        [pLabel release];
+        
+        m_pMyTVC = [[MyTableViewController alloc] initWithStyle: UITableViewStylePlain];
+        m_pMyTVC.view.center = self.center;
+        m_pMyTVC.view.frame = CGRectMake(LANDSCAPE_WIDTH/5, LANDSCAPE_HEIGHT/6, LANDSCAPE_WIDTH*3/5, LANDSCAPE_HEIGHT*3/4);
+        [self addSubview:m_pMyTVC.view];
+        
+        m_pStart = [[UIButton alloc] init];
+        m_pRestart = [[UIButton alloc] init];
+        m_pQuit = [[UIButton alloc] init];
+        [self initButtons];
     }
     
     return self;
 }
 
-- (void) dealloc
+- (void) initLabel: (UILabel*)label
 {
-    [super dealloc];
-    [m_pJupiter dealloc];
-    [m_pJupiter dealloc];
-    [m_pObstacles dealloc];
-    [m_pWalls dealloc];
-    [m_pMyVC dealloc];
-    [m_pstrUser dealloc];
-    [m_pbtStart dealloc];
-    [m_pbtRestart dealloc];
-    [m_pbtQuit dealloc];
+    label.text = @"Pointless Jupiter";
+    label.textColor = [UIColor purpleColor];
+    label.shadowColor = [UIColor whiteColor];
+    label.shadowOffset = CGSizeMake(2, 2);
+    label.textAlignment = UITextAlignmentCenter;
+    label.font = [UIFont fontWithName:@"Optima-BoldItalic" size: 72];
+    label.backgroundColor = [UIColor clearColor];
+}
+
+- (void)initButtons
+{
+    m_pStart = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+    m_pStart.frame = CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 100, 100, 30);
+    [m_pStart setTitle:@"Start" forState:UIControlStateNormal];
+    [m_pStart setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    [m_pStart addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+    
+    m_pQuit = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+    m_pQuit.frame = CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 50, 100, 30);
+    [m_pQuit setTitle:@"Quit" forState:UIControlStateNormal];
+    [m_pQuit setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [m_pQuit addTarget:self action:@selector(quitPlaying) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self addSubview: m_pStart];
+    [self addSubview: m_pQuit];
+}
+
+- (void) quitPlaying
+{
+    [m_pMyVC toMainMenu];
+    [self removeFromSuperview];
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -72,6 +107,18 @@
     double newTraj = 0.0;
     
     return newTraj;
+}
+
+- (void) dealloc
+{
+    [super dealloc];
+//    [m_pJupiter release];
+//    [m_pObstacles release];
+//    [m_pWalls release];
+//    [m_pstrUser release];
+//    [m_pStart release];
+//    [m_pRestart release];
+//    [m_pQuit release];
 }
 
 @end

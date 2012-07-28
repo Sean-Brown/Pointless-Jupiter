@@ -8,39 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Accelerators.h"
-#import "Ball.h"
-#import "Destinaton.h"
 #import "Level.h"
-#import "Traps.h"
-#import "Walls.h"
-#import "Whirls.h"
 
-@interface DataManager : NSObject 
+@interface DataManager : NSObject <NSFetchedResultsControllerDelegate>
 {
-    NSError* m_pError;
-    
-    Accelerators* m_pAccel;
-    Ball* m_pBall;
-    Destinaton* m_pDestination;
-    Level* m_pLevel;
-    Traps* m_pTraps;
-    Walls* m_pWalls;
-    Whirls* m_pWhirls;
+@private
+    NSFetchedResultsController* m_pFetchedResultsController;
+    NSManagedObjectContext* m_pMOC;
 }
 
-@property (nonatomic, retain) NSError* m_pError;
-
-@property (nonatomic, retain) Accelerators* m_pAccel;
-@property (nonatomic, retain) Ball* m_pBall;
-@property (nonatomic, retain) Destinaton* m_pDestination;
-@property (nonatomic, retain) Level* m_pLevel;
-@property (nonatomic, retain) Traps* m_pTraps;
-@property (nonatomic, retain) Walls* m_pWalls;
-@property (nonatomic, retain) Whirls* m_pWhirls;
+@property (nonatomic, retain) NSManagedObjectContext* m_pMOC;
+@property (nonatomic, retain) NSFetchedResultsController* m_pFetchedResultsController;
 
 - (NSArray*) getLevels;
-- (NSArray*) getLevel: withID:(double)level;
+- (NSArray*) getLevel: withID:(NSString*)level;
+- (void)saveLevel:(NSString*)level traps:(NSArray*)traps whirls:(NSArray*)whirls accels:(NSArray*)accels walls:(NSArray*)walls dests:(NSArray*)dests jupiter:(Jupiter*)jupiter rating:(NSNumber*)pRating;
 
 - (NSArray*) getWallsforLevel:(NSString*)level;
 
@@ -50,5 +32,9 @@
 - (NSArray*) getTrapsforLevel:(NSString*)level;
 - (NSArray*) getAcceleratorsforLevel:(NSString*)level;
 - (NSArray*) getWhirlsforLevel:(NSString*)level;
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+
++ (DataManager*) getDataManager;
 
 @end
