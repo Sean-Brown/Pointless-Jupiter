@@ -21,8 +21,8 @@
 @property (nonatomic, retain) NSFetchedResultsController* m_pFetchedResultsController;
 
 - (NSArray*) getLevels;
-- (NSArray*) getLevel: withID:(NSString*)level;
-- (void)saveLevel:(NSString*)level traps:(NSArray*)traps whirls:(NSArray*)whirls accels:(NSArray*)accels walls:(NSArray*)walls dests:(NSArray*)dests jupiter:(Jupiter*)jupiter rating:(NSNumber*)pRating;
+- (NSArray*) getLevelWithID:(NSString*)level;
+- (void)saveLevel:(NSString*)level traps:(NSMutableArray*)traps whirls:(NSMutableArray*)whirls accels:(NSMutableArray*)accels walls:(NSMutableArray*)walls dest:(NSString*)dest jupiter:(NSString*)jupiter rating:(NSNumber*)pRating;
 
 - (NSArray*) getWallsforLevel:(NSString*)level;
 

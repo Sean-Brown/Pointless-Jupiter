@@ -13,9 +13,9 @@
 // Enumeration for the 
 typedef enum 
 {
-    Accelerator,
-    Trap,
-    Whirl
+    eAccelItem,
+    eTrapItem,
+    eWhirlItem
 } MiscItem;
 
 
@@ -27,5 +27,7 @@ typedef enum
 }
 
 @property (nonatomic, assign) MiscItem m_stItemType;
+
+- (id) initWithItem:(MiscItem)mItem inFrame: (CGRect)frame;
 
 @end

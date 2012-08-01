@@ -139,7 +139,11 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     else
     {
-        m_pMOM = [NSManagedObjectModel mergedModelFromBundles:nil];
+//        m_pMOM = [NSManagedObjectModel mergedModelFromBundles:nil];
+        NSString* pPath = [[NSBundle mainBundle] pathForResource:@"PointlessModel" ofType:@"momd"];
+        NSURL* pMomURL = [NSURL fileURLWithPath:pPath];
+        m_pMOM = [[NSManagedObjectModel alloc] initWithContentsOfURL:pMomURL];
+        
         NSAssert(m_pMOM != nil, @"Unable to find yo damn model, fool");
     
         return m_pMOM;
@@ -153,14 +157,13 @@ void uncaughtExceptionHandler(NSException *exception)
  */
 - (NSPersistentStoreCoordinator*)persistentStoreCoordinator 
 {
-    
     if (m_pCoordinator != nil) 
     {
         return m_pCoordinator;
     }
     
     NSURL *pStoreURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Level.momd"];
-    
+    [[NSFileManager defaultManager] removeItemAtURL:pStoreURL error:nil];
     NSError *pError = nil;
     m_pCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![m_pCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:pStoreURL options:nil error:&pError]) {

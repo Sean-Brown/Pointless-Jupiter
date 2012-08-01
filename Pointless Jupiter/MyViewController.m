@@ -12,9 +12,10 @@
 #import "BoardItem.h"
 #import "LevelBuilder.h"
 #import "Jupiter.h"
-#import "Wall.h"
+#import "Wall_Class.h"
 #import "Constants.h" 
 #import "DataManager.h"
+#import "CustomTable.h"
 #import "Util.h"
 
 @implementation MyViewController
@@ -75,6 +76,27 @@
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
+- (void) startGameWithLevelID:(NSString*)pLevelID
+{
+    NSLog(@"MyViewController - beginGameWithLevelID");
+    NSArray* pLevel = [[DataManager getDataManager] getLevelWithID:pLevelID];
+    
+    if (pLevel == nil || [pLevel count] == 0) 
+    {
+        NSLog(@"Didn't retrieve any level with id %@", pLevelID);
+        abort();
+    }
+    else
+    {
+        CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
+        GameBoard* pGB = [[GameBoard alloc] initWithFrame: newFrame];
+        pGB.m_pMyVC = self;
+        [pGB initLevel: [pLevel objectAtIndex:0]];
+        [self.view addSubview: (UIView*)pGB];
+        
+        [pGB release];
+    }
+}
 
 - (void) startNewGame
 {
@@ -82,16 +104,10 @@
     
     // Initialize the new view w/ view controller
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
-    GameBoard* pGB = [[GameBoard alloc] initWithFrame:newFrame];
-    pGB.m_pMyVC = self;
-    
-    // Add it as subview, remove old view
-    [self.view addSubview: (UIView*)pGB];
-//    NSUInteger i = [self.view.subviews count] - 1;
-//    while (i > 0)
-//        [[[self.view subviews] objectAtIndex: i--] removeFromSuperview];
-    
-    [pGB release];
+    CustomTable* pCT = [[CustomTable alloc] initWithFrame: newFrame];
+    pCT.m_pMyVC = self;
+    [pCT initLevels];
+    [self.view addSubview: (UIView*)pCT];
 }
 
 - (void) viewHighScores

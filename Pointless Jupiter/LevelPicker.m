@@ -9,88 +9,64 @@
 #import "LevelPicker.h"
 #import "Pointless_JupiterAppDelegate.h"
 
-#define STAR_TAG 1988
-#define BUDDHA_TAG 1989
-#define JUPITER_TAG 1990
-#define DESTINATION_TAG 1991
+#define SLIDER_FRAME CGRectMake(300,200,200,50)
+#define PADDING 10.0f
 
 @implementation LevelPicker
 
-@synthesize m_pLevelID;
+@synthesize m_pLevelID, m_pRating, m_pCT;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+int nJupiterCenter = 0;
+
+#pragma mark -
+#pragma mark INITIALIZATION
+
+- (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithFrame: frame];
     if (self) 
     {
-        /*
-         *  -------------------------------------------------------------
-         * |                 LAYOUT OF UITABLEVIEWCELL                   |
-         * --------------------------------------------------------------
-         * |     backgroundView    - entire cell background              |
-         * |selectedBackgroundView - entire cell background when selected|
-         * |                                                             |
-         * |     imageView         - cell's left                         |    
-         * |     contentView       - cell's middle                       |
-         * |     accessoryView     - cell's right                        |
-         *  -------------------------------------------------------------
-         *
-         * For my purposes, I'll be using the imageView, contentView, and accessoryView,
-         * but in the future I may look to get some cool custom backgrounds for the cells
-         */
+        self.contentMode = UIViewContentModeScaleAspectFit;
+//        NSLog(@"Initializing LevelPicker with frame %@",NSStringFromCGRect(frame));
+        [self.layer setBorderWidth: 5];
+        [self.layer setBorderColor: [UIColor cyanColor].CGColor];
         
-        int nFrameWidth = self.frame.size.width;
-        int nFrameHeight = self.frame.size.height;
-        int nOriginX = self.frame.origin.x;
-        int nOriginY = self.frame.origin.y;
-
-        // Initialization code
-        // imageView
-        [self.imageView initWithImage: [UIImage imageNamed: @"Buddha_Table.jpg"]];
-        // Use the frame height for the width of this secton, since the Buddha pic is a square
-        [self.imageView setFrame: CGRectMake(nOriginX, nOriginY, nFrameHeight, nFrameHeight)];
-        [self.imageView setTag: BUDDHA_TAG];
-        [self.imageView setUserInteractionEnabled: NO];
-        [self addSubview: self.imageView];
+        m_pSlider = [[UISlider alloc] initWithFrame: SLIDER_FRAME];
+//        [m_pSlider setMinimumValueImage: [UIImage imageNamed:@"Jupiter.jpg"]];
+//        [m_pSlider setMaximumValueImage: [UIImage imageNamed:@"Destination.jpg"]];
+//        [m_pSlider setBackgroundColor: [UIColor clearColor]];
+//        [m_pSlider setThumbImage: [UIImage imageNamed:@"Whirl.jpg"] forState: UIControlStateNormal];
+//        
+//        [self addSubview: m_pSlider];
         
-        // contentView
-        // nFrameWidth - nFrameHeight*2 since the imageView and contentView will have a width equal to the cell's height
-        [self.contentView initWithFrame: CGRectMake(50, nOriginY, nFrameWidth - nFrameHeight, nFrameHeight)];
-        m_pJupiter = [[UIImageView alloc] initWithFrame: CGRectMake(self.contentView.frame.origin.x, 0, nFrameHeight, nFrameHeight)];
-        m_pDest = [[UIImageView alloc] initWithFrame: CGRectMake(self.contentView.frame.size.width - 50, 0, nFrameHeight, nFrameHeight)];
-        m_pJupiter.image = [UIImage imageNamed:@"Jupiter.jpg"];
-        m_pDest.image = [UIImage imageNamed:@"Destination.jpg"];
-        [Pointless_JupiterAppDelegate roundImageCorners: m_pJupiter];
-        [Pointless_JupiterAppDelegate roundImageCorners: m_pDest];
-        [m_pJupiter setUserInteractionEnabled: YES];
-        [m_pJupiter setMultipleTouchEnabled: NO];
-        [m_pDest setUserInteractionEnabled: NO];
-        m_pJupiter.tag = JUPITER_TAG;
-        m_pDest.tag = DESTINATION_TAG;
-        [self.contentView addSubview: m_pJupiter];
-        [self.contentView addSubview: m_pDest];
-        [self addSubview: self.contentView];
-        
-        // accessoryView
-        // The accessory view should be the rating
-        [self.accessoryView initWithFrame: CGRectMake(nFrameWidth - nFrameHeight, nOriginY, nFrameHeight, nFrameHeight)];
-        UIImageView* pStar = [[[UIImageView alloc] initWithFrame: self.accessoryView.frame] autorelease];
-        pStar.image = [UIImage imageNamed:@"GoldStar.jpg"];
-        pStar.tag = STAR_TAG;
-        [self.accessoryView addSubview: pStar];
-        [self addSubview: self.accessoryView];
-        // TODO: Query the RatedLevels table to see if the user's rated it already; if so, disable their ability to rate it again
-        
+        bJupiterActive = false;
     }
     return self;
 }
 
-- (void) setLevelID:(NSString*)levelID withRating:(NSNumber*)pRating
+- (void) setLevelID:(NSString*)levelID withRating:(NSNumber*)pRating 
 {
-    // The label will be laid out to the left of the contentView, leaving room for Jupiter, an empty region, and the Destination (the Sun)
-    int nFrameHeight = self.frame.size.height;
-    UILabel* pLevelID = [[[UILabel alloc] initWithFrame: CGRectMake(self.contentView.frame.origin.x, self.contentView.frame.origin.y, self.contentView.frame.size.width - (nFrameHeight*3) , nFrameHeight)] autorelease];
-    NSLog(@"levelID = %@, pLevelID.frame = %@",levelID,NSStringFromCGRect(pLevelID.frame));
+    m_pLevelID = levelID;
+    [self makeLevelLabel:levelID];
+    [self initJupiterAndDest];
+    [self initRating: pRating];
+}
+
+- (void) makeLevelLabel:(NSString*)levelID
+{
+    int nX = self.bounds.origin.x;
+    int nY = self.bounds.origin.y;
+    int nW = self.bounds.size.width;
+//    int nH = self.bounds.size.height;
+//    NSLog(@"makeLevelLabel nX = %i, nY = %i, nW = %i, nH = %i", nX, nY, nW, nH);
+        
+    UILabel* pLevelID = [[UILabel alloc] initWithFrame: CGRectMake(
+                                                                   nX, 
+                                                                   nY - (PADDING * 2), 
+                                                                   nW - PADDING, 
+                                                                   100
+                                                                   )];
+//    NSLog(@"makeLevelLabel levelID = %@, pLevelID.bounds = %@",levelID,NSStringFromCGRect(pLevelID.bounds));
     pLevelID.text = levelID;
     pLevelID.textColor = [UIColor purpleColor];
     pLevelID.shadowColor = [UIColor whiteColor];
@@ -98,62 +74,143 @@
     pLevelID.textAlignment = UITextAlignmentCenter;
     pLevelID.font = [UIFont fontWithName:@"Optima-BoldItalic" size: 32];
     pLevelID.backgroundColor = [UIColor clearColor];
-    [self.contentView addSubview: pLevelID];
-    [self setNeedsDisplay];
+    
+    [self addSubview: pLevelID];
+    [pLevelID release];
 }
+
+- (void) initJupiterAndDest
+{
+    int nX = self.bounds.origin.x;
+    int nW = self.bounds.size.width;
+    int nH = self.bounds.size.height;
+    
+    m_pJupiter = [[UIImageView alloc] initWithFrame: CGRectMake(
+                                                                nX + PADDING + 75, 
+                                                                ((nH / 3.0) * 2.0) - PADDING,
+                                                                50, 
+                                                                50
+                                                                )];
+    m_pJupiter.image = [UIImage imageNamed:@"Jupiter.jpg"];
+    [Pointless_JupiterAppDelegate roundImageCorners: m_pJupiter];
+    [m_pJupiter setUserInteractionEnabled: YES];
+    [m_pJupiter setMultipleTouchEnabled: NO];
+    
+    m_pDest = [[UIImageView alloc] initWithFrame: CGRectMake(
+                                                             (nW - 125 - PADDING),
+                                                             ((nH / 3.0) * 2.0) - PADDING,
+                                                             50,
+                                                             50
+                                                             )];
+    m_pDest.image = [UIImage imageNamed:@"Destination.jpg"];
+    [Pointless_JupiterAppDelegate roundImageCorners: m_pDest];
+    [m_pDest setUserInteractionEnabled: NO];
+    [m_pDest setMultipleTouchEnabled: NO];
+    
+    [self addSubview: m_pDest];
+    [self addSubview: m_pJupiter];
+}
+
+- (void) initRating:(NSNumber*)pRating
+{
+    int nW = self.bounds.size.width;
+    int nH = self.bounds.size.height;
+
+    UIImageView* pRatingView = [[UIImageView alloc] initWithFrame: CGRectMake(
+                                                                              (nW / 2.0) - 50 + PADDING*2, 
+                                                                              nH - 100 - 50 + PADDING, 
+                                                                              50, 
+                                                                              50
+                                                                              )];
+    pRatingView.image = [UIImage imageNamed:@"GoldStar.jpg"];
+    [m_pJupiter setUserInteractionEnabled: NO];
+    [m_pJupiter setMultipleTouchEnabled: NO];
+    // TODO: Query to find out if the user has already rated the level, if not, insert cevrons
+    
+    UILabel* pLabel = [[UILabel alloc] initWithFrame: CGRectMake(
+                                                                pRatingView.bounds.origin.x, 
+                                                                pRatingView.bounds.origin.y + (pRatingView.bounds.size.height / 2.0) - (PADDING * 2), 
+                                                                pRatingView.bounds.size.width,
+                                                                (pRatingView.bounds.size.height / 2.0) + PADDING
+                                                                 )];
+    pLabel.text = [pRating stringValue];
+    pLabel.textColor = [UIColor redColor];
+    pLabel.backgroundColor = [UIColor clearColor];
+    pLabel.shadowColor = [UIColor purpleColor];
+    pLabel.shadowOffset = CGSizeMake(2, 2);
+    pLabel.textAlignment = UITextAlignmentCenter;
+    pLabel.font = [UIFont fontWithName:@"Optima-BoldItalic" size: 36];
+    
+    [pRatingView addSubview: pLabel];
+    [self addSubview: pRatingView];
+}
+
+#pragma mark -
+#pragma mark TOUCHES
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint touchPoint = [[touches anyObject] locationInView:self];
+//    NSLog(@"Touch at point %@", NSStringFromCGPoint(touchPoint));
     
-    UIView *v = [self hitTest:touchPoint withEvent:event];
-    if (v.tag != JUPITER_TAG) 
+    CGRect temp = CGRectMake(touchPoint.x, touchPoint.y, 1, 1);
+    
+    if (!CGRectIntersectsRect(m_pJupiter.frame, temp)) 
     {
-        [v release];
+        bJupiterActive = false;
         return;
     }
     else
-    {
-        m_pJupiter = (UIImageView*)v;
-        [v release];
-    }
+        bJupiterActive = true;
 }
 
 - (void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    m_pJupiter.center = [[touches anyObject] locationInView: self];
+    if (bJupiterActive)
+    {
+        m_pJupiter.center = [[touches anyObject] locationInView: self];
+        CGPoint ptTemp = CGPointMake(110, 0);
+        CGPoint ptNewCenter;
+        if (m_pJupiter.center.x < ptTemp.x) 
+            ptNewCenter = CGPointMake(ptTemp.x, m_pDest.center.y);
+        else
+            ptNewCenter = CGPointMake(m_pJupiter.center.x, m_pDest.center.y);
+        [m_pJupiter setCenter: ptNewCenter];
+        
+        if (m_pJupiter.center.x >= m_pDest.center.x) 
+        {
+            NSLog(@"Calling beginGameWithLevelID");
+            if([m_pCT respondsToSelector:@selector(beginGameWithLevelID:)])
+            {
+                NSLog(@"222");
+                [m_pCT beginGameWithLevelID: m_pLevelID];
+            }
+        }
+    }
 }
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    if (m_pJupiter.center.x >= m_pDest.center.x) 
-//    {
-//        NSLog(@"OMG BEGIN THE LEVEL");
-//    }
+    NSLog(@"Should never get here...");
 }
 
 - (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [[self imageView] setFrame: CGRectMake(self.bounds.size.width/2+50, self.bounds.size.height/2, 50, 50)];
-    [[self imageView] setNeedsDisplay];
-}
-
-- (void) setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state - animate Jupiter to rotate on axis
-} 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath 
-{
-    return 75;
+    [m_pJupiter setFrame: CGRectMake(
+                                     self.bounds.origin.x + PADDING, 
+                                     ((self.bounds.size.height / 3.0) * 2) - PADDING,
+                                     50, 
+                                     50
+                                     )];
+    [m_pJupiter setNeedsDisplay];
 }
 
 - (void) dealloc
 {
     if (m_pLevelID != nil)
         [m_pLevelID release];
+    if (m_pRating != nil) 
+        [m_pRating release];
     [m_pJupiter release];
     [m_pDest release];
     [super dealloc];

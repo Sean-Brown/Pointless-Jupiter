@@ -10,7 +10,7 @@
 #import "MyViewController.h"
 #import "Jupiter.h"
 #import "BoardItem.h"
-#import "Wall.h"
+#import "Wall_Class.h"
 #import "DataManager.h"
 
 @interface LevelBuilder : UIView <UIGestureRecognizerDelegate,UITextFieldDelegate>
@@ -18,7 +18,6 @@
     MyViewController* m_pMyVC;
     
     NSMutableArray* m_pItems;
-    Jupiter* m_pJupiter;
     
     UIButton* m_pWallImg;
     UIButton* m_pTrap;
@@ -35,13 +34,13 @@
     
     UITextField* m_pLevelID;
     
-    int m_destCount;
+    int m_nDestCount;
+    int m_nJupiCount;
 }
 
 @property (nonatomic, assign) MyViewController* m_pMyVC;
 
 @property (nonatomic, retain) NSMutableArray* m_pItems;
-@property (nonatomic, retain) Jupiter* m_pJupiter;
 
 @property (nonatomic, retain) UIButton* m_pWallImg, * m_pTrap, * m_pAccel,* m_pWhirl,* m_pJupi,* m_pRemove,* m_pDest,* m_pSave,* m_pQuit;
 

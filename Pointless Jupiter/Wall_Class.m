@@ -1,14 +1,14 @@
 //
-//  Wall.m
+//  Wall_Class.m
 //  Pointless Jupiter
 //
 //  Created by Sean Brown on 6/22/12.
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "Wall.h"
+#import "Wall_Class.h"
 
-@implementation Wall
+@implementation Wall_Class
 
 - (id) init: WithBounds: (CGRect)bounds
 {

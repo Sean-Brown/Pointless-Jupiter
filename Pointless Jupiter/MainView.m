@@ -47,7 +47,7 @@
 
 - (id) initWithFrame:(CGRect)frame
 {
-    // NSLog(@"Initializing the MainView");
+//    NSLog(@"Initializing the MainView with frame %@",NSStringFromCGRect(frame));
     self = [super initWithFrame:frame];
     if (self) 
     {

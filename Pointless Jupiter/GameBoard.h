@@ -9,15 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "Jupiter.h"
 #import "BoardItem.h"
-#import "Wall.h"
+#import "Wall_Class.h"
 #import "MyViewController.h"
 #import "DataManager.h"
 #import "LevelPicker.h"
-#import "MyTableViewController.h"
 
 @interface GameBoard : UIView 
 {
-    MyTableViewController* m_pMyTVC;
     MyViewController* m_pMyVC;
     
     NSString* m_pstrLevelID; 
@@ -44,12 +42,13 @@
 
 @property (nonatomic, assign) MyViewController* m_pMyVC;
 
+- (void) initLevel:(Level*)pLevel;
 - (void) initLabel:(UILabel*)pLabel;
 - (void) initButtons;
 - (void) quitPlaying;
 - (void) redraw:(int)levelID; // Redraw the board with the given id, usually in response to a Restart
 
 -(BOOL) JupiterHitWall:(Point) JupiterPos; // Tells if the Jupiter hits a wall
--(double) calcNewTrajectory:(Wall* ) wall: (Jupiter* ) Jupiter; // Calculates the Jupiter's new trajectory
+-(double) calcNewTrajectory:(Wall_Class* ) wall: (Jupiter* ) Jupiter; // Calculates the Jupiter's new trajectory
 
 @end

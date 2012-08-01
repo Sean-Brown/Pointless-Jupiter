@@ -1,5 +1,5 @@
 //
-//  Wall.h
+//  Wall_Class.h
 //  Pointless Jupiter
 //
 //  Created by Sean Brown on 6/22/12.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Jupiter.h"
 
-@interface Wall : UIImageView <JupiterDelegate>  
+@interface Wall_Class : UIImageView <JupiterDelegate>  
 {
     
 }

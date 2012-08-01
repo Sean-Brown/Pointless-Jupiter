@@ -7,23 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		180DF8BB15C1FF5A0085BBE5 /* PointlessModel.xcdatamodel in Resources */ = {isa = PBXBuildFile; fileRef = 18AE270515BD9C6D006369F6 /* PointlessModel.xcdatamodel */; };
+		1803DDB815C809160074C6EA /* PointlessModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1803DDB615C809160074C6EA /* PointlessModel.xcdatamodeld */; };
 		1814840B15C4010700C86651 /* Buddha_Table.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1814840A15C4010700C86651 /* Buddha_Table.jpg */; };
 		18232F0B15A9DD15005A27AD /* Pointless_JupiterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F0A15A9DD15005A27AD /* Pointless_JupiterAppDelegate.m */; };
 		18232F0E15A9DD1F005A27AD /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F0D15A9DD1F005A27AD /* MyViewController.m */; };
 		18232F1815A9DD33005A27AD /* BoardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F1215A9DD33005A27AD /* BoardItem.m */; };
 		18232F1915A9DD33005A27AD /* GameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F1415A9DD33005A27AD /* GameBoard.m */; };
-		18232F1A15A9DD33005A27AD /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F1615A9DD33005A27AD /* Wall.m */; };
-		1824C78415BDDF4500A54048 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824C78315BDDF4500A54048 /* Level.m */; };
+		18232F1A15A9DD33005A27AD /* Wall_Class.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F1615A9DD33005A27AD /* Wall_Class.m */; };
 		1824C79615BDE11D00A54048 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824C79515BDE11D00A54048 /* DataManager.m */; };
-		1824C79C15BED14100A54048 /* BestTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824C79B15BED14000A54048 /* BestTimes.m */; };
-		1824C79F15BED18100A54048 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 1824C79E15BED18100A54048 /* User.m */; };
+		18253F1A15C89A27001A9814 /* Accel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F0915C89A27001A9814 /* Accel.m */; };
+		18253F1B15C89A27001A9814 /* Ball.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F0B15C89A27001A9814 /* Ball.m */; };
+		18253F1C15C89A27001A9814 /* BestTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F0D15C89A27001A9814 /* BestTimes.m */; };
+		18253F1D15C89A27001A9814 /* Dest.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F0F15C89A27001A9814 /* Dest.m */; };
+		18253F1E15C89A27001A9814 /* Level.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1115C89A27001A9814 /* Level.m */; };
+		18253F1F15C89A27001A9814 /* Trap.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1315C89A27001A9814 /* Trap.m */; };
+		18253F2015C89A27001A9814 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1515C89A27001A9814 /* User.m */; };
+		18253F2115C89A27001A9814 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1715C89A27001A9814 /* Wall.m */; };
+		18253F2215C89A27001A9814 /* Whirl.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1915C89A27001A9814 /* Whirl.m */; };
+		1877B08715C4B4B100A451B6 /* CustomTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1877B08615C4B4B000A451B6 /* CustomTable.m */; };
 		18A8762915AC9D3B00C924E3 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A8762815AC9D3B00C924E3 /* MainView.m */; };
 		18A8763915AEFC0000C924E3 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A8763815AEFC0000C924E3 /* MainWindow.xib */; };
 		18A8763C15B389C500C924E3 /* LevelBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A8763B15B389C300C924E3 /* LevelBuilder.m */; };
 		18A8764615B4A7DA00C924E3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A8764515B4A7DA00C924E3 /* QuartzCore.framework */; };
 		18A8764815B4A88300C924E3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A8764715B4A88300C924E3 /* CoreData.framework */; };
-		18AE270615BD9C6D006369F6 /* PointlessModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18AE270415BD9C6D006369F6 /* PointlessModel.xcdatamodeld */; };
 		18AE271C15BDABBE006369F6 /* JupiterIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AE271B15BDABBD006369F6 /* JupiterIcon.png */; };
 		18AE271E15BDABCD006369F6 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AE271D15BDABCC006369F6 /* Default-Landscape~ipad.png */; };
 		18AE273915BDAF15006369F6 /* Jupiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AE273815BDAF15006369F6 /* Jupiter.m */; };
@@ -48,7 +54,6 @@
 		18DF5EC715C032A000A0AFF3 /* Whirl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EBF15C032A000A0AFF3 /* Whirl.jpg */; };
 		18DF5ECA15C0AF8500A0AFF3 /* LevelPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF5EC915C0AF8500A0AFF3 /* LevelPicker.m */; };
 		18DF5ECC15C0BB9700A0AFF3 /* GoldStar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5ECB15C0BB9700A0AFF3 /* GoldStar.jpg */; };
-		18DF5ECF15C14F6600A0AFF3 /* MyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF5ECE15C14F6600A0AFF3 /* MyTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1803DDB715C809160074C6EA /* PointlessModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PointlessModel.xcdatamodel; sourceTree = "<group>"; };
 		1814840A15C4010700C86651 /* Buddha_Table.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Buddha_Table.jpg; path = Images/Buddha_Table.jpg; sourceTree = SOURCE_ROOT; };
 		18232F0915A9DD15005A27AD /* Pointless_JupiterAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pointless_JupiterAppDelegate.h; sourceTree = "<group>"; };
 		18232F0A15A9DD15005A27AD /* Pointless_JupiterAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pointless_JupiterAppDelegate.m; sourceTree = "<group>"; };
@@ -71,16 +77,30 @@
 		18232F1215A9DD33005A27AD /* BoardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardItem.m; sourceTree = "<group>"; };
 		18232F1315A9DD33005A27AD /* GameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameBoard.h; sourceTree = "<group>"; };
 		18232F1415A9DD33005A27AD /* GameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameBoard.m; sourceTree = "<group>"; };
-		18232F1515A9DD33005A27AD /* Wall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wall.h; sourceTree = "<group>"; };
-		18232F1615A9DD33005A27AD /* Wall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wall.m; sourceTree = "<group>"; };
-		1824C78215BDDF4500A54048 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Level.h; sourceTree = "<group>"; };
-		1824C78315BDDF4500A54048 /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Level.m; sourceTree = "<group>"; };
+		18232F1515A9DD33005A27AD /* Wall_Class.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Wall_Class.h; sourceTree = "<group>"; };
+		18232F1615A9DD33005A27AD /* Wall_Class.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wall_Class.m; sourceTree = "<group>"; };
 		1824C79415BDE11D00A54048 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		1824C79515BDE11D00A54048 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
-		1824C79A15BED13F00A54048 /* BestTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BestTimes.h; sourceTree = "<group>"; };
-		1824C79B15BED14000A54048 /* BestTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BestTimes.m; sourceTree = "<group>"; };
-		1824C79D15BED18000A54048 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		1824C79E15BED18100A54048 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		18253F0815C89A27001A9814 /* Accel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Accel.h; path = "Model Classes/Accel.h"; sourceTree = "<group>"; };
+		18253F0915C89A27001A9814 /* Accel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Accel.m; path = "Model Classes/Accel.m"; sourceTree = "<group>"; };
+		18253F0A15C89A27001A9814 /* Ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ball.h; path = "Model Classes/Ball.h"; sourceTree = "<group>"; };
+		18253F0B15C89A27001A9814 /* Ball.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Ball.m; path = "Model Classes/Ball.m"; sourceTree = "<group>"; };
+		18253F0C15C89A27001A9814 /* BestTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BestTimes.h; path = "Model Classes/BestTimes.h"; sourceTree = "<group>"; };
+		18253F0D15C89A27001A9814 /* BestTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BestTimes.m; path = "Model Classes/BestTimes.m"; sourceTree = "<group>"; };
+		18253F0E15C89A27001A9814 /* Dest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Dest.h; path = "Model Classes/Dest.h"; sourceTree = "<group>"; };
+		18253F0F15C89A27001A9814 /* Dest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Dest.m; path = "Model Classes/Dest.m"; sourceTree = "<group>"; };
+		18253F1015C89A27001A9814 /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Level.h; path = "Model Classes/Level.h"; sourceTree = "<group>"; };
+		18253F1115C89A27001A9814 /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Level.m; path = "Model Classes/Level.m"; sourceTree = "<group>"; };
+		18253F1215C89A27001A9814 /* Trap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Trap.h; path = "Model Classes/Trap.h"; sourceTree = "<group>"; };
+		18253F1315C89A27001A9814 /* Trap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Trap.m; path = "Model Classes/Trap.m"; sourceTree = "<group>"; };
+		18253F1415C89A27001A9814 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = "Model Classes/User.h"; sourceTree = "<group>"; };
+		18253F1515C89A27001A9814 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = "Model Classes/User.m"; sourceTree = "<group>"; };
+		18253F1615C89A27001A9814 /* Wall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wall.h; path = "Model Classes/Wall.h"; sourceTree = "<group>"; };
+		18253F1715C89A27001A9814 /* Wall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Wall.m; path = "Model Classes/Wall.m"; sourceTree = "<group>"; };
+		18253F1815C89A27001A9814 /* Whirl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Whirl.h; path = "Model Classes/Whirl.h"; sourceTree = "<group>"; };
+		18253F1915C89A27001A9814 /* Whirl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Whirl.m; path = "Model Classes/Whirl.m"; sourceTree = "<group>"; };
+		1877B08515C4B4B000A451B6 /* CustomTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTable.h; sourceTree = "<group>"; };
+		1877B08615C4B4B000A451B6 /* CustomTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTable.m; sourceTree = "<group>"; };
 		18A8762715AC9D3A00C924E3 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
 		18A8762815AC9D3B00C924E3 /* MainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainView.m; sourceTree = "<group>"; };
 		18A8763815AEFC0000C924E3 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -90,7 +110,6 @@
 		18A8764715B4A88300C924E3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		18A8764915B7133E00C924E3 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		18AE26F515B9A7E9006369F6 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		18AE270515BD9C6D006369F6 /* PointlessModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PointlessModel.xcdatamodel; sourceTree = "<group>"; };
 		18AE271B15BDABBD006369F6 /* JupiterIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JupiterIcon.png; sourceTree = "<group>"; };
 		18AE271D15BDABCC006369F6 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		18AE273715BDAF14006369F6 /* Jupiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Jupiter.h; sourceTree = "<group>"; };
@@ -120,8 +139,6 @@
 		18DF5EC815C0AF8500A0AFF3 /* LevelPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelPicker.h; sourceTree = "<group>"; };
 		18DF5EC915C0AF8500A0AFF3 /* LevelPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelPicker.m; sourceTree = "<group>"; };
 		18DF5ECB15C0BB9700A0AFF3 /* GoldStar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = GoldStar.jpg; path = Images/GoldStar.jpg; sourceTree = SOURCE_ROOT; };
-		18DF5ECD15C14F6500A0AFF3 /* MyTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableViewController.h; sourceTree = "<group>"; };
-		18DF5ECE15C14F6600A0AFF3 /* MyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,16 +172,25 @@
 			children = (
 				18232F1115A9DD33005A27AD /* BoardItem.h */,
 				18AE26F515B9A7E9006369F6 /* Constants.h */,
-				1824C79415BDE11D00A54048 /* DataManager.h */,
+				1877B08515C4B4B000A451B6 /* CustomTable.h */,
 				18232F1315A9DD33005A27AD /* GameBoard.h */,
 				18AE273715BDAF14006369F6 /* Jupiter.h */,
 				18A8763A15B389BF00C924E3 /* LevelBuilder.h */,
 				18DF5EC815C0AF8500A0AFF3 /* LevelPicker.h */,
 				18A8762715AC9D3A00C924E3 /* MainView.h */,
 				18A8764915B7133E00C924E3 /* Util.h */,
-				18232F1515A9DD33005A27AD /* Wall.h */,
+				18232F1515A9DD33005A27AD /* Wall_Class.h */,
 			);
 			name = Headers;
+			sourceTree = "<group>";
+		};
+		1877B08815C71DAC00A451B6 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				1824C79515BDE11D00A54048 /* DataManager.m */,
+				1824C79415BDE11D00A54048 /* DataManager.h */,
+			);
+			name = Manager;
 			sourceTree = "<group>";
 		};
 		18A8763F15B4201600C924E3 /* Data */ = {
@@ -172,6 +198,7 @@
 			children = (
 				18D68F2C15BDCAB400DEB9AE /* Classes */,
 				18D68F2B15BDCAAC00DEB9AE /* Headers */,
+				1877B08815C71DAC00A451B6 /* Manager */,
 				18D68F2D15BDCAD200DEB9AE /* Model */,
 			);
 			name = Data;
@@ -260,13 +287,13 @@
 			isa = PBXGroup;
 			children = (
 				18232F1215A9DD33005A27AD /* BoardItem.m */,
-				1824C79515BDE11D00A54048 /* DataManager.m */,
+				1877B08615C4B4B000A451B6 /* CustomTable.m */,
 				18232F1415A9DD33005A27AD /* GameBoard.m */,
 				18AE273815BDAF15006369F6 /* Jupiter.m */,
 				18A8763B15B389C300C924E3 /* LevelBuilder.m */,
 				18DF5EC915C0AF8500A0AFF3 /* LevelPicker.m */,
 				18A8762815AC9D3B00C924E3 /* MainView.m */,
-				18232F1615A9DD33005A27AD /* Wall.m */,
+				18232F1615A9DD33005A27AD /* Wall_Class.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -274,8 +301,8 @@
 		18CDA9691594DE490057BC94 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
-				18232F0915A9DD15005A27AD /* Pointless_JupiterAppDelegate.h */,
 				18232F0A15A9DD15005A27AD /* Pointless_JupiterAppDelegate.m */,
+				18232F0915A9DD15005A27AD /* Pointless_JupiterAppDelegate.h */,
 			);
 			name = Delegate;
 			sourceTree = "<group>";
@@ -317,9 +344,15 @@
 		18D68F2B15BDCAAC00DEB9AE /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				1824C79A15BED13F00A54048 /* BestTimes.h */,
-				1824C78215BDDF4500A54048 /* Level.h */,
-				1824C79D15BED18000A54048 /* User.h */,
+				18253F0815C89A27001A9814 /* Accel.h */,
+				18253F0A15C89A27001A9814 /* Ball.h */,
+				18253F0C15C89A27001A9814 /* BestTimes.h */,
+				18253F0E15C89A27001A9814 /* Dest.h */,
+				18253F1015C89A27001A9814 /* Level.h */,
+				18253F1215C89A27001A9814 /* Trap.h */,
+				18253F1415C89A27001A9814 /* User.h */,
+				18253F1615C89A27001A9814 /* Wall.h */,
+				18253F1815C89A27001A9814 /* Whirl.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -327,9 +360,15 @@
 		18D68F2C15BDCAB400DEB9AE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1824C79B15BED14000A54048 /* BestTimes.m */,
-				1824C78315BDDF4500A54048 /* Level.m */,
-				1824C79E15BED18100A54048 /* User.m */,
+				18253F0915C89A27001A9814 /* Accel.m */,
+				18253F0B15C89A27001A9814 /* Ball.m */,
+				18253F0D15C89A27001A9814 /* BestTimes.m */,
+				18253F0F15C89A27001A9814 /* Dest.m */,
+				18253F1115C89A27001A9814 /* Level.m */,
+				18253F1315C89A27001A9814 /* Trap.m */,
+				18253F1515C89A27001A9814 /* User.m */,
+				18253F1715C89A27001A9814 /* Wall.m */,
+				18253F1915C89A27001A9814 /* Whirl.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -337,7 +376,7 @@
 		18D68F2D15BDCAD200DEB9AE /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				18AE270415BD9C6D006369F6 /* PointlessModel.xcdatamodeld */,
+				1803DDB615C809160074C6EA /* PointlessModel.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -345,7 +384,6 @@
 		18DF5ED015C14F6E00A0AFF3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				18DF5ECE15C14F6600A0AFF3 /* MyTableViewController.m */,
 				18232F0D15A9DD1F005A27AD /* MyViewController.m */,
 			);
 			name = Classes;
@@ -354,7 +392,6 @@
 		18DF5ED115C14F7B00A0AFF3 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				18DF5ECD15C14F6500A0AFF3 /* MyTableViewController.h */,
 				18232F0C15A9DD1F005A27AD /* MyViewController.h */,
 			);
 			name = Headers;
@@ -428,7 +465,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				180DF8BB15C1FF5A0085BBE5 /* PointlessModel.xcdatamodel in Resources */,
 				18CDA9271594C7AC0057BC94 /* InfoPlist.strings in Resources */,
 				18A8763915AEFC0000C924E3 /* MainWindow.xib in Resources */,
 				18AE271C15BDABBE006369F6 /* JupiterIcon.png in Resources */,
@@ -483,17 +519,23 @@
 				18232F0E15A9DD1F005A27AD /* MyViewController.m in Sources */,
 				18232F1815A9DD33005A27AD /* BoardItem.m in Sources */,
 				18232F1915A9DD33005A27AD /* GameBoard.m in Sources */,
-				18232F1A15A9DD33005A27AD /* Wall.m in Sources */,
+				18232F1A15A9DD33005A27AD /* Wall_Class.m in Sources */,
 				18A8762915AC9D3B00C924E3 /* MainView.m in Sources */,
 				18A8763C15B389C500C924E3 /* LevelBuilder.m in Sources */,
-				18AE270615BD9C6D006369F6 /* PointlessModel.xcdatamodeld in Sources */,
 				18AE273915BDAF15006369F6 /* Jupiter.m in Sources */,
-				1824C78415BDDF4500A54048 /* Level.m in Sources */,
 				1824C79615BDE11D00A54048 /* DataManager.m in Sources */,
-				1824C79C15BED14100A54048 /* BestTimes.m in Sources */,
-				1824C79F15BED18100A54048 /* User.m in Sources */,
 				18DF5ECA15C0AF8500A0AFF3 /* LevelPicker.m in Sources */,
-				18DF5ECF15C14F6600A0AFF3 /* MyTableViewController.m in Sources */,
+				1877B08715C4B4B100A451B6 /* CustomTable.m in Sources */,
+				1803DDB815C809160074C6EA /* PointlessModel.xcdatamodeld in Sources */,
+				18253F1A15C89A27001A9814 /* Accel.m in Sources */,
+				18253F1B15C89A27001A9814 /* Ball.m in Sources */,
+				18253F1C15C89A27001A9814 /* BestTimes.m in Sources */,
+				18253F1D15C89A27001A9814 /* Dest.m in Sources */,
+				18253F1E15C89A27001A9814 /* Level.m in Sources */,
+				18253F1F15C89A27001A9814 /* Trap.m in Sources */,
+				18253F2015C89A27001A9814 /* User.m in Sources */,
+				18253F2115C89A27001A9814 /* Wall.m in Sources */,
+				18253F2215C89A27001A9814 /* Whirl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,12 +731,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		18AE270415BD9C6D006369F6 /* PointlessModel.xcdatamodeld */ = {
+		1803DDB615C809160074C6EA /* PointlessModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				18AE270515BD9C6D006369F6 /* PointlessModel.xcdatamodel */,
+				1803DDB715C809160074C6EA /* PointlessModel.xcdatamodel */,
 			);
-			currentVersion = 18AE270515BD9C6D006369F6 /* PointlessModel.xcdatamodel */;
+			currentVersion = 1803DDB715C809160074C6EA /* PointlessModel.xcdatamodel */;
 			path = PointlessModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

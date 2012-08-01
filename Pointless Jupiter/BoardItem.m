@@ -13,26 +13,27 @@
 
 @synthesize m_stItemType;
 
-- (id) init: WithItem:(MiscItem)mItem: InFrame: (CGRect)frame
+- (id) initWithItem:(MiscItem)mItem inFrame: (CGRect)frame
 {
     if (self == [super init]) 
     {
         self.m_stItemType = mItem;
+        self.tag = mItem;
         UIImageView* item = [[[UIImageView alloc] initWithFrame: frame] autorelease];
         UIImage* itemImg;
         switch (mItem) 
         {
-            case Accelerator:
+            case eAccelItem:
                 itemImg = [[UIImage imageNamed:@"Accelerator.jpg"] autorelease];
                 item.image = itemImg;
                 NSLog(@"Initializing an Accelerator");
                 break;
-            case Trap:
+            case eTrapItem:
                 itemImg = [[UIImage imageNamed:@"Trap.jpg"] autorelease];
                 item.image = itemImg;
                 NSLog(@"Initializing a Trap");
                 break;
-            case Whirl:
+            case eWhirlItem:
                 itemImg = [[UIImage imageNamed:@"Whirl.jpg"] autorelease];
                 item.image = itemImg;
                 NSLog(@"Initializing a Whirl");

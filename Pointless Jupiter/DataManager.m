@@ -22,8 +22,6 @@
     return self;
 }
 
-
-
 #pragma mark -
 #pragma mark LEVELS
 
@@ -48,7 +46,7 @@
     return pLevels;
 }
 
-- (NSArray*) getLevel: withID:(NSString*)level
+- (NSArray*) getLevelWithID:(NSString*)level
 {
     NSEntityDescription *pEntityDescription = [NSEntityDescription entityForName:@"Level" inManagedObjectContext:m_pMOC];
     NSFetchRequest *pRequest = [[[NSFetchRequest alloc] init] autorelease];
@@ -57,14 +55,17 @@
     [pRequest setPredicate: pPredicate];
     
     NSError* pError;
-    NSArray *pLevels = [m_pMOC executeFetchRequest:pRequest error:&pError];
+    NSArray* pLevels = [m_pMOC executeFetchRequest:pRequest error:&pError];
     if (pLevels == nil) 
+    {
         NSLog(@"Could not find the level with Level_ID = %@",level);
+        abort();
+    }
 
     return pLevels;
 }
 
-- (void)saveLevel:(NSString*)level traps:(NSArray*)traps whirls:(NSArray*)whirls accels:(NSArray*)accels walls:(NSArray*)walls dests:(NSArray*)dests jupiter:(Jupiter*)jupiter rating:(NSNumber*)pRating;
+- (void)saveLevel:(NSString*)level traps:(NSMutableArray*)traps whirls:(NSMutableArray*)whirls accels:(NSMutableArray*)accels walls:(NSMutableArray*)walls dest:(NSString*)dest jupiter:(NSString*)jupiter rating:(NSNumber*)pRating;
 {   
     if (m_pMOC == nil) 
     {
@@ -74,26 +75,64 @@
         [pDelegate release];
     }
 	NSManagedObject* pNewLevel = [NSEntityDescription insertNewObjectForEntityForName:@"Level" inManagedObjectContext:m_pMOC];
+    NSManagedObject* pNewBall = [NSEntityDescription insertNewObjectForEntityForName:@"Ball" inManagedObjectContext:m_pMOC];
+    [pNewBall setValue:jupiter forKey:@"a_Bounds"];
+    NSManagedObject* pNewDest = [NSEntityDescription insertNewObjectForEntityForName:@"Dest" inManagedObjectContext:m_pMOC];
+    [pNewDest setValue:dest forKey:@"a_Bounds"];
+    NSManagedObject* pNewCreator = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:m_pMOC];
+    [pNewCreator setValue:@"Bob Dole" forKey:@"a_Name"];
+    [pNewCreator setValue:@"Bobdole" forKey:@"a_Password"];
     
-    NSString* pBallString = NSStringFromCGRect(jupiter.frame);
-    NSDate *pDate = [NSDate date];
+    NSDate* pDate = [NSDate date];
     
     // Must have these four attributes
-    [pNewLevel setValue:level forKey:@"Level_ID"];
-    [pNewLevel setValue:pBallString forKey:@"Ball"];
-    [pNewLevel setValue:pDate forKey:@"Creation_Date"];
-    [pNewLevel setValue:dests forKey:@"Destination"];
-    [pNewLevel setValue:pRating forKey:@"Rating"];
+    [pNewLevel setValue:level forKey:@"a_Level_ID"];
+    [pNewLevel setValue:pDate forKey:@"a_Creation_Date"];
+    [pNewLevel setValue:pRating forKey:@"a_Rating"];
+    [pNewLevel setValue:[pNewCreator valueForKey:@"a_Name"] forKey:@"a_CreatedBy"];
+    
+    // Set the relationships
+    [pNewLevel setValue:pNewCreator forKey:@"r_Creator"];
+    [pNewLevel setValue:pNewBall forKey:@"r_Ball"];
+    [pNewLevel setValue:pNewDest forKey:@"r_Dest"];
     
     // Optional attributes
     if ([traps count] != 0) 
-        [pNewLevel setValue:traps forKey:@"Traps"];
+    {
+        for (NSString* pBounds in traps) 
+        {
+            NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Trap" inManagedObjectContext:m_pMOC];
+            [pNewTrap setValue:pBounds forKey:@"a_Bounds"];
+            [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
+        }
+    }
     if ([whirls count] != 0) 
-        [pNewLevel setValue:whirls forKey:@"Whirls"];
+    {
+        for (NSString* pBounds in whirls) 
+        {
+            NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Whirl" inManagedObjectContext:m_pMOC];
+            [pNewTrap setValue:pBounds forKey:@"a_Bounds"];
+            [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
+        }
+    }
     if ([accels count] != 0) 
-        [pNewLevel setValue:accels forKey:@"Accelerators"];
+    {
+        for (NSString* pBounds in accels) 
+        {
+            NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Accel" inManagedObjectContext:m_pMOC];
+            [pNewTrap setValue:pBounds forKey:@"a_Bounds"];
+            [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
+        }
+    }
     if ([walls count] != 0) 
-        [pNewLevel setValue:walls forKey:@"Walls"];
+    {
+        for (NSString* pBounds in walls) 
+        {
+            NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Wall" inManagedObjectContext:m_pMOC];
+            [pNewTrap setValue:pBounds forKey:@"a_Bounds"];
+            [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
+        }
+    }
     
     NSError* pError;
     if (![m_pMOC save: &pError]) 
@@ -107,6 +146,7 @@
     else
     {
         NSLog(@"Successfully saved!");
+        
         UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Map Successfully Saved!" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
         pAlert.frame = CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3);
         [pAlert show];

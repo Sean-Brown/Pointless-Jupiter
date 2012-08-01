@@ -22,18 +22,18 @@
 
 typedef enum 
 {
-    WALL,
-    TRAP,
-    ACCELERATOR,
-    WHIRL,
-    JUPITER,
-    DESTINATION,
-    REMOVE
+    eitid_Wall,
+    eitid_Trap,
+    eitid_Accel,
+    eitid_Whirl,
+    eitid_Jupiter,
+    eitid_Dest,
+    eitid_Remove
 }ImageTagID;
 
 @implementation LevelBuilder
 
-@synthesize m_pMyVC, m_pItems, m_pJupiter, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID;
+@synthesize m_pMyVC, m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID;
 
 #pragma mark -
 #pragma mark INIT
@@ -42,7 +42,7 @@ typedef enum
 {
     self = [super initWithFrame:frame];
     if (self) {
-        m_destCount = 0;
+        m_nDestCount = 0;
         self.backgroundColor = [UIColor blackColor];
         m_pItems = [[NSMutableArray alloc] init];
         m_pSelectedItemImage = [[UIImageView alloc] init];
@@ -154,13 +154,13 @@ typedef enum
     [m_pDest.layer setBorderColor:[[UIColor redColor] CGColor]];
     [m_pRemove.layer setBorderColor:[[UIColor redColor] CGColor]];
     
-    [m_pWallImg setTag: WALL];
-    [m_pTrap setTag: TRAP];
-    [m_pAccel setTag: ACCELERATOR];
-    [m_pWhirl setTag: WHIRL];
-    [m_pJupi setTag: JUPITER];
-    [m_pDest setTag: DESTINATION];
-    [m_pRemove setTag: REMOVE];
+    [m_pWallImg setTag: eitid_Wall];
+    [m_pTrap setTag: eitid_Trap];
+    [m_pAccel setTag: eitid_Accel];
+    [m_pWhirl setTag: eitid_Whirl];
+    [m_pJupi setTag: eitid_Jupiter];
+    [m_pDest setTag: eitid_Dest];
+    [m_pRemove setTag: eitid_Remove];
     
     [m_pWallImg setImage: [UIImage imageNamed: @"Wall.jpg"] forState: UIControlStateNormal];
     [m_pTrap setImage: [UIImage imageNamed: @"Trap.jpg"] forState:UIControlStateNormal];
@@ -224,41 +224,43 @@ typedef enum
     NSMutableArray* accels = [[NSMutableArray alloc] init];
     NSMutableArray* traps = [[NSMutableArray alloc] init];
     NSMutableArray* whirls = [[NSMutableArray alloc] init];
-    NSMutableArray* jupiter = [[NSMutableArray alloc] init];
-    NSMutableArray* dest = [[NSMutableArray alloc] init];
+    NSString* jupiter = [[NSString alloc] init];
+    NSString* dest = [[NSString alloc] init];
     for (int i = 0; i < [m_pItems count]; i++) 
     {
         id object = [m_pItems objectAtIndex:i];
+        NSString* pFrameString = NSStringFromCGRect([object frame]);
         switch ([object tag]) 
         {
-            case WALL:
-                [walls addObject: object];
+            case eitid_Wall:
+                [walls addObject: pFrameString];
                 break;
-            case TRAP:
-                [traps addObject: object];
+            case eitid_Trap:
+                [traps addObject: pFrameString];
                 break;
-            case ACCELERATOR:
-                [accels addObject: object];
+            case eitid_Accel:
+                [accels addObject: pFrameString];
                 break;
-            case WHIRL:
-                [whirls addObject: object];
+            case eitid_Whirl:
+                [whirls addObject: pFrameString];
                 break;
-            case JUPITER:
-                [jupiter addObject: object];
+            case eitid_Jupiter:
+                jupiter = pFrameString;
                 break;
-            case DESTINATION:
-                [dest addObject: object];
+            case eitid_Dest:
+                dest = pFrameString;
                 break;
             default: 
                 break;
         }
     }
     NSNumber* pRating = [NSNumber numberWithInt: 0];
-    [[DataManager getDataManager] saveLevel:level traps:traps whirls:whirls accels:accels walls:walls dests:dest jupiter:[jupiter objectAtIndex:0] rating:pRating];
+    [[DataManager getDataManager] saveLevel:level traps:traps whirls:whirls accels:accels walls:walls dest:dest jupiter:jupiter rating:pRating];
 }
 
 - (void) saveLevel
 {
+//    NSString* pText = [m_pLevelID.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString* pText = m_pLevelID.text;
     if ([pText length] < 1) 
     { 
@@ -267,9 +269,9 @@ typedef enum
         [pAlert show];
         [pAlert release];
     }
-    else if (m_pJupiter == NULL || m_pDest == NULL)
+    else if (m_nJupiCount == 0 || m_nDestCount == 0)
     { 
-        UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Map" message:@"You must have Jupiter and a Destination" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
+        UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Map" message:@"You must have Jupiter and a Sun" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
         pAlert.frame = CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3);
         [pAlert show];
         [pAlert release];
@@ -298,63 +300,52 @@ typedef enum
     UIImageView* pNewImage;
     switch (tid) 
     {
-        case WALL:
+        case eitid_Wall:
             // NSLog(@"WALL Selected");
             pNewImage = [[UIImageView alloc] initWithFrame: WALL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Wall.jpg"]];
-            [pNewImage setTag: WALL];
+            [pNewImage setTag: eitid_Wall];
             break;
-        case TRAP:
+        case eitid_Trap:
             // NSLog(@"TRAP Selected");
             pNewImage = [[UIImageView alloc] initWithFrame: TRAP_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Trap.jpg"]];
-            [pNewImage setTag: TRAP];
+            [pNewImage setTag: eitid_Trap];
             [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
-        case ACCELERATOR:
+        case eitid_Accel:
             // NSLog(@"ACCELERATOR Selected");
             pNewImage = [[UIImageView alloc] initWithFrame: ACCEL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Accelerator.jpg"]];
-            [pNewImage setTag: ACCELERATOR];
+            [pNewImage setTag: eitid_Accel];
             break;
-        case WHIRL:
+        case eitid_Whirl:
             // NSLog(@"WHIRL Selected");
             pNewImage = [[UIImageView alloc] initWithFrame: WHIRL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Whirl.jpg"]];
-            [pNewImage setTag: WHIRL];
+            [pNewImage setTag: eitid_Whirl];
             [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
-        case JUPITER:
+        case eitid_Jupiter:
             // NSLog(@"JUPITER Selected");
-            if (m_pJupiter == nil) 
+            if (m_nJupiCount == 0) 
             {
-                m_pJupiter = [[[Jupiter alloc] initWithFrame: JUPI_RECT] retain];
-                m_pJupiter.m_pMyVC = m_pMyVC;
-                UIImage* pImage = [UIImage imageNamed: @"Jupiter.jpg"];
-                m_pJupiter.image = pImage;
-                [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pJupiter];
-                [pImage release];
-                
-                [m_pJupiter setUserInteractionEnabled: YES];
-                [m_pJupiter setMultipleTouchEnabled: YES];
-                
-                [m_pJupiter setTag: JUPITER];
-                
-                m_pSelectedItemImage = m_pJupiter;
-                
-                [m_pItems addObject: m_pSelectedItemImage];
-        
-                [self addSubview: m_pJupiter];
+                pNewImage = [[UIImageView alloc] initWithFrame: JUPI_RECT];
+                [pNewImage setImage: [UIImage imageNamed:@"Jupiter.jpg"]];
+                ++m_nJupiCount;
+                [pNewImage setTag: eitid_Jupiter];
+                [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
+                break;
             }
-            return;
-            break;
-        case DESTINATION:
-            if (m_destCount < 1) 
+            else
+                return;
+        case eitid_Dest:
+            if (m_nDestCount < 1) 
             {
                 pNewImage = [[UIImageView alloc] initWithFrame: DEST_RECT];
                 [pNewImage setImage: [UIImage imageNamed: @"Destination.jpg"]];
-                ++m_destCount;
-                [pNewImage setTag: DESTINATION];
+                ++m_nDestCount;
+                [pNewImage setTag: eitid_Dest];
                 [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             }
             else
@@ -373,7 +364,7 @@ typedef enum
 
 - (void)processTap: (id)sender
 {
-    NSLog(@"Tapping item");
+//    NSLog(@"Tapping item");
     [self selectItem: sender];
 }
 
@@ -397,7 +388,7 @@ typedef enum
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (m_pSelectedItemImage.tag == WALL)
+    if (m_pSelectedItemImage.tag == eitid_Wall)
     { // Walls are special
         int heightRadius = m_pSelectedItemImage.frame.size.height/2;
         int widthRadius = m_pSelectedItemImage.frame.size.width/2;
@@ -530,15 +521,15 @@ typedef enum
 {
     if (m_pSelectedItemImage == nil || [m_pItems count] < 1)
         return;
-    if ([m_pSelectedItemImage isKindOfClass: [Jupiter class]]) 
-        m_pJupiter = nil;
-    if ([m_pSelectedItemImage tag] == DESTINATION)    
-        --m_destCount;
+    if ([m_pSelectedItemImage tag] == eitid_Jupiter) 
+        --m_nJupiCount;
+    if ([m_pSelectedItemImage tag] == eitid_Dest)    
+        --m_nDestCount;
     // First remove from the items list, then from the view
     int index = [m_pItems indexOfObjectIdenticalTo: m_pSelectedItemImage];
     [m_pItems removeObjectAtIndex: index];
     UIImageView* pIV = m_pSelectedItemImage;
-    NSLog(@"Removing %@",pIV);
+//    NSLog(@"Removing %@",pIV);
     [pIV removeFromSuperview];
     m_pSelectedItemImage = nil;
 }
@@ -547,7 +538,6 @@ typedef enum
 {
     [m_pSelectedItemImage release];
     [m_pJupi release];
-    [m_pJupiter release];
     [m_pItems release];
     [m_pAccel release];
     [m_pTrap release];
