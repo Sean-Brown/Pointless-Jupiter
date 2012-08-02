@@ -87,24 +87,28 @@
     for (int i = 0; i < [pAccels count]; i++) 
     {
         NSString* pFrame = [[pAccels objectAtIndex:i] a_Frame];
+//        NSLog(@"Initializing accel in frame %@",pFrame);
         BoardItem* pAccel = [[[BoardItem alloc] initWithItem:emi_Accel inFrame: CGRectFromString(pFrame)] autorelease];
         [self addSubview: pAccel];
     }
     for (int i = 0; i < [pTraps count]; i++) 
     {
         NSString* pFrame = [[pTraps objectAtIndex:i] a_Frame];
+//        NSLog(@"Initializing trap in frame %@",pFrame);
         BoardItem* pTrap = [[[BoardItem alloc] initWithItem:emi_Trap inFrame: CGRectFromString(pFrame)] autorelease];
         [self addSubview: pTrap];
     }
     for (int i = 0; i < [pWhirls count]; i++) 
     {
         NSString* pFrame = [[pWhirls objectAtIndex:i] a_Frame];
+//        NSLog(@"Initializing whirl in frame %@",pFrame);
         BoardItem* pWhirl = [[[BoardItem alloc] initWithItem:emi_Whirl inFrame: CGRectFromString(pFrame)] autorelease];
         [self addSubview: pWhirl];
     }
     for (int i = 0; i < [pWalls count]; i++) 
     {
         NSString* pFrame = [[pWalls objectAtIndex:i] a_Frame];
+//        NSLog(@"Initializing wall in frame %@",pFrame);
         Wall_Class* pWall = [[[Wall_Class alloc] initWithFrame: CGRectFromString(pFrame)] autorelease];
         [self addSubview: pWall];
     }
