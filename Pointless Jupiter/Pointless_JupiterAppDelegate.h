@@ -13,9 +13,7 @@
 
 @interface Pointless_JupiterAppDelegate : NSObject <UIApplicationDelegate> 
 {
-    UIWindow* window;
-    MyViewController* m_pMyVC;
-    
+    UIWindow* window;  
 @private
     NSManagedObjectContext* m_pMOC;
     NSManagedObjectModel* m_pMOM;
@@ -23,7 +21,6 @@
 }
 
 @property (nonatomic, retain) UIWindow* window;
-@property (nonatomic, retain) MyViewController* m_pMyVC;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext* m_pMOC;
 @property (nonatomic, retain, readonly) NSManagedObjectModel* m_pMOM;

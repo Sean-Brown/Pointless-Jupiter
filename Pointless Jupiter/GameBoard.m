@@ -16,7 +16,7 @@
 
 @implementation GameBoard
 
-@synthesize m_pJupiter, m_pMyVC, m_pStart, m_pRestart, m_pQuit;
+@synthesize m_pJupiter, m_pStart, m_pRestart, m_pQuit;
 
 - (id) initWithFrame:(CGRect)frame
 {
@@ -117,7 +117,7 @@
 
 - (void) quitPlaying
 {
-    [m_pMyVC toMainMenu];
+    [[MyViewController getMVC] toMainMenu];
     [self removeFromSuperview];
 }
 
@@ -152,14 +152,10 @@
 
 - (void) dealloc
 {
-    if (m_pJupiter != nil)
-        [m_pJupiter release];
-    if (m_pStart != nil)
-        [m_pStart release];
-    if (m_pRestart != nil)        
-        [m_pRestart release];
-    if (m_pQuit != nil)
-        [m_pQuit release];
+    [m_pJupiter release];
+    [m_pStart release];     
+    [m_pRestart release];
+    [m_pQuit release];
     [super dealloc];
 }
 

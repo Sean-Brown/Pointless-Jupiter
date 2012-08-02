@@ -11,8 +11,6 @@
 
 @implementation Jupiter
 
-@synthesize m_pMyVC;
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

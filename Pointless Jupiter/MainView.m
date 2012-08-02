@@ -13,7 +13,7 @@
 
 @implementation MainView
 
-@synthesize m_pMyVC, m_pstrUser, m_pbtNewGame, m_pbtSetUser, m_pbtLevelBuilder, m_pbtBestTimes;
+@synthesize m_pstrUser, m_pbtNewGame, m_pbtSetUser, m_pbtLevelBuilder, m_pbtBestTimes;
 
 - (void) initLabel: (UILabel*)label withName: (NSString*)name atY: (CGFloat)yCoord
 {
@@ -79,10 +79,10 @@
         m_pbtSetUser = [self initButton: m_pbtSetUser atY:height*4 withTitle:@"My Account" withColor: [UIColor orangeColor]];
         
         // Add press event handlers
-        [m_pbtNewGame addTarget:m_pMyVC action:@selector(chooseLevel) forControlEvents:UIControlEventTouchUpInside];
-        [m_pbtBestTimes addTarget:m_pMyVC action:@selector(viewHighScores) forControlEvents:UIControlEventTouchUpInside];
-        [m_pbtLevelBuilder addTarget:m_pMyVC action:@selector(buildLevel) forControlEvents:UIControlEventTouchUpInside];
-        [m_pbtSetUser addTarget:m_pMyVC action:@selector(setUserAccount) forControlEvents:UIControlEventTouchUpInside];
+        [m_pbtNewGame addTarget:[MyViewController getMVC] action:@selector(chooseLevel) forControlEvents:UIControlEventTouchUpInside];
+        [m_pbtBestTimes addTarget:[MyViewController getMVC] action:@selector(viewHighScores) forControlEvents:UIControlEventTouchUpInside];
+        [m_pbtLevelBuilder addTarget:[MyViewController getMVC] action:@selector(buildLevel) forControlEvents:UIControlEventTouchUpInside];
+        [m_pbtSetUser addTarget:[MyViewController getMVC] action:@selector(setUserAccount) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -90,12 +90,9 @@
 - (void)dealloc
 {
     // NSLog(@"Dealloc'ing MainView");
-    if (m_pbtNewGame)
-        [m_pbtSetUser release];
-    if (m_pbtBestTimes)
-        [m_pbtBestTimes release];
-    if (m_pbtLevelBuilder)
-        [m_pbtLevelBuilder release];
+    [m_pbtSetUser release];
+    [m_pbtBestTimes release];
+    [m_pbtLevelBuilder release];
     [super dealloc];
 }
 

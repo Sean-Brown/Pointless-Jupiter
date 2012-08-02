@@ -11,8 +11,6 @@
 #import "MyViewController.h"
 
 @interface CustomTable : UIView {
-    MyViewController* m_pMyVC;
-    
     NSArray* m_pLevelIDs;
     NSMutableArray* m_pPickers;
     
@@ -22,7 +20,6 @@
     int m_nCurrentIndex;
 }
 
-@property (nonatomic, assign) MyViewController* m_pMyVC;
 @property (nonatomic, retain) NSArray* m_pLevelIDs;
 @property (nonatomic, retain) NSMutableArray* m_pPickers;
 @property (nonatomic, retain) UILabel* m_pTitle;

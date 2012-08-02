@@ -10,11 +10,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MyViewController.h"
 
-@interface Jupiter : UIImageView {
-    MyViewController* m_pMyVC;
-}
+@interface Jupiter : UIImageView 
+{
 
-@property (nonatomic, retain) MyViewController* m_pMyVC;
+}
 
 @end
 

@@ -21,8 +21,6 @@ typedef enum
 
 @interface BoardItem : UIView <JupiterDelegate>
 {
-    MyViewController* m_pMyVC;
-    
     MiscItem m_stItemType;
 }
 

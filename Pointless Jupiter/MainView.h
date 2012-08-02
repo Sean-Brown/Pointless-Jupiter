@@ -11,14 +11,10 @@
 
 @interface MainView : UIView 
 {
-    MyViewController* m_pMyVC;
-    
     NSString* m_pstrUser;
     
     UIButton* m_pbtNewGame,* m_pbtBestTimes,* m_pbtLevelBuilder,* m_pbtSetUser;
 }
-
-@property (nonatomic, assign) MyViewController* m_pMyVC;
 
 @property (nonatomic, copy) NSString* m_pstrUser;
 

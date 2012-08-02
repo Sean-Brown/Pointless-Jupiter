@@ -192,14 +192,10 @@ int nJupiterCenter = 0;
 
 - (void) dealloc
 {
-    if (m_pLevelID != nil)
-        [m_pLevelID release];
-    if (m_pRating != nil) 
-        [m_pRating release];
-    if (m_pJupiter != nil)
-        [m_pJupiter release];
-    if (m_pDest != nil)
-        [m_pDest release];
+    [m_pLevelID release];
+    [m_pRating release];
+    [m_pJupiter release];
+    [m_pDest release];
     [super dealloc];
 }
 

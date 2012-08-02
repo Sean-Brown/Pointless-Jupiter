@@ -102,6 +102,7 @@
         for (NSString* pBounds in traps) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Trap" inManagedObjectContext:m_pMOC];
+            NSLog(@"Saving bounds %@ for a trap.",pBounds);
             [pNewTrap setValue:pBounds forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
@@ -111,6 +112,7 @@
         for (NSString* pBounds in whirls) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Whirl" inManagedObjectContext:m_pMOC];
+            NSLog(@"Saving bounds %@ for a whirl.",pBounds);
             [pNewTrap setValue:pBounds forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
@@ -120,6 +122,7 @@
         for (NSString* pBounds in accels) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Accel" inManagedObjectContext:m_pMOC];
+            NSLog(@"Saving bounds %@ for an accel.",pBounds);
             [pNewTrap setValue:pBounds forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
@@ -129,6 +132,7 @@
         for (NSString* pBounds in walls) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Wall" inManagedObjectContext:m_pMOC];
+            NSLog(@"Saving bounds %@ for a wall.",pBounds);
             [pNewTrap setValue:pBounds forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }

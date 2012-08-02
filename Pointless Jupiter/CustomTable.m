@@ -20,7 +20,7 @@
 
 @implementation CustomTable
 
-@synthesize m_pTitle, m_pLevelIDs, m_pBack, m_pMyVC, m_pPickers;
+@synthesize m_pTitle, m_pLevelIDs, m_pBack, m_pPickers;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -71,7 +71,7 @@
 - (void) beginGameWithLevelID: (NSString*)pLevelID
 {
     NSLog(@"CustomTable - beginGameWithLevelID");
-    [m_pMyVC startGameWithLevelID: pLevelID];
+    [[MyViewController getMVC] startGameWithLevelID: pLevelID];
     [self removeFromSuperview];
 }
 
@@ -88,7 +88,7 @@
 
 - (void) quitGame
 {
-    [m_pMyVC toMainMenu];
+    [[MyViewController getMVC] toMainMenu];
     [self removeFromSuperview];
 }
 
@@ -225,16 +225,12 @@
 - (void)dealloc
 {
 // ** Objects returned by the DM are autoreleased, fool! **
-//    if (m_pLevelIDs != nil) 
-//        [m_pLevelIDs release];
+//    [m_pLevelIDs release];
 // ** Not sure why, but m_pPickers gives me issues, so leave it alone **
-//    if (m_pPickers != nil)
-//        [m_pPickers release];
-    if (m_pTitle != nil)
-        [m_pTitle release];
+//    [m_pPickers release];
+    [m_pTitle release];
 // ** Something's screwy with releasing the back button, so leave it alone **
-//    if (m_pBack != nil)    
-//        [m_pBack release];
+//    [m_pBack release];
     [super dealloc];
 }
 

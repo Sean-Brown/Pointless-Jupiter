@@ -43,7 +43,6 @@
 	CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
     
 	MainView* mv = [[MainView alloc] initWithFrame: newFrame];
-    mv.m_pMyVC = self;
 	self.view = mv;
     [mv release];
 }
@@ -98,7 +97,6 @@
     {
         CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
         GameBoard* pGB = [[GameBoard alloc] initWithFrame: newFrame];
-        pGB.m_pMyVC = self;
         [pGB initLevel: [pLevel objectAtIndex:0]];
         [self.view addSubview: (UIView*)pGB];
 //        [pGB release];
@@ -112,7 +110,6 @@
     // Initialize the new view w/ view controller
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
     CustomTable* pCT = [[CustomTable alloc] initWithFrame: newFrame];
-    pCT.m_pMyVC = self;
     [pCT initLevels];
     [self.view addSubview: (UIView*)pCT];
     [pCT release];
@@ -129,7 +126,6 @@
     // NSLog(@"Level Builder");
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
     LevelBuilder* pLB = [[LevelBuilder alloc] initWithFrame:newFrame];
-    pLB.m_pMyVC = self;
     
     [self.view addSubview: (UIView*)pLB];
     [pLB release];
@@ -149,9 +145,21 @@
 {
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
     MainView* mv = [[MainView alloc] initWithFrame: newFrame];
-    mv.m_pMyVC = self;
     [self.view addSubview:(UIView*)mv];
     [mv release];
+}
+
++ (MyViewController*)getMVC
+{
+    static MyViewController* pSharedMVC;
+    
+    @synchronized(self)
+    {
+        if( !pSharedMVC )
+            pSharedMVC = [[MyViewController alloc] init];
+        
+        return pSharedMVC;
+    }
 }
 
 - (void) dealloc

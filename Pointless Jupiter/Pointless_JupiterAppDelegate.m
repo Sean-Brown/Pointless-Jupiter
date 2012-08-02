@@ -11,7 +11,7 @@
 @implementation Pointless_JupiterAppDelegate
 
 
-@synthesize window, m_pMyVC, m_pMOC, m_pMOM, m_pCoordinator;
+@synthesize window, m_pMOC, m_pMOM, m_pCoordinator;
 
 // Credit to Zane Claes - http://stackoverflow.com/questions/7841610/xcode-4-2-debug-doesnt-symbolicate-stack-call
 void uncaughtExceptionHandler(NSException *exception) 
@@ -26,12 +26,8 @@ void uncaughtExceptionHandler(NSException *exception)
     NSLog(@"app did finish launching with options");
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
-    MyViewController* viewController = [[MyViewController alloc] init];
-    self.m_pMyVC = viewController;
-    [viewController release];
-    
-	m_pMyVC.view.frame = [UIScreen mainScreen].applicationFrame;
-	[window addSubview:[m_pMyVC view]];
+	[MyViewController getMVC].view.frame = [UIScreen mainScreen].applicationFrame;
+	[window addSubview:[[MyViewController getMVC] view]];
 
     return YES;
 }
@@ -216,7 +212,6 @@ void uncaughtExceptionHandler(NSException *exception)
     [m_pCoordinator release];
     
     [window release];
-    [m_pMyVC release];
     [super dealloc];
 }
 

@@ -27,4 +27,6 @@
 - (void) quitApp;
 - (void) toMainMenu;
 
++ (MyViewController*)getMVC;
+
 @end

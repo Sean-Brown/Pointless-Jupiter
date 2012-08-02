@@ -16,8 +16,6 @@
 
 @interface GameBoard : UIView 
 {
-    MyViewController* m_pMyVC;
-    
     Jupiter* m_pJupiter; // The game Jupiter
     
     UIButton* m_pStart;
@@ -28,8 +26,6 @@
 @property (nonatomic, retain) Jupiter* m_pJupiter;
 
 @property (nonatomic, retain) UIButton* m_pStart,* m_pRestart,* m_pQuit;
-
-@property (nonatomic, assign) MyViewController* m_pMyVC;
 
 - (void) initLevel:(Level*)pLevel;
 - (void) initButtons;

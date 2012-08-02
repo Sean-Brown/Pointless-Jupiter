@@ -33,7 +33,7 @@ typedef enum
 
 @implementation LevelBuilder
 
-@synthesize m_pMyVC, m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID;
+@synthesize m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID;
 
 #pragma mark -
 #pragma mark INIT
@@ -117,7 +117,7 @@ typedef enum
 
 - (void)initSaveQuit
 {
-    m_pSave = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+    m_pSave = [UIButton buttonWithType: UIButtonTypeCustom];
     m_pSave.frame = CGRectMake(
                                kLANDSCAPE_WIDTH - 100, 
                                kLANDSCAPE_HEIGHT - 100, 
@@ -128,7 +128,7 @@ typedef enum
     [m_pSave setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     [m_pSave addTarget:self action:@selector(saveLevel) forControlEvents:UIControlEventTouchUpInside];
     
-    m_pQuit = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+    m_pQuit = [UIButton buttonWithType: UIButtonTypeCustom];
     m_pQuit.frame = CGRectMake(
                                kLANDSCAPE_WIDTH - 100, 
                                kLANDSCAPE_HEIGHT - 50, 
@@ -324,7 +324,7 @@ typedef enum
 
 - (void) quitLevelBuilder
 {
-    [m_pMyVC toMainMenu];
+    [[MyViewController getMVC] toMainMenu];
     [self removeFromSuperview];
 }
 
@@ -578,22 +578,14 @@ typedef enum
 {
     if (m_pSelectedItemImage != nil)
         [m_pSelectedItemImage release];
-    if (m_pJupi != nil)
-        [m_pJupi release];
-    if (m_pItems != nil)
-        [m_pItems release];
-    if (m_pAccel != nil)
-        [m_pAccel release];
-    if (m_pTrap != nil)
-        [m_pTrap release];
-    if (m_pWallImg != nil)
-        [m_pWallImg release];
-    if (m_pWhirl != nil)
-        [m_pWhirl release];
-    if (m_pDest != nil)
-        [m_pDest release];
-    if (m_pLevelID != nil)
-        [m_pLevelID release];
+    [m_pJupi release];
+    [m_pItems release];
+    [m_pAccel release];
+    [m_pTrap release];
+    [m_pWallImg release];
+    [m_pWhirl release];
+    [m_pDest release];
+    [m_pLevelID release];
     [super dealloc];
 }
 

@@ -15,8 +15,6 @@
 
 @interface LevelBuilder : UIView <UIGestureRecognizerDelegate,UITextFieldDelegate>
 {
-    MyViewController* m_pMyVC;
-    
     NSMutableArray* m_pItems;
     
     UIButton* m_pWallImg;
@@ -37,8 +35,6 @@
     int m_nDestCount;
     int m_nJupiCount;
 }
-
-@property (nonatomic, assign) MyViewController* m_pMyVC;
 
 @property (nonatomic, retain) NSMutableArray* m_pItems;
 
