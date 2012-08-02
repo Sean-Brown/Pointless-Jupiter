@@ -235,7 +235,7 @@ typedef enum
     
     UIPinchGestureRecognizer *pPinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(processPinch:)];
     [pPinch setDelegate: self];
-    [pPinch setDelaysTouchesBegan:YES];
+//    [pPinch setDelaysTouchesBegan:YES];
     [m_pSelectedItemImage addGestureRecognizer: pPinch];
     [pPinch release];
     
@@ -394,7 +394,17 @@ typedef enum
         default: 
             break;
     }
+    UIPinchGestureRecognizer *pPinch = [[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(processPinch:)] autorelease];
+    [pPinch setDelegate: self];
+    [pNewImage addGestureRecognizer: pPinch];
+    if (m_pSelectedItemImage != nil) 
+    {
+        [m_pSelectedItemImage.layer setBorderColor: [UIColor clearColor].CGColor];
+        [m_pSelectedItemImage.layer setBorderWidth: 0];
+    }
     m_pSelectedItemImage = pNewImage;
+    [m_pSelectedItemImage.layer setBorderColor: [UIColor yellowColor].CGColor];
+    [m_pSelectedItemImage.layer setBorderWidth: 2.0];
     [pNewImage setUserInteractionEnabled: YES];
     [pNewImage setMultipleTouchEnabled: YES];
     [m_pItems addObject: pNewImage];
@@ -418,7 +428,14 @@ typedef enum
     {
         return;
     }
+    if (m_pSelectedItemImage != nil) 
+    {
+        [m_pSelectedItemImage.layer setBorderColor: [UIColor clearColor].CGColor];
+        [m_pSelectedItemImage.layer setBorderWidth: 0];
+    }
     m_pSelectedItemImage = (UIImageView *)v;
+    [m_pSelectedItemImage.layer setBorderColor: [UIColor yellowColor].CGColor];
+    [m_pSelectedItemImage.layer setBorderWidth: 2.0];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -430,8 +447,8 @@ typedef enum
 {
     if (m_pSelectedItemImage.tag == eitid_Wall)
     { // Walls are special
-        int heightRadius = m_pSelectedItemImage.frame.size.height/2;
-        int widthRadius = m_pSelectedItemImage.frame.size.width/2;
+        int heightRadius = m_pSelectedItemImage.frame.size.height / 2;
+        int widthRadius = m_pSelectedItemImage.frame.size.width / 2;
         if (m_pSelectedItemImage.center.x < widthRadius || 
             m_pSelectedItemImage.center.x > (kGAME_WIDTH - widthRadius) ||
             m_pSelectedItemImage.center.y < heightRadius ||
@@ -462,6 +479,12 @@ typedef enum
     // if ([m_pItems count] > 1)
         // [self checkOverlap];
 }
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+//    m_pSelectedItemImage = nil;
+}
+
 
 - (void)checkOverlap
 {
@@ -506,9 +529,20 @@ typedef enum
     }
 }
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+// scale and rotation transforms are applied relative to the layer's anchor point
+// this method moves a gesture recognizer's view's anchor point between the user's fingers
+// Taken directly from the Apple example: https://developer.apple.com/library/ios/#samplecode/Touches/Listings/Touches_GestureRecognizers_Classes_MyViewController_m.html#//apple_ref/doc/uid/DTS40007435-Touches_GestureRecognizers_Classes_MyViewController_m-DontLinkElementID_11
+- (void)adjustAnchorPointForGestureRecognizer:(UIGestureRecognizer *)pGestureRecognizer
 {
-    m_pSelectedItemImage = nil;
+    if (pGestureRecognizer.state == UIGestureRecognizerStateBegan) 
+    {
+        UIView *piece = pGestureRecognizer.view;
+        CGPoint locationInView = [pGestureRecognizer locationInView:piece];
+        CGPoint locationInSuperview = [pGestureRecognizer locationInView:piece.superview];
+        
+        piece.layer.anchorPoint = CGPointMake(locationInView.x / piece.bounds.size.width, locationInView.y / piece.bounds.size.height);
+        piece.center = locationInSuperview;
+    }
 }
 
 - (void)snapToGrid
@@ -546,15 +580,116 @@ typedef enum
     m_pSelectedItemImage.center = center;
 }
 
-- (void)processPinch: (id)sender
+- (void)processPinch: (UIPinchGestureRecognizer*)pPGR
 {
     NSLog(@"Pinching item");
+    if (m_pSelectedItemImage == nil)
+    {
+        NSLog(@"Pinch exiting because m_pSelectedItemImage is nil");
+        return;
+    }
+    else
+    {
+        [self adjustAnchorPointForGestureRecognizer:pPGR];
+        switch (m_pSelectedItemImage.tag) 
+        {
+            case eitid_Jupiter:
+            case eitid_Dest:
+            case eitid_Trap:
+            case eitid_Whirl:
+                if (
+                    pPGR.scale < 0 && // Pinch inwards
+                    m_pSelectedItemImage.frame.size.width > 10 // Minimum width
+                    ) 
+                {
+                    CGRect newFrame = CGRectMake(
+                                                 m_pSelectedItemImage.frame.origin.x, 
+                                                 m_pSelectedItemImage.frame.origin.y, 
+                                                 m_pSelectedItemImage.frame.size.width - 1, 
+                                                 m_pSelectedItemImage.frame.size.height - 1
+                                                 );
+                    [m_pSelectedItemImage setFrame: newFrame];
+                }
+                else if (
+                         pPGR.scale > 0 && // Pinch outwards
+                         m_pSelectedItemImage.frame.size.width < 50 // Maximum width
+                         )
+                {
+                    CGRect newFrame = CGRectMake(
+                                                 m_pSelectedItemImage.frame.origin.x, 
+                                                 m_pSelectedItemImage.frame.origin.y, 
+                                                 m_pSelectedItemImage.frame.size.width + 1, 
+                                                 m_pSelectedItemImage.frame.size.height + 1
+                                                 );
+                    [m_pSelectedItemImage setFrame: newFrame];
+                }
+                break;
+            case eitid_Accel:
+                if (
+                    pPGR.scale < 0 && // Pinch inwards
+                    m_pSelectedItemImage.frame.size.width > 50 // Minimum width
+                    ) 
+                {
+                    CGRect newFrame = CGRectMake(
+                                                 m_pSelectedItemImage.frame.origin.x, 
+                                                 m_pSelectedItemImage.frame.origin.y, 
+                                                 m_pSelectedItemImage.frame.size.width - 1, 
+                                                 m_pSelectedItemImage.frame.size.height - 1
+                                                 );
+                    [m_pSelectedItemImage setFrame: newFrame];
+                }
+                else if (
+                         pPGR.scale > 0 && // Pinch inwards
+                         m_pSelectedItemImage.frame.size.width < 100 // Maximum width
+                         )
+                {
+                    CGRect newFrame = CGRectMake(
+                                                 m_pSelectedItemImage.frame.origin.x, 
+                                                 m_pSelectedItemImage.frame.origin.y, 
+                                                 m_pSelectedItemImage.frame.size.width + 1, 
+                                                 m_pSelectedItemImage.frame.size.height + 1
+                                                 );
+                    [m_pSelectedItemImage setFrame: newFrame];
+                }
+                break;
+            case eitid_Wall:
+                if (
+                    pPGR.scale < 0 && // Pinch inwards
+                    m_pSelectedItemImage.frame.size.width > 10 // Minimum width
+                    ) 
+                {
+                    CGRect newFrame = CGRectMake(
+                                                 m_pSelectedItemImage.frame.origin.x, 
+                                                 m_pSelectedItemImage.frame.origin.y, 
+                                                 m_pSelectedItemImage.frame.size.width - 1, 
+                                                 m_pSelectedItemImage.frame.size.height // Height for walls is consistent
+                                                 );
+                    [m_pSelectedItemImage setFrame: newFrame];
+                }
+                else if (
+                         pPGR.scale < 0 && // Pinch inwards
+                         m_pSelectedItemImage.frame.size.width < kGAME_WIDTH // Maximum width
+                         )
+                {
+                    CGRect newFrame = CGRectMake(
+                                                 m_pSelectedItemImage.frame.origin.x, 
+                                                 m_pSelectedItemImage.frame.origin.y, 
+                                                 m_pSelectedItemImage.frame.size.width + 1, 
+                                                 m_pSelectedItemImage.frame.size.height // Height for walls is consistent
+                                                 );
+                    [m_pSelectedItemImage setFrame: newFrame];
+                }
+                break;
+            default:
+                return;
+                break;
+        }
+    }
 }
 
-- (void)processRotate: (id)sender
+- (void)processRotate: (UIRotationGestureRecognizer*) pRGR
 {
-    NSLog(@"Rotating item");
-    [self selectItem: sender];
+//    NSLog(@"Rotating item");
 }
 
 - (void)removeItem: (id)sender
