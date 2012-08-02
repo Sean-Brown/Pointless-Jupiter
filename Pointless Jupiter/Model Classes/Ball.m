@@ -11,7 +11,7 @@
 
 
 @implementation Ball
-@dynamic a_Bounds;
+@dynamic a_Frame;
 @dynamic r_Ball;
 
 

@@ -8,6 +8,7 @@
 
 #import "BoardItem.h"
 #import "Constants.h"
+#import "Pointless_JupiterAppDelegate.h"
 
 @implementation BoardItem
 
@@ -15,25 +16,25 @@
 
 - (id) initWithItem:(MiscItem)mItem inFrame: (CGRect)frame
 {
-    if (self == [super init]) 
+    if (self == [super initWithFrame:frame]) 
     {
         self.m_stItemType = mItem;
         self.tag = mItem;
-        UIImageView* item = [[[UIImageView alloc] initWithFrame: frame] autorelease];
+        UIImageView* item = [[UIImageView alloc] initWithFrame: frame];
         UIImage* itemImg;
         switch (mItem) 
         {
-            case eAccelItem:
+            case emi_Accel:
                 itemImg = [[UIImage imageNamed:@"Accelerator.jpg"] autorelease];
                 item.image = itemImg;
                 NSLog(@"Initializing an Accelerator");
                 break;
-            case eTrapItem:
+            case emi_Trap:
                 itemImg = [[UIImage imageNamed:@"Trap.jpg"] autorelease];
                 item.image = itemImg;
                 NSLog(@"Initializing a Trap");
                 break;
-            case eWhirlItem:
+            case emi_Whirl:
                 itemImg = [[UIImage imageNamed:@"Whirl.jpg"] autorelease];
                 item.image = itemImg;
                 NSLog(@"Initializing a Whirl");
@@ -42,6 +43,9 @@
                 NSLog(@"WTF ITEM YOU GIVE ME MAN??");
                 break;
         }
+        if (mItem == emi_Trap || mItem == emi_Whirl) 
+            [Pointless_JupiterAppDelegate roundImageCorners:item];
+        [self addSubview: item];
     }
     return self;
 }

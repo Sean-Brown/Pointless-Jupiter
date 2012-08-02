@@ -17,8 +17,6 @@
     
     NSString* m_pLevelID;
     
-    UISlider* m_pSlider;
-    
     UIImageView* m_pJupiter;
     UIImageView* m_pDest;
     

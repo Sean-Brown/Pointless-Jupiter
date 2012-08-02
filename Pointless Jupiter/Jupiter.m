@@ -7,7 +7,7 @@
 //
 
 #import "Jupiter.h"
-
+#import "Pointless_JupiterAppDelegate.h"
 
 @implementation Jupiter
 
@@ -16,8 +16,11 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self) 
+    {
         // Initialize the game ball
+        self.image = [UIImage imageNamed:@"Jupiter.jpg"];
+        [Pointless_JupiterAppDelegate roundImageCorners: self];
     }
     return self;
 }

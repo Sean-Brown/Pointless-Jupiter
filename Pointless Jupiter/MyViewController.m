@@ -52,8 +52,8 @@
     float prevX = m_pLastAcceleration.x;
     float prevY = m_pLastAcceleration.y;
     
-    prevX = (float) acceleration.x*  FILTER_FACTOR + (1-FILTER_FACTOR)*  prevX;
-    prevY = (float) acceleration.y*  FILTER_FACTOR + (1-FILTER_FACTOR)*  prevY;
+    prevX = (float) acceleration.x*  kFILTER_FACTOR + (1-kFILTER_FACTOR)*  prevX;
+    prevY = (float) acceleration.y*  kFILTER_FACTOR + (1-kFILTER_FACTOR)*  prevY;
     
     m_pLastAcceleration = acceleration;
 }
@@ -83,8 +83,16 @@
     
     if (pLevel == nil || [pLevel count] == 0) 
     {
-        NSLog(@"Didn't retrieve any level with id %@", pLevelID);
-        abort();
+        UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Internal Error" message:@"The level could not be loaded. Try a different level or try restarting the app/your iPad." delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
+        pAlert.frame = CGRectMake(
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3,
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3 
+                                  );
+        [pAlert show];
+        [pAlert release];
+        return;
     }
     else
     {
@@ -93,12 +101,11 @@
         pGB.m_pMyVC = self;
         [pGB initLevel: [pLevel objectAtIndex:0]];
         [self.view addSubview: (UIView*)pGB];
-        
-        [pGB release];
+//        [pGB release];
     }
 }
 
-- (void) startNewGame
+- (void) chooseLevel
 {
     // NSLog(@"Start New Game");
     
@@ -108,6 +115,7 @@
     pCT.m_pMyVC = self;
     [pCT initLevels];
     [self.view addSubview: (UIView*)pCT];
+    [pCT release];
 }
 
 - (void) viewHighScores

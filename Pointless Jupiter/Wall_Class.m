@@ -10,13 +10,14 @@
 
 @implementation Wall_Class
 
-- (id) init: WithBounds: (CGRect)bounds
+- (id) initWithFrame: (CGRect)frame
 {
-    if (self == [super init])
+    if (self == [super initWithFrame:frame])
     {
-        UIImageView* wall = [[UIImageView alloc] initWithFrame: bounds];
-        UIImage* wallImage = [UIImage imageNamed: @"Wall.jpg"];
+        UIImageView* wall = [[[UIImageView alloc] initWithFrame: frame] autorelease];
+        UIImage* wallImage = [[UIImage imageNamed: @"Wall.jpg"] autorelease];
         wall.image = wallImage;
+        [self addSubview: wall];
     }
     
     return self;

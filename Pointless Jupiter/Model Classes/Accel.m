@@ -11,7 +11,7 @@
 
 
 @implementation Accel
-@dynamic a_Bounds;
+@dynamic a_Frame;
 @dynamic r_Accel;
 
 

@@ -10,13 +10,13 @@
 #import "LevelPicker.h"
 #import "Level.h"
 
-#define TITLE_HEIGHT 100
+#define kTITLE_HEIGHT 100
 
-#define TITLE_TAG 1989
-#define BUDDHA_TAG 1990
+#define kTITLE_TAG 1989
+#define kBUDDHA_TAG 1990
 
-#define NUM_LEVELS 9
-#define PADDING 10.0f
+#define kNUM_LEVELS 9
+#define kPADDING 10.0f
 
 @implementation CustomTable
 
@@ -27,14 +27,13 @@
     self = [super initWithFrame:frame];
     if (self) 
     {
-        [self respondsToSelector: @selector(startGameWithLevelID:)];
         // Initialization code
         UIImageView* pBuddha = [[UIImageView alloc] initWithFrame: self.frame];
         pBuddha.image = [UIImage imageNamed:@"Buddha.jpg"];
         pBuddha.contentMode = UIViewContentModeScaleAspectFit;
         [pBuddha setUserInteractionEnabled: NO];
         [pBuddha setMultipleTouchEnabled: NO];
-        pBuddha.tag = BUDDHA_TAG;
+        pBuddha.tag = kBUDDHA_TAG;
         [self insertSubview:pBuddha atIndex:0];
         [pBuddha release];
         
@@ -42,7 +41,7 @@
         [self initBackButton];
     }
     return self;
-}
+}   
 
 - (void)initLevels
 {
@@ -51,13 +50,16 @@
     if ([m_pLevelIDs count] < 1) 
         return;
     
-    for (eGridPosition gridPos = eTOP_LEFT; gridPos <= eBOT_RIGHT; gridPos++) 
+    m_pPickers = [[NSMutableArray alloc] initWithCapacity: [m_pLevelIDs count]];
+    
+    for (eGridPosition gridPos = egp_Top_Left; gridPos <= egp_Bot_Right; gridPos++) 
     {
         if (gridPos > ([m_pLevelIDs count] - 1)) 
             return;
         else
         {
-            LevelPicker* pPicker = [[[LevelPicker alloc] initWithFrame: [self gridForPosition: gridPos]] autorelease];
+            LevelPicker* pPicker = [[LevelPicker alloc] initWithFrame: [self gridForPosition: gridPos]];
+            [m_pPickers addObject:pPicker];
             Level* pLevel = (Level*)[m_pLevelIDs objectAtIndex: gridPos];
             pPicker.m_pCT = self;
             [pPicker setLevelID: [pLevel a_Level_ID] withRating: [pLevel a_Rating]];
@@ -76,11 +78,7 @@
 - (void) initBackButton
 {
     m_pBack = [UIButton buttonWithType: UIButtonTypeCustom];
-    m_pBack.frame = CGRectMake(
-                               0, 
-                               0, 
-                               100, 
-                               30);
+    m_pBack.frame = CGRectMake(0, 0, 100, 30);
     [m_pBack setTitle:@"Back" forState:UIControlStateNormal];
     [m_pBack.titleLabel setFont: [UIFont fontWithName:@"Arial-BoldMT" size:24]];
     [m_pBack setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -102,57 +100,57 @@
     CGRect grid = [self getGridSpace];
     switch (pos) 
     {
-        case eTOP_LEFT:            
+        case egp_Top_Left:            
         {
             nX = grid.origin.x;
             nY = grid.origin.y;
             break;
         }
-        case eTOP_CENTER:            
+        case egp_Top_Center:            
         {
-            nX = (grid.size.width / 3.0) + PADDING;
+            nX = (grid.size.width / 3.0) + kPADDING;
             nY = grid.origin.y;
             break;
         }
-        case eTOP_RIGHT:            
+        case egp_Top_Right:            
         {
-            nX = ((grid.size.width / 3.0) * 2.0) + PADDING;
+            nX = ((grid.size.width / 3.0) * 2.0) + kPADDING;
             nY = grid.origin.y;
             break;
         }
-        case eMID_LEFT:            
+        case egp_Mid_Left:            
         {
             nX = grid.origin.x;
             nY = grid.size.height / 2.0;
             break;
         }
-        case eMID_CENTER:            
+        case egp_Mid_Center:            
         {
-            nX = (grid.size.width / 3.0) + PADDING;
+            nX = (grid.size.width / 3.0) + kPADDING;
             nY = grid.size.height / 2.0;
             break;
         }
-        case eMID_RIGHT:            
+        case egp_Mid_Right:            
         {
-            nX = ((grid.size.width / 3.0) * 2.0) + PADDING;
+            nX = ((grid.size.width / 3.0) * 2.0) + kPADDING;
             nY = grid.size.height / 2.0;
             break;
         }
-        case eBOT_LEFT:            
+        case egp_Bot_Left:            
         {
             nX = grid.origin.x;
             nY = (grid.size.height / 3.0) * 2.5;
             break;
         }
-        case eBOT_CENTER:            
+        case egp_Bot_Center:            
         {
-            nX = (grid.size.width / 3.0) + PADDING;
+            nX = (grid.size.width / 3.0) + kPADDING;
             nY = (grid.size.height / 3.0) * 2.5;
             break;
         }
-        case eBOT_RIGHT:            
+        case egp_Bot_Right:            
         {
-            nX = ((grid.size.width / 3.0) * 2.0) + PADDING;
+            nX = ((grid.size.width / 3.0) * 2.0) + kPADDING;
             nY = (grid.size.height / 3.0) * 2.5;
             break;
         }
@@ -180,7 +178,7 @@
                                                          nOriginX, 
                                                          nOriginY, 
                                                          nFrameWidth, 
-                                                         TITLE_HEIGHT
+                                                         kTITLE_HEIGHT
                                                          )];
     m_pTitle.text = @"Pointless Jupiter - Level Selection";
     m_pTitle.backgroundColor = [UIColor clearColor];
@@ -189,7 +187,7 @@
     m_pTitle.shadowOffset = CGSizeMake(2, 2);
     m_pTitle.textAlignment = UITextAlignmentCenter;
     m_pTitle.font = [UIFont fontWithName:@"Optima-BoldItalic" size: 50];
-    [m_pTitle setTag: TITLE_TAG];
+    [m_pTitle setTag: kTITLE_TAG];
     [m_pTitle setUserInteractionEnabled: NO];
     [m_pTitle setMultipleTouchEnabled: NO];
     
@@ -201,15 +199,15 @@
 {
     int nOriginX = self.frame.origin.x;
     int nOriginY = self.frame.origin.y;
-    int nFrameWidth = LANDSCAPE_WIDTH;
-    int nFrameHeight = LANDSCAPE_HEIGHT;
+    int nFrameWidth = kLANDSCAPE_WIDTH;
+    int nFrameHeight = kLANDSCAPE_HEIGHT;
 //    NSLog(@"getGridSpace nFrameWidth = %i nFrameHeight = %i",nFrameWidth,nFrameHeight);
     
     CGRect gridSpace = CGRectMake(
-                                  nOriginX + PADDING, 
-                                  nOriginY + PADDING + TITLE_HEIGHT, 
-                                  nFrameWidth - PADDING - (nOriginX + PADDING), 
-                                  nFrameHeight - PADDING - (nOriginY + (PADDING*2) + TITLE_HEIGHT)
+                                  nOriginX + kPADDING, 
+                                  nOriginY + kPADDING + kTITLE_HEIGHT, 
+                                  nFrameWidth - kPADDING - (nOriginX + kPADDING), 
+                                  nFrameHeight - kPADDING - (nOriginY + (kPADDING*2) + kTITLE_HEIGHT)
                                   );
 //    NSLog(@"getGridSpace returning gridSpace = %@",NSStringFromCGRect(gridSpace));
     return gridSpace;
@@ -226,11 +224,17 @@
 
 - (void)dealloc
 {
-    if (m_pLevelIDs != nil) 
-        [m_pLevelIDs release];
-    [m_pPickers release];
-    [m_pTitle release];
-    [m_pBack release];
+// ** Objects returned by the DM are autoreleased, fool! **
+//    if (m_pLevelIDs != nil) 
+//        [m_pLevelIDs release];
+// ** Not sure why, but m_pPickers gives me issues, so leave it alone **
+//    if (m_pPickers != nil)
+//        [m_pPickers release];
+    if (m_pTitle != nil)
+        [m_pTitle release];
+// ** Something's screwy with releasing the back button, so leave it alone **
+//    if (m_pBack != nil)    
+//        [m_pBack release];
     [super dealloc];
 }
 

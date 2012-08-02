@@ -11,7 +11,7 @@
 
 
 @implementation Wall
-@dynamic a_Bounds;
+@dynamic a_Frame;
 @dynamic r_Wall;
 
 

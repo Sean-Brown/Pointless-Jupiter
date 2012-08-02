@@ -9,13 +9,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Constants.h"
 #import "GameBoard.h"
+#import "Accel.h"
 #import "Pointless_JupiterAppDelegate.h"
 
-#define MAX_ITEMS 32 // Maximum items the obstacles array can contain
+#define kMAX_ITEMS 32 // Maximum items the obstacles array can contain
 
 @implementation GameBoard
 
-@synthesize m_pJupiter, m_pObstacles, m_pWalls, m_pstrUser, m_pMyVC, m_pStart, m_pRestart, m_pQuit, m_pstrLevelID;
+@synthesize m_pJupiter, m_pMyVC, m_pStart, m_pRestart, m_pQuit;
 
 - (id) initWithFrame:(CGRect)frame
 {
@@ -27,16 +28,6 @@
         [self addSubview:pBackground];
         [pBackground release];
         
-        UILabel* pLabel = [[UILabel alloc] initWithFrame: CGRectMake(
-                                                                     0, 
-                                                                     0, 
-                                                                     LANDSCAPE_WIDTH, 
-                                                                     LANDSCAPE_HEIGHT/6
-                                                                     )];
-        [self initLabel: pLabel];
-        [self addSubview: pLabel];
-        [pLabel release];
-        
         m_pStart = [[UIButton alloc] init];
         m_pRestart = [[UIButton alloc] init];
         m_pQuit = [[UIButton alloc] init];
@@ -46,23 +37,12 @@
     return self;
 }
 
-- (void) initLabel: (UILabel*)label
-{
-    label.text = @"Pointless Jupiter";
-    label.textColor = [UIColor purpleColor];
-    label.shadowColor = [UIColor whiteColor];
-    label.shadowOffset = CGSizeMake(2, 2);
-    label.textAlignment = UITextAlignmentCenter;
-    label.font = [UIFont fontWithName:@"Optima-BoldItalic" size: 72];
-    label.backgroundColor = [UIColor clearColor];
-}
-
 - (void)initButtons
 {
-    m_pStart = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+    m_pStart = [UIButton buttonWithType: UIButtonTypeCustom];
     m_pStart.frame = CGRectMake(
-                                LANDSCAPE_WIDTH - 100, 
-                                LANDSCAPE_HEIGHT - 100, 
+                                kLANDSCAPE_WIDTH - 100, 
+                                0, 
                                 100, 
                                 30
                                 );
@@ -70,10 +50,10 @@
     [m_pStart setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     [m_pStart addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
     
-    m_pQuit = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+    m_pQuit = [UIButton buttonWithType: UIButtonTypeCustom];
     m_pQuit.frame = CGRectMake(
-                               LANDSCAPE_WIDTH - 100, 
-                               LANDSCAPE_HEIGHT - 50, 
+                               kLANDSCAPE_WIDTH - 100, 
+                               30, 
                                100, 
                                30
                                );
@@ -87,13 +67,13 @@
 
 - (void) initLevel:(Level*)pLevel
 {
-    NSString* pJupiter = [[pLevel valueForKey:@"r_Ball"] valueForKey:@"a_Bounds"];
-    NSString* pDest = [[pLevel valueForKey:@"r_Dest"] valueForKey:@"a_Bounds"];
+    NSString* pJupiter = [[pLevel valueForKey:@"r_Ball"] valueForKey:@"a_Frame"];
+    NSString* pDest = [[pLevel valueForKey:@"r_Dest"] valueForKey:@"a_Frame"];
     
-    NSArray* pAccels = [pLevel valueForKey:@"Accelerators"];
-    NSArray* pTraps = [pLevel valueForKey:@"Traps"];
-    NSArray* pWalls = [pLevel valueForKey:@"Walls"];
-    NSArray* pWhirls = [pLevel valueForKey:@"Whirls"];
+    NSArray* pAccels = [[pLevel r_Accels] allObjects];
+    NSArray* pTraps = [[pLevel r_Traps] allObjects];
+    NSArray* pWalls = [[pLevel r_Walls] allObjects];
+    NSArray* pWhirls = [[pLevel r_Whirls] allObjects];
     
     UIImageView* dest = [[UIImageView alloc] initWithFrame: CGRectFromString(pDest)];
     dest.image = [UIImage imageNamed: @"Destination.jpg"];
@@ -101,36 +81,38 @@
     [self addSubview: dest];
     [dest release];
     
-    UIImageView* jupiter = [[UIImageView alloc] initWithFrame: CGRectFromString(pJupiter)];
-    jupiter.image = [UIImage imageNamed:@"Jupiter.jpg"];
-    [Pointless_JupiterAppDelegate roundImageCorners: jupiter];
-    [self addSubview: jupiter];
-    [jupiter release];
+    m_pJupiter = [[Jupiter alloc] initWithFrame: CGRectFromString(pJupiter)];
+    [self addSubview: m_pJupiter];
     
     for (int i = 0; i < [pAccels count]; i++) 
     {
-        BoardItem* object = [pAccels objectAtIndex:i];
-        BoardItem* accel = [[BoardItem alloc] initWithItem:eAccelItem inFrame: object.frame];
-        [self addSubview: accel];
-        [self addSubview: object];
+        NSString* pFrame = [[pAccels objectAtIndex:i] a_Frame];
+        BoardItem* pAccel = [[[BoardItem alloc] initWithItem:emi_Accel inFrame: CGRectFromString(pFrame)] autorelease];
+        [self addSubview: pAccel];
     }
     for (int i = 0; i < [pTraps count]; i++) 
     {
-        BoardItem* trap = [pTraps objectAtIndex:i];
-        [trap setTag: eTrapItem];
-        [self addSubview: trap];
+        NSString* pFrame = [[pTraps objectAtIndex:i] a_Frame];
+        BoardItem* pTrap = [[[BoardItem alloc] initWithItem:emi_Trap inFrame: CGRectFromString(pFrame)] autorelease];
+        [self addSubview: pTrap];
     }
-    for (int i = 0; i < [pAccels count]; i++) 
+    for (int i = 0; i < [pWhirls count]; i++) 
     {
-        Wall_Class* wall = [pWalls objectAtIndex:i];
-        [self addSubview: wall];
+        NSString* pFrame = [[pWhirls objectAtIndex:i] a_Frame];
+        BoardItem* pWhirl = [[[BoardItem alloc] initWithItem:emi_Whirl inFrame: CGRectFromString(pFrame)] autorelease];
+        [self addSubview: pWhirl];
     }
-    for (int i = 0; i < [pAccels count]; i++) 
+    for (int i = 0; i < [pWalls count]; i++) 
     {
-        BoardItem* whirl = [pWhirls objectAtIndex:i];
-        [whirl setTag: eWhirlItem];
-        [self addSubview: whirl];
+        NSString* pFrame = [[pWalls objectAtIndex:i] a_Frame];
+        Wall_Class* pWall = [[[Wall_Class alloc] initWithFrame: CGRectFromString(pFrame)] autorelease];
+        [self addSubview: pWall];
     }
+}
+
+- (void) startGame
+{
+    
 }
 
 - (void) quitPlaying
@@ -154,14 +136,14 @@
     
 }
 
--(BOOL) JupiterHitWall:(Point) JupiterPos
+- (BOOL) JupiterHitWall:(Point) JupiterPos
 {
     BOOL hitWall = false;
     
     return hitWall;
 }
 
--(double) calcNewTrajectory:(Wall_Class* ) wall: (Jupiter* ) Jupiter
+- (double) calcNewTrajectory:(Wall_Class* ) wall: (Jupiter* ) Jupiter
 {
     double newTraj = 0.0;
     
@@ -170,13 +152,14 @@
 
 - (void) dealloc
 {
-    [m_pJupiter release];
-    [m_pObstacles release];
-    [m_pWalls release];
-    [m_pstrUser release];
-    [m_pStart release];
-    [m_pRestart release];
-    [m_pQuit release];
+    if (m_pJupiter != nil)
+        [m_pJupiter release];
+    if (m_pStart != nil)
+        [m_pStart release];
+    if (m_pRestart != nil)        
+        [m_pRestart release];
+    if (m_pQuit != nil)
+        [m_pQuit release];
     [super dealloc];
 }
 

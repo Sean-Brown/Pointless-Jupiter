@@ -11,7 +11,7 @@
 
 
 @implementation Whirl
-@dynamic a_Bounds;
+@dynamic a_Frame;
 @dynamic r_Whirl;
 
 

@@ -40,7 +40,7 @@
     
     NSError* pError;
     NSArray* pLevels = [m_pMOC executeFetchRequest:pRequest error:&pError];
-    if (pLevels == nil) 
+    if (pLevels == nil || [pLevels count] == 0) 
         NSLog(@"No levels were retrieved from storage :-(");
     
     return pLevels;
@@ -51,7 +51,7 @@
     NSEntityDescription *pEntityDescription = [NSEntityDescription entityForName:@"Level" inManagedObjectContext:m_pMOC];
     NSFetchRequest *pRequest = [[[NSFetchRequest alloc] init] autorelease];
     [pRequest setEntity:pEntityDescription];
-    NSPredicate* pPredicate = [NSPredicate predicateWithFormat:@"Level_ID == %@", level];
+    NSPredicate* pPredicate = [NSPredicate predicateWithFormat:@"a_Level_ID == %@", level];
     [pRequest setPredicate: pPredicate];
     
     NSError* pError;
@@ -76,9 +76,9 @@
     }
 	NSManagedObject* pNewLevel = [NSEntityDescription insertNewObjectForEntityForName:@"Level" inManagedObjectContext:m_pMOC];
     NSManagedObject* pNewBall = [NSEntityDescription insertNewObjectForEntityForName:@"Ball" inManagedObjectContext:m_pMOC];
-    [pNewBall setValue:jupiter forKey:@"a_Bounds"];
+    [pNewBall setValue:jupiter forKey:@"a_Frame"];
     NSManagedObject* pNewDest = [NSEntityDescription insertNewObjectForEntityForName:@"Dest" inManagedObjectContext:m_pMOC];
-    [pNewDest setValue:dest forKey:@"a_Bounds"];
+    [pNewDest setValue:dest forKey:@"a_Frame"];
     NSManagedObject* pNewCreator = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:m_pMOC];
     [pNewCreator setValue:@"Bob Dole" forKey:@"a_Name"];
     [pNewCreator setValue:@"Bobdole" forKey:@"a_Password"];
@@ -102,7 +102,7 @@
         for (NSString* pBounds in traps) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Trap" inManagedObjectContext:m_pMOC];
-            [pNewTrap setValue:pBounds forKey:@"a_Bounds"];
+            [pNewTrap setValue:pBounds forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
     }
@@ -111,7 +111,7 @@
         for (NSString* pBounds in whirls) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Whirl" inManagedObjectContext:m_pMOC];
-            [pNewTrap setValue:pBounds forKey:@"a_Bounds"];
+            [pNewTrap setValue:pBounds forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
     }
@@ -120,7 +120,7 @@
         for (NSString* pBounds in accels) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Accel" inManagedObjectContext:m_pMOC];
-            [pNewTrap setValue:pBounds forKey:@"a_Bounds"];
+            [pNewTrap setValue:pBounds forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
     }
@@ -129,7 +129,7 @@
         for (NSString* pBounds in walls) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Wall" inManagedObjectContext:m_pMOC];
-            [pNewTrap setValue:pBounds forKey:@"a_Bounds"];
+            [pNewTrap setValue:pBounds forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
     }
@@ -139,7 +139,12 @@
     {
         NSLog(@"Failed to save\n%@",[pError localizedDescription]);
         UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Fail!" message:@"Map Unsucessfully Saved. Try Restarting The App." delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
-        pAlert.frame = CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3);
+        pAlert.frame = CGRectMake(
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3, 
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3
+                                  );
         [pAlert show];
         [pAlert release];
     }
@@ -148,7 +153,12 @@
         NSLog(@"Successfully saved!");
         
         UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Map Successfully Saved!" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
-        pAlert.frame = CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3);
+        pAlert.frame = CGRectMake(
+                                  kLANDSCAPE_WIDTH / 3,
+                                  kLANDSCAPE_HEIGHT / 3, 
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3
+                                  );
         [pAlert show];
         [pAlert release];
     }

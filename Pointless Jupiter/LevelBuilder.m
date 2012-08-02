@@ -13,12 +13,12 @@
 #import "Pointless_JupiterAppDelegate.h"
 #import "Constants.h"
 
-#define WALL_RECT CGRectMake(300,300,10,500)
-#define TRAP_RECT CGRectMake(300,300,50,50)
-#define ACCEL_RECT CGRectMake(300,300,60,20)
-#define WHIRL_RECT CGRectMake(300,300,50,50)
-#define JUPI_RECT CGRectMake(300,300,50,50)
-#define DEST_RECT CGRectMake(300,300,50,50)
+#define kWALL_RECT CGRectMake(300,300,10,500)
+#define kTRAP_RECT CGRectMake(300,300,50,50)
+#define kACCEL_RECT CGRectMake(300,300,60,20)
+#define kWHIRL_RECT CGRectMake(300,300,50,50)
+#define kJUPI_RECT CGRectMake(300,300,50,50)
+#define kDEST_RECT CGRectMake(300,300,50,50)
 
 typedef enum 
 {
@@ -52,12 +52,22 @@ typedef enum
         [self initGestures];
         [self initSaveQuit];
         
-        UILabel* pLabel = [[UILabel alloc] initWithFrame:CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 150, 100, 10)];
+        UILabel* pLabel = [[UILabel alloc] initWithFrame:CGRectMake(
+                                                                    kLANDSCAPE_WIDTH - 100, 
+                                                                    kLANDSCAPE_HEIGHT - 150, 
+                                                                    100, 
+                                                                    10
+                                                                    )];
         pLabel.textColor = [UIColor purpleColor];
         pLabel.backgroundColor = [UIColor clearColor];
         pLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:14];
         pLabel.text = @"Level Name";
-        m_pLevelID = [[UITextField alloc] initWithFrame:CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 120, 100, 20)];
+        m_pLevelID = [[UITextField alloc] initWithFrame:CGRectMake(
+                                                                   kLANDSCAPE_WIDTH - 100, 
+                                                                   kLANDSCAPE_HEIGHT - 120, 
+                                                                   100, 
+                                                                   20
+                                                                   )];
         m_pLevelID.backgroundColor = [UIColor whiteColor];
         m_pLevelID.delegate = self;
         m_pLevelID.font = [UIFont fontWithName:@"AmericanTypewriter" size:14];
@@ -76,7 +86,12 @@ typedef enum
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    m_pLevelID.frame = CGRectMake(0, 0, LANDSCAPE_WIDTH, LANDSCAPE_HEIGHT-LANDSCAPE_KEYBOARD_HEIGHT);
+    m_pLevelID.frame = CGRectMake(
+                                  0, 
+                                  0, 
+                                  kLANDSCAPE_WIDTH, 
+                                  kLANDSCAPE_HEIGHT - kLANDSCAPE_KEYBOARD_HEIGHT
+                                  );
     [m_pLevelID setBackgroundColor:[UIColor whiteColor]];
     [m_pLevelID setText: textField.text];
     [m_pLevelID setFont: [UIFont fontWithName:@"AmericanTypewriter" size:60]];
@@ -90,7 +105,12 @@ typedef enum
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    m_pLevelID.frame = CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 150, 100, 20);
+    m_pLevelID.frame = CGRectMake(
+                                  kLANDSCAPE_WIDTH - 100, 
+                                  kLANDSCAPE_HEIGHT - 150, 
+                                  100, 
+                                  20
+                                  );
     [m_pLevelID setFont: [UIFont fontWithName:@"AmericanTypeWriter" size:18]];
     [m_pLevelID setNeedsDisplay];
 }
@@ -98,13 +118,23 @@ typedef enum
 - (void)initSaveQuit
 {
     m_pSave = [UIButton buttonWithType: UIButtonTypeRoundedRect];
-    m_pSave.frame = CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 100, 100, 30);
+    m_pSave.frame = CGRectMake(
+                               kLANDSCAPE_WIDTH - 100, 
+                               kLANDSCAPE_HEIGHT - 100, 
+                               100, 
+                               30
+                               );
     [m_pSave setTitle:@"Save" forState:UIControlStateNormal];
     [m_pSave setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     [m_pSave addTarget:self action:@selector(saveLevel) forControlEvents:UIControlEventTouchUpInside];
     
     m_pQuit = [UIButton buttonWithType: UIButtonTypeRoundedRect];
-    m_pQuit.frame = CGRectMake(LANDSCAPE_WIDTH - 100, LANDSCAPE_HEIGHT - 50, 100, 30);
+    m_pQuit.frame = CGRectMake(
+                               kLANDSCAPE_WIDTH - 100, 
+                               kLANDSCAPE_HEIGHT - 50, 
+                               100, 
+                               30
+                               );
     [m_pQuit setTitle:@"Quit" forState:UIControlStateNormal];
     [m_pQuit setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [m_pQuit addTarget:self action:@selector(quitLevelBuilder) forControlEvents:UIControlEventTouchUpInside];
@@ -115,9 +145,9 @@ typedef enum
 
 - (void)drawRect:(CGRect)rect
 {
-    for (int i = 0; i < GAME_WIDTH; i+=10) 
+    for (int i = 0; i < kGAME_WIDTH; i+=10) 
     {
-        for (int j = 0; j < GAME_HEIGHT; j+=10) 
+        for (int j = 0; j < kGAME_HEIGHT; j+=10) 
         {
             CGContextRef context= UIGraphicsGetCurrentContext();
             
@@ -130,13 +160,13 @@ typedef enum
 
 - (void)initImages: (id)sender
 {
-    m_pWallImg     = [[UIButton alloc] initWithFrame: CGRectMake(LANDSCAPE_WIDTH - 100,  0, 50, 50)];
-    m_pTrap        = [[UIButton alloc] initWithFrame: CGRectMake(LANDSCAPE_WIDTH - 100, 50, 50, 50)];
-    m_pAccel       = [[UIButton alloc] initWithFrame: CGRectMake(LANDSCAPE_WIDTH - 100, 100, 50, 50)];
-    m_pWhirl       = [[UIButton alloc] initWithFrame: CGRectMake(LANDSCAPE_WIDTH - 100, 150, 50, 50)];
-    m_pJupi        = [[UIButton alloc] initWithFrame: CGRectMake(LANDSCAPE_WIDTH - 100, 200, 50, 50)];
-    m_pDest        = [[UIButton alloc] initWithFrame: CGRectMake(LANDSCAPE_WIDTH - 100, 250, 50, 50)];
-    m_pRemove      = [[UIButton alloc] initWithFrame: CGRectMake(LANDSCAPE_WIDTH - 100, 350, 50, 50)];
+    m_pWallImg     = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100,  0, 50, 50)];
+    m_pTrap        = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 50, 50, 50)];
+    m_pAccel       = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 100, 50, 50)];
+    m_pWhirl       = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 150, 50, 50)];
+    m_pJupi        = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 200, 50, 50)];
+    m_pDest        = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 250, 50, 50)];
+    m_pRemove      = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 350, 50, 50)];
     
     [m_pWallImg setUserInteractionEnabled: YES];
     [m_pTrap setUserInteractionEnabled: YES];
@@ -265,14 +295,24 @@ typedef enum
     if ([pText length] < 1) 
     { 
         UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Enter A Name" message:@"You must first enter a (unique) name for your level" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
-        pAlert.frame = CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3);
+        pAlert.frame = CGRectMake(
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3, 
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3
+                                  );
         [pAlert show];
         [pAlert release];
     }
     else if (m_nJupiCount == 0 || m_nDestCount == 0)
     { 
         UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Map" message:@"You must have Jupiter and a Sun" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
-        pAlert.frame = CGRectMake(LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3, LANDSCAPE_WIDTH/3, LANDSCAPE_HEIGHT/3);
+        pAlert.frame = CGRectMake(
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3, 
+                                  kLANDSCAPE_WIDTH / 3, 
+                                  kLANDSCAPE_HEIGHT / 3
+                                  );
         [pAlert show];
         [pAlert release];
     }
@@ -302,26 +342,26 @@ typedef enum
     {
         case eitid_Wall:
             // NSLog(@"WALL Selected");
-            pNewImage = [[UIImageView alloc] initWithFrame: WALL_RECT];
+            pNewImage = [[UIImageView alloc] initWithFrame: kWALL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Wall.jpg"]];
             [pNewImage setTag: eitid_Wall];
             break;
         case eitid_Trap:
             // NSLog(@"TRAP Selected");
-            pNewImage = [[UIImageView alloc] initWithFrame: TRAP_RECT];
+            pNewImage = [[UIImageView alloc] initWithFrame: kTRAP_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Trap.jpg"]];
             [pNewImage setTag: eitid_Trap];
             [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
         case eitid_Accel:
             // NSLog(@"ACCELERATOR Selected");
-            pNewImage = [[UIImageView alloc] initWithFrame: ACCEL_RECT];
+            pNewImage = [[UIImageView alloc] initWithFrame: kACCEL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Accelerator.jpg"]];
             [pNewImage setTag: eitid_Accel];
             break;
         case eitid_Whirl:
             // NSLog(@"WHIRL Selected");
-            pNewImage = [[UIImageView alloc] initWithFrame: WHIRL_RECT];
+            pNewImage = [[UIImageView alloc] initWithFrame: kWHIRL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Whirl.jpg"]];
             [pNewImage setTag: eitid_Whirl];
             [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
@@ -330,7 +370,7 @@ typedef enum
             // NSLog(@"JUPITER Selected");
             if (m_nJupiCount == 0) 
             {
-                pNewImage = [[UIImageView alloc] initWithFrame: JUPI_RECT];
+                pNewImage = [[UIImageView alloc] initWithFrame: kJUPI_RECT];
                 [pNewImage setImage: [UIImage imageNamed:@"Jupiter.jpg"]];
                 ++m_nJupiCount;
                 [pNewImage setTag: eitid_Jupiter];
@@ -342,7 +382,7 @@ typedef enum
         case eitid_Dest:
             if (m_nDestCount < 1) 
             {
-                pNewImage = [[UIImageView alloc] initWithFrame: DEST_RECT];
+                pNewImage = [[UIImageView alloc] initWithFrame: kDEST_RECT];
                 [pNewImage setImage: [UIImage imageNamed: @"Destination.jpg"]];
                 ++m_nDestCount;
                 [pNewImage setTag: eitid_Dest];
@@ -358,8 +398,8 @@ typedef enum
     [pNewImage setUserInteractionEnabled: YES];
     [pNewImage setMultipleTouchEnabled: YES];
     [m_pItems addObject: pNewImage];
-    [self addSubview: pNewImage];
-    [pNewImage release];
+    [self addSubview: m_pSelectedItemImage];
+//    [pNewImage release];
 }
 
 - (void)processTap: (id)sender
@@ -393,9 +433,9 @@ typedef enum
         int heightRadius = m_pSelectedItemImage.frame.size.height/2;
         int widthRadius = m_pSelectedItemImage.frame.size.width/2;
         if (m_pSelectedItemImage.center.x < widthRadius || 
-            m_pSelectedItemImage.center.x > (GAME_WIDTH - widthRadius) ||
+            m_pSelectedItemImage.center.x > (kGAME_WIDTH - widthRadius) ||
             m_pSelectedItemImage.center.y < heightRadius ||
-            m_pSelectedItemImage.center.y > (GAME_HEIGHT - heightRadius))
+            m_pSelectedItemImage.center.y > (kGAME_HEIGHT - heightRadius))
         {
             [self snapToGrid];
         }
@@ -408,9 +448,9 @@ typedef enum
     {
         int radius = m_pSelectedItemImage.frame.size.width/2;
         if (m_pSelectedItemImage.center.x < radius || 
-            m_pSelectedItemImage.center.x > (GAME_WIDTH - radius) ||
+            m_pSelectedItemImage.center.x > (kGAME_WIDTH - radius) ||
             m_pSelectedItemImage.center.y < radius ||
-            m_pSelectedItemImage.center.y > (GAME_HEIGHT - radius))
+            m_pSelectedItemImage.center.y > (kGAME_HEIGHT - radius))
         {
             [self snapToGrid];
         }
@@ -438,7 +478,7 @@ typedef enum
             CGRect intersection = CGRectIntersection(selFrame, itemFrame);
             CGPoint center = m_pSelectedItemImage.center;
             // 0 = LEFT , 1 = RIGHT
-            int direction = (center.x + intersection.size.width) < GAME_WIDTH ? 1 : 0;
+            int direction = (center.x + intersection.size.width) < kGAME_WIDTH ? 1 : 0;
             if (direction == 0)
             {
                 center.x -= intersection.size.width;
@@ -452,7 +492,7 @@ typedef enum
             if (CGRectIntersectsRect(selFrame, itemFrame))
             { 
                 // 0 = UP , 1 = DOWN
-                int direction = (center.y + intersection.size.height) < GAME_HEIGHT ? 1 : 0;
+                int direction = (center.y + intersection.size.height) < kGAME_HEIGHT ? 1 : 0;
                 if (direction == 0) 
                 {
                     center.y -= intersection.size.height;
@@ -483,12 +523,12 @@ typedef enum
         
         if (x < widthRadius)
             center.x = widthRadius;
-        else if (x > GAME_WIDTH - widthRadius)
-            center.x = GAME_WIDTH - widthRadius;
+        else if (x > kGAME_WIDTH - widthRadius)
+            center.x = kGAME_WIDTH - widthRadius;
         if (y < heightRadius)
             center.y = heightRadius;
-        else if (y > GAME_HEIGHT - heightRadius)
-            center.y = GAME_HEIGHT - heightRadius;
+        else if (y > kGAME_HEIGHT - heightRadius)
+            center.y = kGAME_HEIGHT - heightRadius;
     }
     else
     {
@@ -496,12 +536,12 @@ typedef enum
         
         if (x < radius)
             center.x = radius;
-        else if (x > GAME_WIDTH - radius)
-            center.x = GAME_WIDTH - radius;
+        else if (x > kGAME_WIDTH - radius)
+            center.x = kGAME_WIDTH - radius;
         if (y < radius)
             center.y = radius;
-        else if (y > GAME_HEIGHT - radius)
-            center.y = GAME_HEIGHT - radius;
+        else if (y > kGAME_HEIGHT - radius)
+            center.y = kGAME_HEIGHT - radius;
     }
     m_pSelectedItemImage.center = center;
 }
@@ -536,15 +576,24 @@ typedef enum
 
 - (void)dealloc
 {
-    [m_pSelectedItemImage release];
-    [m_pJupi release];
-    [m_pItems release];
-    [m_pAccel release];
-    [m_pTrap release];
-    [m_pWallImg release];
-    [m_pWhirl release];
-    [m_pDest release];
-    [m_pLevelID release];
+    if (m_pSelectedItemImage != nil)
+        [m_pSelectedItemImage release];
+    if (m_pJupi != nil)
+        [m_pJupi release];
+    if (m_pItems != nil)
+        [m_pItems release];
+    if (m_pAccel != nil)
+        [m_pAccel release];
+    if (m_pTrap != nil)
+        [m_pTrap release];
+    if (m_pWallImg != nil)
+        [m_pWallImg release];
+    if (m_pWhirl != nil)
+        [m_pWhirl release];
+    if (m_pDest != nil)
+        [m_pDest release];
+    if (m_pLevelID != nil)
+        [m_pLevelID release];
     [super dealloc];
 }
 

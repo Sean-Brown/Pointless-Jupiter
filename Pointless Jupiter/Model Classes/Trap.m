@@ -11,7 +11,7 @@
 
 
 @implementation Trap
-@dynamic a_Bounds;
+@dynamic a_Frame;
 @dynamic r_Trap;
 
 

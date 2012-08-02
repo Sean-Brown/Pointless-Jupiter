@@ -72,14 +72,14 @@
         [jupiter release];
         [img release];
         
-        float height = LANDSCAPE_HEIGHT/6.0;
+        float height = kLANDSCAPE_HEIGHT/6.0;
         m_pbtNewGame = [self initButton: m_pbtNewGame atY:height withTitle:@"New Game" withColor: [UIColor greenColor]];
         m_pbtBestTimes = [self initButton: m_pbtBestTimes atY:height*2 withTitle:@"Best Times" withColor: [UIColor redColor]];
         m_pbtLevelBuilder = [self initButton: m_pbtLevelBuilder atY:height*3 withTitle:@"Level Builder" withColor: [UIColor cyanColor]];
         m_pbtSetUser = [self initButton: m_pbtSetUser atY:height*4 withTitle:@"My Account" withColor: [UIColor orangeColor]];
         
         // Add press event handlers
-        [m_pbtNewGame addTarget:m_pMyVC action:@selector(startNewGame) forControlEvents:UIControlEventTouchUpInside];
+        [m_pbtNewGame addTarget:m_pMyVC action:@selector(chooseLevel) forControlEvents:UIControlEventTouchUpInside];
         [m_pbtBestTimes addTarget:m_pMyVC action:@selector(viewHighScores) forControlEvents:UIControlEventTouchUpInside];
         [m_pbtLevelBuilder addTarget:m_pMyVC action:@selector(buildLevel) forControlEvents:UIControlEventTouchUpInside];
         [m_pbtSetUser addTarget:m_pMyVC action:@selector(setUserAccount) forControlEvents:UIControlEventTouchUpInside];
@@ -90,9 +90,12 @@
 - (void)dealloc
 {
     // NSLog(@"Dealloc'ing MainView");
-    [m_pbtSetUser release];
-    [m_pbtBestTimes release];
-    [m_pbtLevelBuilder release];
+    if (m_pbtNewGame)
+        [m_pbtSetUser release];
+    if (m_pbtBestTimes)
+        [m_pbtBestTimes release];
+    if (m_pbtLevelBuilder)
+        [m_pbtLevelBuilder release];
     [super dealloc];
 }
 

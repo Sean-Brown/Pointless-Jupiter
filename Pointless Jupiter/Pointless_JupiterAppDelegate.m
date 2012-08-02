@@ -163,7 +163,7 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     
     NSURL *pStoreURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Level.momd"];
-    [[NSFileManager defaultManager] removeItemAtURL:pStoreURL error:nil];
+
     NSError *pError = nil;
     m_pCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![m_pCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:pStoreURL options:nil error:&pError]) {
@@ -182,7 +182,7 @@ void uncaughtExceptionHandler(NSException *exception)
          
          If you encounter schema incompatibility errors during development, you can reduce their frequency by:
          * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:pStoreURL error:nil]
+         [[NSFileManager defaultManager] removeItemAtURL:pStoreURL error:nil];
          
          * Performing automatic lightweight migration by passing the following dictionary as the options parameter: 
          [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];

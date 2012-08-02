@@ -20,7 +20,7 @@
 - (void)calcNextPosition: fromAcceleration:(UIAcceleration*)acceleration;
 
 - (void) startGameWithLevelID:(NSString*)pLevelID;
-- (void) startNewGame;
+- (void) chooseLevel;
 - (void) viewHighScores;
 - (void) buildLevel;
 - (void) setUserAccount;

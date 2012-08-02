@@ -14,7 +14,8 @@
     MyViewController* m_pMyVC;
     
     NSArray* m_pLevelIDs;
-
+    NSMutableArray* m_pPickers;
+    
     UILabel* m_pTitle;
     UIButton* m_pBack;
     

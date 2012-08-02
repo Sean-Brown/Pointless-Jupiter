@@ -9,8 +9,7 @@
 #import "LevelPicker.h"
 #import "Pointless_JupiterAppDelegate.h"
 
-#define SLIDER_FRAME CGRectMake(300,200,200,50)
-#define PADDING 10.0f
+#define kPADDING 10.0f
 
 @implementation LevelPicker
 
@@ -27,17 +26,8 @@ int nJupiterCenter = 0;
     if (self) 
     {
         self.contentMode = UIViewContentModeScaleAspectFit;
-//        NSLog(@"Initializing LevelPicker with frame %@",NSStringFromCGRect(frame));
         [self.layer setBorderWidth: 5];
         [self.layer setBorderColor: [UIColor cyanColor].CGColor];
-        
-        m_pSlider = [[UISlider alloc] initWithFrame: SLIDER_FRAME];
-//        [m_pSlider setMinimumValueImage: [UIImage imageNamed:@"Jupiter.jpg"]];
-//        [m_pSlider setMaximumValueImage: [UIImage imageNamed:@"Destination.jpg"]];
-//        [m_pSlider setBackgroundColor: [UIColor clearColor]];
-//        [m_pSlider setThumbImage: [UIImage imageNamed:@"Whirl.jpg"] forState: UIControlStateNormal];
-//        
-//        [self addSubview: m_pSlider];
         
         bJupiterActive = false;
     }
@@ -57,16 +47,13 @@ int nJupiterCenter = 0;
     int nX = self.bounds.origin.x;
     int nY = self.bounds.origin.y;
     int nW = self.bounds.size.width;
-//    int nH = self.bounds.size.height;
-//    NSLog(@"makeLevelLabel nX = %i, nY = %i, nW = %i, nH = %i", nX, nY, nW, nH);
         
     UILabel* pLevelID = [[UILabel alloc] initWithFrame: CGRectMake(
                                                                    nX, 
-                                                                   nY - (PADDING * 2), 
-                                                                   nW - PADDING, 
+                                                                   nY - (kPADDING * 2), 
+                                                                   nW - kPADDING, 
                                                                    100
                                                                    )];
-//    NSLog(@"makeLevelLabel levelID = %@, pLevelID.bounds = %@",levelID,NSStringFromCGRect(pLevelID.bounds));
     pLevelID.text = levelID;
     pLevelID.textColor = [UIColor purpleColor];
     pLevelID.shadowColor = [UIColor whiteColor];
@@ -86,8 +73,8 @@ int nJupiterCenter = 0;
     int nH = self.bounds.size.height;
     
     m_pJupiter = [[UIImageView alloc] initWithFrame: CGRectMake(
-                                                                nX + PADDING + 75, 
-                                                                ((nH / 3.0) * 2.0) - PADDING,
+                                                                nX + kPADDING + 75, 
+                                                                ((nH / 3.0) * 2.0) - kPADDING,
                                                                 50, 
                                                                 50
                                                                 )];
@@ -97,8 +84,8 @@ int nJupiterCenter = 0;
     [m_pJupiter setMultipleTouchEnabled: NO];
     
     m_pDest = [[UIImageView alloc] initWithFrame: CGRectMake(
-                                                             (nW - 125 - PADDING),
-                                                             ((nH / 3.0) * 2.0) - PADDING,
+                                                             (nW - 125 - kPADDING),
+                                                             ((nH / 3.0) * 2.0) - kPADDING,
                                                              50,
                                                              50
                                                              )];
@@ -117,8 +104,8 @@ int nJupiterCenter = 0;
     int nH = self.bounds.size.height;
 
     UIImageView* pRatingView = [[UIImageView alloc] initWithFrame: CGRectMake(
-                                                                              (nW / 2.0) - 50 + PADDING*2, 
-                                                                              nH - 100 - 50 + PADDING, 
+                                                                              (nW / 2.0) - 50 + kPADDING*2, 
+                                                                              nH - 100 - 50 + kPADDING, 
                                                                               50, 
                                                                               50
                                                                               )];
@@ -129,9 +116,9 @@ int nJupiterCenter = 0;
     
     UILabel* pLabel = [[UILabel alloc] initWithFrame: CGRectMake(
                                                                 pRatingView.bounds.origin.x, 
-                                                                pRatingView.bounds.origin.y + (pRatingView.bounds.size.height / 2.0) - (PADDING * 2), 
+                                                                pRatingView.bounds.origin.y + (pRatingView.bounds.size.height / 2.0) - (kPADDING * 2), 
                                                                 pRatingView.bounds.size.width,
-                                                                (pRatingView.bounds.size.height / 2.0) + PADDING
+                                                                (pRatingView.bounds.size.height / 2.0) + kPADDING
                                                                  )];
     pLabel.text = [pRating stringValue];
     pLabel.textColor = [UIColor redColor];
@@ -179,10 +166,8 @@ int nJupiterCenter = 0;
         
         if (m_pJupiter.center.x >= m_pDest.center.x) 
         {
-            NSLog(@"Calling beginGameWithLevelID");
             if([m_pCT respondsToSelector:@selector(beginGameWithLevelID:)])
             {
-                NSLog(@"222");
                 [m_pCT beginGameWithLevelID: m_pLevelID];
             }
         }
@@ -197,8 +182,8 @@ int nJupiterCenter = 0;
 - (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [m_pJupiter setFrame: CGRectMake(
-                                     self.bounds.origin.x + PADDING, 
-                                     ((self.bounds.size.height / 3.0) * 2) - PADDING,
+                                     self.bounds.origin.x + kPADDING, 
+                                     ((self.bounds.size.height / 3.0) * 2) - kPADDING,
                                      50, 
                                      50
                                      )];
@@ -211,8 +196,10 @@ int nJupiterCenter = 0;
         [m_pLevelID release];
     if (m_pRating != nil) 
         [m_pRating release];
-    [m_pJupiter release];
-    [m_pDest release];
+    if (m_pJupiter != nil)
+        [m_pJupiter release];
+    if (m_pDest != nil)
+        [m_pDest release];
     [super dealloc];
 }
 

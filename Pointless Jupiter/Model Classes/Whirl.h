@@ -14,7 +14,7 @@
 @interface Whirl : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * a_Bounds;
+@property (nonatomic, retain) NSString * a_Frame;
 @property (nonatomic, retain) Level * r_Whirl;
 
 @end

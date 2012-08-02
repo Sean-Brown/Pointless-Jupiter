@@ -13,9 +13,9 @@
 // Enumeration for the 
 typedef enum 
 {
-    eAccelItem,
-    eTrapItem,
-    eWhirlItem
+    emi_Accel,
+    emi_Trap,
+    emi_Whirl
 } MiscItem;
 
 

@@ -11,7 +11,7 @@
 
 
 @implementation Dest
-@dynamic a_Bounds;
+@dynamic a_Frame;
 @dynamic r_Dest;
 
 
