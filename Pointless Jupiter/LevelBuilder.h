@@ -47,7 +47,6 @@
 - (void)initImages:(id)sender;
 - (void)initSaveQuit;
 - (void)initGestures;
-- (void)processTap:(id)sender;
 - (void)processPinch:(id)sender;
 - (void)processRotate:(id)sender;
 - (void)removeItem:(id)sender;

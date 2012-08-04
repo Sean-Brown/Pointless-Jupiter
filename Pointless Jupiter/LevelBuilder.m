@@ -79,7 +79,8 @@ typedef enum
     return self;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     [textField resignFirstResponder];
     return NO;
 }
@@ -225,18 +226,17 @@ typedef enum
 
 - (void)initGestures
 {   
-    [m_pWallImg addTarget:self action:@selector(processTap:) forControlEvents:UIControlEventTouchUpInside];
-    [m_pTrap addTarget:self action:@selector(processTap:) forControlEvents:UIControlEventTouchUpInside];
-    [m_pAccel addTarget:self action:@selector(processTap:) forControlEvents:UIControlEventTouchUpInside];
-    [m_pWhirl addTarget:self action:@selector(processTap:) forControlEvents:UIControlEventTouchUpInside];
-    [m_pJupi addTarget:self action:@selector(processTap:) forControlEvents:UIControlEventTouchUpInside];
-    [m_pDest addTarget:self action:@selector(processTap:) forControlEvents:UIControlEventTouchUpInside];
+    [m_pWallImg addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventTouchUpInside];
+    [m_pTrap addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventTouchUpInside];
+    [m_pAccel addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventTouchUpInside];
+    [m_pWhirl addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventTouchUpInside];
+    [m_pJupi addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventTouchUpInside];
+    [m_pDest addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventTouchUpInside];
     [m_pRemove addTarget:self action:@selector(removeItem:) forControlEvents:UIControlEventTouchUpInside];
     
     UIPinchGestureRecognizer *pPinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(processPinch:)];
     [pPinch setDelegate: self];
-//    [pPinch setDelaysTouchesBegan:YES];
-    [m_pSelectedItemImage addGestureRecognizer: pPinch];
+    [self addGestureRecognizer: pPinch];
     [pPinch release];
     
     UIRotationGestureRecognizer *pRot = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(processRotate:)];
@@ -409,13 +409,6 @@ typedef enum
     [pNewImage setMultipleTouchEnabled: YES];
     [m_pItems addObject: pNewImage];
     [self addSubview: m_pSelectedItemImage];
-//    [pNewImage release];
-}
-
-- (void)processTap: (id)sender
-{
-//    NSLog(@"Tapping item");
-    [self selectItem: sender];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -582,12 +575,8 @@ typedef enum
 
 - (void)processPinch: (UIPinchGestureRecognizer*)pPGR
 {
-    NSLog(@"Pinching item");
     if (m_pSelectedItemImage == nil)
-    {
-        NSLog(@"Pinch exiting because m_pSelectedItemImage is nil");
         return;
-    }
     else
     {
         [self adjustAnchorPointForGestureRecognizer:pPGR];
@@ -598,8 +587,8 @@ typedef enum
             case eitid_Trap:
             case eitid_Whirl:
                 if (
-                    pPGR.scale < 0 && // Pinch inwards
-                    m_pSelectedItemImage.frame.size.width > 10 // Minimum width
+                    pPGR.scale < 1 && // Pinch inwards
+                    m_pSelectedItemImage.frame.size.width > 35 // Minimum width
                     ) 
                 {
                     CGRect newFrame = CGRectMake(
@@ -611,8 +600,8 @@ typedef enum
                     [m_pSelectedItemImage setFrame: newFrame];
                 }
                 else if (
-                         pPGR.scale > 0 && // Pinch outwards
-                         m_pSelectedItemImage.frame.size.width < 50 // Maximum width
+                         pPGR.scale > 1 && // Pinch outwards
+                         m_pSelectedItemImage.frame.size.width < 65 // Maximum width
                          )
                 {
                     CGRect newFrame = CGRectMake(
@@ -626,8 +615,8 @@ typedef enum
                 break;
             case eitid_Accel:
                 if (
-                    pPGR.scale < 0 && // Pinch inwards
-                    m_pSelectedItemImage.frame.size.width > 50 // Minimum width
+                    pPGR.scale < 1 && // Pinch inwards
+                    m_pSelectedItemImage.frame.size.width > 35 // Minimum width
                     ) 
                 {
                     CGRect newFrame = CGRectMake(
@@ -639,7 +628,7 @@ typedef enum
                     [m_pSelectedItemImage setFrame: newFrame];
                 }
                 else if (
-                         pPGR.scale > 0 && // Pinch inwards
+                         pPGR.scale > 1 && // Pinch inwards
                          m_pSelectedItemImage.frame.size.width < 100 // Maximum width
                          )
                 {
@@ -654,28 +643,28 @@ typedef enum
                 break;
             case eitid_Wall:
                 if (
-                    pPGR.scale < 0 && // Pinch inwards
-                    m_pSelectedItemImage.frame.size.width > 10 // Minimum width
+                    pPGR.scale < 1 && // Pinch inwards
+                    m_pSelectedItemImage.frame.size.height > 10 // Minimum height
                     ) 
                 {
                     CGRect newFrame = CGRectMake(
                                                  m_pSelectedItemImage.frame.origin.x, 
                                                  m_pSelectedItemImage.frame.origin.y, 
-                                                 m_pSelectedItemImage.frame.size.width - 1, 
-                                                 m_pSelectedItemImage.frame.size.height // Height for walls is consistent
+                                                 m_pSelectedItemImage.frame.size.width, // Wall width stays consisten 
+                                                 m_pSelectedItemImage.frame.size.height + 1
                                                  );
                     [m_pSelectedItemImage setFrame: newFrame];
                 }
                 else if (
-                         pPGR.scale < 0 && // Pinch inwards
-                         m_pSelectedItemImage.frame.size.width < kGAME_WIDTH // Maximum width
+                         pPGR.scale > 1 && // Pinch inwards
+                         m_pSelectedItemImage.frame.size.height < kGAME_HEIGHT // Maximum height
                          )
                 {
                     CGRect newFrame = CGRectMake(
                                                  m_pSelectedItemImage.frame.origin.x, 
                                                  m_pSelectedItemImage.frame.origin.y, 
-                                                 m_pSelectedItemImage.frame.size.width + 1, 
-                                                 m_pSelectedItemImage.frame.size.height // Height for walls is consistent
+                                                 m_pSelectedItemImage.frame.size.width, // Wall width stays consistent 
+                                                 m_pSelectedItemImage.frame.size.height + 1
                                                  );
                     [m_pSelectedItemImage setFrame: newFrame];
                 }
