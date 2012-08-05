@@ -159,10 +159,11 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     
     NSURL *pStoreURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Level.momd"];
-    
+
     NSError *pError = nil;
     m_pCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![m_pCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:pStoreURL options:nil error:&pError]) {
+    if (![m_pCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:pStoreURL options:nil error:&pError]) 
+    {
         /*
          Replace this implementation with code to handle the error appropriately.
          

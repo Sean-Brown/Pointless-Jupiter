@@ -15,6 +15,7 @@
 @private
 }
 @property (nonatomic, retain) NSString * a_Frame;
+@property (nonatomic, retain) NSNumber *a_Orientation;
 @property (nonatomic, retain) Level * r_Accel;
 
 @end

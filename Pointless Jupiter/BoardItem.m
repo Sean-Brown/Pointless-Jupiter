@@ -14,7 +14,7 @@
 
 @synthesize m_stItemType;
 
-- (id) initWithItem:(MiscItem)mItem inFrame: (CGRect)frame
+- (id) initWithItem:(eMiscItem)mItem inFrame: (CGRect)frame
 {
     // For some reason the x and y get screwed up
     CGRect correctRect = CGRectMake(0, 0, frame.size.width, frame.size.height);

@@ -16,16 +16,16 @@ typedef enum
     emi_Accel,
     emi_Trap,
     emi_Whirl
-} MiscItem;
+} eMiscItem;
 
 
 @interface BoardItem : UIView <JupiterDelegate>
 {
-    MiscItem m_stItemType;
+    eMiscItem m_stItemType;
 }
 
-@property (nonatomic, assign) MiscItem m_stItemType;
+@property (nonatomic, assign) eMiscItem m_stItemType;
 
-- (id) initWithItem:(MiscItem)mItem inFrame: (CGRect)frame;
+- (id) initWithItem:(eMiscItem)mItem inFrame: (CGRect)frame;
 
 @end

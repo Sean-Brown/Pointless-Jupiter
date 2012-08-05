@@ -13,7 +13,7 @@
 #import "Pointless_JupiterAppDelegate.h"
 #import "Constants.h"
 
-#define kWALL_RECT CGRectMake(300,300,10,500)
+#define kWALL_RECT CGRectMake(300,200,10,500)
 #define kTRAP_RECT CGRectMake(300,300,50,50)
 #define kACCEL_RECT CGRectMake(300,300,60,20)
 #define kWHIRL_RECT CGRectMake(300,300,50,50)
@@ -29,11 +29,11 @@ typedef enum
     eitid_Jupiter,
     eitid_Dest,
     eitid_Remove
-}ImageTagID;
+}eImageTagID;
 
 @implementation LevelBuilder
 
-@synthesize m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID;
+@synthesize m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID, m_pOrientations;
 
 #pragma mark -
 #pragma mark INIT
@@ -45,6 +45,7 @@ typedef enum
         m_nDestCount = 0;
         self.backgroundColor = [UIColor blackColor];
         m_pItems = [[NSMutableArray alloc] init];
+        m_pOrientations = [[NSMutableArray alloc] init];
         m_pSelectedItemImage = [[UIImageView alloc] init];
         m_pSelectedItemImage.userInteractionEnabled = YES;
         
@@ -75,6 +76,9 @@ typedef enum
         [self addSubview: m_pLevelID];
         [pLabel setNeedsDisplay];
         [pLabel release];
+        
+        m_bRotating = false;
+        m_bPinching = false;
     }
     return self;
 }
@@ -241,7 +245,7 @@ typedef enum
     
     UIRotationGestureRecognizer *pRot = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(processRotate:)];
     [pRot setDelegate: self];
-    [m_pSelectedItemImage addGestureRecognizer: pRot];
+    [self addGestureRecognizer: pRot];
     [pRot release];
 }
 
@@ -250,6 +254,7 @@ typedef enum
 
 - (void) saveLevelWithID:(NSString*)level
 {
+    NSAssert([m_pItems count] == [m_pOrientations count], @"Item count must equal orientations");
     NSMutableArray* walls = [[NSMutableArray alloc] init];
     NSMutableArray* accels = [[NSMutableArray alloc] init];
     NSMutableArray* traps = [[NSMutableArray alloc] init];
@@ -263,14 +268,28 @@ typedef enum
         switch ([object tag]) 
         {
             case eitid_Wall:
-                [walls addObject: pFrameString];
+            {
+                NSNumber* pfOrientation = [m_pOrientations objectAtIndex:i];
+                stImageOrientation stImgOr;
+                stImgOr.pFrame = pFrameString;
+                stImgOr.pOrientation = pfOrientation;
+                NSValue* pVal = [NSValue valueWithBytes:&stImgOr objCType:@encode(stImageOrientation)];
+                [walls addObject: pVal];
                 break;
+            }
             case eitid_Trap:
                 [traps addObject: pFrameString];
                 break;
             case eitid_Accel:
-                [accels addObject: pFrameString];
+            {
+                NSNumber* pfOrientation = [m_pOrientations objectAtIndex:i];
+                stImageOrientation stImgOr;
+                stImgOr.pFrame = pFrameString;
+                stImgOr.pOrientation = pfOrientation;
+                NSValue* pVal = [NSValue valueWithBytes:&stImgOr objCType:@encode(stImageOrientation)];
+                [accels addObject: pVal];
                 break;
+            }
             case eitid_Whirl:
                 [whirls addObject: pFrameString];
                 break;
@@ -345,6 +364,8 @@ typedef enum
             pNewImage = [[UIImageView alloc] initWithFrame: kWALL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Wall.jpg"]];
             [pNewImage setTag: eitid_Wall];
+            [pNewImage setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+            [pNewImage setContentMode: UIViewContentModeScaleToFill];
             break;
         case eitid_Trap:
             // NSLog(@"TRAP Selected");
@@ -358,6 +379,8 @@ typedef enum
             pNewImage = [[UIImageView alloc] initWithFrame: kACCEL_RECT];
             [pNewImage setImage: [UIImage imageNamed: @"Accelerator.jpg"]];
             [pNewImage setTag: eitid_Accel];
+            [pNewImage setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+            [pNewImage setContentMode: UIViewContentModeScaleToFill];
             break;
         case eitid_Whirl:
             // NSLog(@"WHIRL Selected");
@@ -394,9 +417,7 @@ typedef enum
         default: 
             break;
     }
-    UIPinchGestureRecognizer *pPinch = [[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(processPinch:)] autorelease];
-    [pPinch setDelegate: self];
-    [pNewImage addGestureRecognizer: pPinch];
+    [m_pOrientations addObject: [NSNumber numberWithFloat:0.0]];
     if (m_pSelectedItemImage != nil) 
     {
         [m_pSelectedItemImage.layer setBorderColor: [UIColor clearColor].CGColor];
@@ -575,10 +596,11 @@ typedef enum
 
 - (void)processPinch: (UIPinchGestureRecognizer*)pPGR
 {
-    if (m_pSelectedItemImage == nil)
+    if (m_pSelectedItemImage == nil || m_bRotating)
         return;
     else
     {
+        m_bPinching = true;
         [self adjustAnchorPointForGestureRecognizer:pPGR];
         switch (m_pSelectedItemImage.tag) 
         {
@@ -591,26 +613,14 @@ typedef enum
                     m_pSelectedItemImage.frame.size.width > 35 // Minimum width
                     ) 
                 {
-                    CGRect newFrame = CGRectMake(
-                                                 m_pSelectedItemImage.frame.origin.x, 
-                                                 m_pSelectedItemImage.frame.origin.y, 
-                                                 m_pSelectedItemImage.frame.size.width - 1, 
-                                                 m_pSelectedItemImage.frame.size.height - 1
-                                                 );
-                    [m_pSelectedItemImage setFrame: newFrame];
+                    m_pSelectedItemImage.transform = CGAffineTransformScale(m_pSelectedItemImage.transform, pPGR.scale, pPGR.scale);
                 }
                 else if (
                          pPGR.scale > 1 && // Pinch outwards
                          m_pSelectedItemImage.frame.size.width < 65 // Maximum width
                          )
                 {
-                    CGRect newFrame = CGRectMake(
-                                                 m_pSelectedItemImage.frame.origin.x, 
-                                                 m_pSelectedItemImage.frame.origin.y, 
-                                                 m_pSelectedItemImage.frame.size.width + 1, 
-                                                 m_pSelectedItemImage.frame.size.height + 1
-                                                 );
-                    [m_pSelectedItemImage setFrame: newFrame];
+                    m_pSelectedItemImage.transform = CGAffineTransformScale(m_pSelectedItemImage.transform, pPGR.scale, pPGR.scale);
                 }
                 break;
             case eitid_Accel:
@@ -619,26 +629,14 @@ typedef enum
                     m_pSelectedItemImage.frame.size.width > 35 // Minimum width
                     ) 
                 {
-                    CGRect newFrame = CGRectMake(
-                                                 m_pSelectedItemImage.frame.origin.x, 
-                                                 m_pSelectedItemImage.frame.origin.y, 
-                                                 m_pSelectedItemImage.frame.size.width - 1, 
-                                                 m_pSelectedItemImage.frame.size.height - 1
-                                                 );
-                    [m_pSelectedItemImage setFrame: newFrame];
+                    m_pSelectedItemImage.transform = CGAffineTransformScale(m_pSelectedItemImage.transform, pPGR.scale, pPGR.scale);
                 }
                 else if (
                          pPGR.scale > 1 && // Pinch inwards
                          m_pSelectedItemImage.frame.size.width < 100 // Maximum width
                          )
                 {
-                    CGRect newFrame = CGRectMake(
-                                                 m_pSelectedItemImage.frame.origin.x, 
-                                                 m_pSelectedItemImage.frame.origin.y, 
-                                                 m_pSelectedItemImage.frame.size.width + 1, 
-                                                 m_pSelectedItemImage.frame.size.height + 1
-                                                 );
-                    [m_pSelectedItemImage setFrame: newFrame];
+                    m_pSelectedItemImage.transform = CGAffineTransformScale(m_pSelectedItemImage.transform, pPGR.scale, pPGR.scale);
                 }
                 break;
             case eitid_Wall:
@@ -647,26 +645,14 @@ typedef enum
                     m_pSelectedItemImage.frame.size.height > 10 // Minimum height
                     ) 
                 {
-                    CGRect newFrame = CGRectMake(
-                                                 m_pSelectedItemImage.frame.origin.x, 
-                                                 m_pSelectedItemImage.frame.origin.y, 
-                                                 m_pSelectedItemImage.frame.size.width, // Wall width stays consisten 
-                                                 m_pSelectedItemImage.frame.size.height + 1
-                                                 );
-                    [m_pSelectedItemImage setFrame: newFrame];
+                    m_pSelectedItemImage.transform = CGAffineTransformScale(m_pSelectedItemImage.transform, pPGR.scale, pPGR.scale);
                 }
                 else if (
                          pPGR.scale > 1 && // Pinch inwards
                          m_pSelectedItemImage.frame.size.height < kGAME_HEIGHT // Maximum height
                          )
                 {
-                    CGRect newFrame = CGRectMake(
-                                                 m_pSelectedItemImage.frame.origin.x, 
-                                                 m_pSelectedItemImage.frame.origin.y, 
-                                                 m_pSelectedItemImage.frame.size.width, // Wall width stays consistent 
-                                                 m_pSelectedItemImage.frame.size.height + 1
-                                                 );
-                    [m_pSelectedItemImage setFrame: newFrame];
+                    m_pSelectedItemImage.transform = CGAffineTransformScale(m_pSelectedItemImage.transform, pPGR.scale, pPGR.scale);
                 }
                 break;
             default:
@@ -674,11 +660,20 @@ typedef enum
                 break;
         }
     }
+    m_bPinching = false;
 }
 
 - (void)processRotate: (UIRotationGestureRecognizer*) pRGR
 {
-//    NSLog(@"Rotating item");
+    NSLog(@"Rotating item with tag %i %f degrees", m_pSelectedItemImage.tag, pRGR.rotation);
+    if (m_pSelectedItemImage == nil || !(m_pSelectedItemImage.tag == eitid_Accel || m_pSelectedItemImage.tag == eitid_Wall) || m_bRotating)
+        return;
+    else
+    {
+        m_bRotating = true;
+        m_pSelectedItemImage.transform = CGAffineTransformMakeRotation(pRGR.rotation);   
+    }
+    m_bRotating = false;
 }
 
 - (void)removeItem: (id)sender
@@ -704,6 +699,7 @@ typedef enum
         [m_pSelectedItemImage release];
     [m_pJupi release];
     [m_pItems release];
+    [m_pOrientations release];
     [m_pAccel release];
     [m_pTrap release];
     [m_pWallImg release];

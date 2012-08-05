@@ -23,6 +23,15 @@
 #define kGAME_HEIGHT 750.0f
 
 #pragma mark -
+#pragma mark LEVEL_BUILDER
+
+typedef struct
+{
+    NSString* pFrame;
+    NSNumber* pOrientation;
+}stImageOrientation;
+
+#pragma mark -
 #pragma mark TIMER
 
 #define kSTEP_INTERVAL 1/60.0f
