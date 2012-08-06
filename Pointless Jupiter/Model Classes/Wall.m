@@ -13,7 +13,7 @@
 @implementation Wall
 @dynamic a_Frame;
 @dynamic a_Orientation;
-@dynamic r_Wall;
+@dynamic r_Level;
 
 
 @end

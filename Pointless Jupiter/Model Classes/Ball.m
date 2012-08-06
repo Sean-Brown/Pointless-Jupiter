@@ -12,7 +12,7 @@
 
 @implementation Ball
 @dynamic a_Frame;
-@dynamic r_Ball;
+@dynamic r_Level;
 
 
 @end

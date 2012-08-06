@@ -10,17 +10,19 @@
 
 @implementation Wall_Class
 
+@synthesize m_fOrientation;
+
 - (id) initWithFrame: (CGRect)frame
 {
     CGRect correctRect = CGRectMake(0, 0, frame.size.width, frame.size.height);
     if (self == [super initWithFrame:correctRect])
     {
-        UIImageView* wall = [[[UIImageView alloc] initWithFrame: frame] autorelease];
+        UIImageView* wall = [[[UIImageView alloc] initWithFrame: correctRect] autorelease];
         UIImage* wallImage = [[UIImage imageNamed: @"Wall.jpg"] autorelease];
         wall.image = wallImage;
         [self addSubview: wall];
     }
-    
+    m_fOrientation = 0.0;
     return self;
 }
 

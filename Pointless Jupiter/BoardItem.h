@@ -9,23 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "MyViewController.h"
 #import "Jupiter.h"
-
-// Enumeration for the 
-typedef enum 
-{
-    emi_Accel,
-    emi_Trap,
-    emi_Whirl
-} eMiscItem;
-
+#import "Constants.h"
 
 @interface BoardItem : UIView <JupiterDelegate>
 {
-    eMiscItem m_stItemType;
+    eImageTagID m_stItemType;
+    CGFloat m_fOrientation;
 }
 
-@property (nonatomic, assign) eMiscItem m_stItemType;
+@property (nonatomic, assign) eImageTagID m_stItemType;
+@property (nonatomic, assign) CGFloat m_fOrientation;
 
-- (id) initWithItem:(eMiscItem)mItem inFrame: (CGRect)frame;
+- (id) initWithItem:(eImageTagID)mItem inFrame: (CGRect)frame;
 
 @end

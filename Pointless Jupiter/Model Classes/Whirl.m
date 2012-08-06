@@ -12,7 +12,7 @@
 
 @implementation Whirl
 @dynamic a_Frame;
-@dynamic r_Whirl;
+@dynamic r_Level;
 
 
 @end

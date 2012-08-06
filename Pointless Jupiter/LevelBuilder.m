@@ -20,20 +20,9 @@
 #define kJUPI_RECT CGRectMake(300,300,50,50)
 #define kDEST_RECT CGRectMake(300,300,50,50)
 
-typedef enum 
-{
-    eitid_Wall,
-    eitid_Trap,
-    eitid_Accel,
-    eitid_Whirl,
-    eitid_Jupiter,
-    eitid_Dest,
-    eitid_Remove
-}eImageTagID;
-
 @implementation LevelBuilder
 
-@synthesize m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID, m_pOrientations;
+@synthesize m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID;
 
 #pragma mark -
 #pragma mark INIT
@@ -45,7 +34,6 @@ typedef enum
         m_nDestCount = 0;
         self.backgroundColor = [UIColor blackColor];
         m_pItems = [[NSMutableArray alloc] init];
-        m_pOrientations = [[NSMutableArray alloc] init];
         m_pSelectedItemImage = [[UIImageView alloc] init];
         m_pSelectedItemImage.userInteractionEnabled = YES;
         
@@ -254,7 +242,6 @@ typedef enum
 
 - (void) saveLevelWithID:(NSString*)level
 {
-    NSAssert([m_pItems count] == [m_pOrientations count], @"Item count must equal orientations");
     NSMutableArray* walls = [[NSMutableArray alloc] init];
     NSMutableArray* accels = [[NSMutableArray alloc] init];
     NSMutableArray* traps = [[NSMutableArray alloc] init];
@@ -263,41 +250,30 @@ typedef enum
     NSString* dest = [[NSString alloc] init];
     for (int i = 0; i < [m_pItems count]; i++) 
     {
-        id object = [m_pItems objectAtIndex:i];
-        NSString* pFrameString = NSStringFromCGRect([object frame]);
+        id object = [m_pItems objectAtIndex: i];
         switch ([object tag]) 
         {
             case eitid_Wall:
             {
-                NSNumber* pfOrientation = [m_pOrientations objectAtIndex:i];
-                stImageOrientation stImgOr;
-                stImgOr.pFrame = pFrameString;
-                stImgOr.pOrientation = pfOrientation;
-                NSValue* pVal = [NSValue valueWithBytes:&stImgOr objCType:@encode(stImageOrientation)];
-                [walls addObject: pVal];
+                [walls addObject: object];
                 break;
             }
             case eitid_Trap:
-                [traps addObject: pFrameString];
+                [traps addObject: object];
                 break;
             case eitid_Accel:
             {
-                NSNumber* pfOrientation = [m_pOrientations objectAtIndex:i];
-                stImageOrientation stImgOr;
-                stImgOr.pFrame = pFrameString;
-                stImgOr.pOrientation = pfOrientation;
-                NSValue* pVal = [NSValue valueWithBytes:&stImgOr objCType:@encode(stImageOrientation)];
-                [accels addObject: pVal];
+                [accels addObject: object];
                 break;
             }
             case eitid_Whirl:
-                [whirls addObject: pFrameString];
+                [whirls addObject: object];
                 break;
             case eitid_Jupiter:
-                jupiter = pFrameString;
+                jupiter = NSStringFromCGRect(((UIImageView*)object).frame);
                 break;
             case eitid_Dest:
-                dest = pFrameString;
+                dest = NSStringFromCGRect(((UIImageView*)object).frame);
                 break;
             default: 
                 break;
@@ -356,41 +332,32 @@ typedef enum
     if ([m_pItems count] > 25)
         return;
     NSInteger tid = ((UIButton*)sender).tag;
-    UIImageView* pNewImage;
+    id pNewImage;
     switch (tid) 
     {
         case eitid_Wall:
-            // NSLog(@"WALL Selected");
-            pNewImage = [[UIImageView alloc] initWithFrame: kWALL_RECT];
-            [pNewImage setImage: [UIImage imageNamed: @"Wall.jpg"]];
-            [pNewImage setTag: eitid_Wall];
+            pNewImage = [[Wall_Class alloc] initWithFrame: kWALL_RECT];
+            [pNewImage setFrame: kWALL_RECT];
             [pNewImage setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
             [pNewImage setContentMode: UIViewContentModeScaleToFill];
             break;
         case eitid_Trap:
-            // NSLog(@"TRAP Selected");
-            pNewImage = [[UIImageView alloc] initWithFrame: kTRAP_RECT];
-            [pNewImage setImage: [UIImage imageNamed: @"Trap.jpg"]];
-            [pNewImage setTag: eitid_Trap];
+            pNewImage = [[BoardItem alloc] initWithItem: eitid_Trap inFrame: kTRAP_RECT];
+            [pNewImage setFrame: kTRAP_RECT];
             [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
         case eitid_Accel:
-            // NSLog(@"ACCELERATOR Selected");
-            pNewImage = [[UIImageView alloc] initWithFrame: kACCEL_RECT];
-            [pNewImage setImage: [UIImage imageNamed: @"Accelerator.jpg"]];
-            [pNewImage setTag: eitid_Accel];
+            pNewImage = [[BoardItem alloc] initWithItem: eitid_Accel inFrame: kACCEL_RECT];
+            [pNewImage setFrame: kACCEL_RECT];
             [pNewImage setAutoresizingMask: UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
             [pNewImage setContentMode: UIViewContentModeScaleToFill];
             break;
         case eitid_Whirl:
-            // NSLog(@"WHIRL Selected");
-            pNewImage = [[UIImageView alloc] initWithFrame: kWHIRL_RECT];
-            [pNewImage setImage: [UIImage imageNamed: @"Whirl.jpg"]];
-            [pNewImage setTag: eitid_Whirl];
+            pNewImage = [[BoardItem alloc] initWithItem: eitid_Whirl inFrame: kWHIRL_RECT];
+            [pNewImage setFrame: kWHIRL_RECT];
             [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
         case eitid_Jupiter:
-            // NSLog(@"JUPITER Selected");
             if (m_nJupiCount == 0) 
             {
                 pNewImage = [[UIImageView alloc] initWithFrame: kJUPI_RECT];
@@ -417,7 +384,6 @@ typedef enum
         default: 
             break;
     }
-    [m_pOrientations addObject: [NSNumber numberWithFloat:0.0]];
     if (m_pSelectedItemImage != nil) 
     {
         [m_pSelectedItemImage.layer setBorderColor: [UIColor clearColor].CGColor];
@@ -564,7 +530,7 @@ typedef enum
     int x = m_pSelectedItemImage.center.x;
     int y = m_pSelectedItemImage.center.y;
     CGPoint center = m_pSelectedItemImage.center;
-    if (m_pSelectedItemImage.image == [UIImage imageNamed:@"Wall.jpg"])
+    if (m_pSelectedItemImage.tag == eitid_Wall)
     {
         int widthRadius = m_pSelectedItemImage.frame.size.width/2;
         int heightRadius = m_pSelectedItemImage.frame.size.height/2;
@@ -640,7 +606,7 @@ typedef enum
                 }
                 break;
             case eitid_Wall:
-                if (
+                if ( 
                     pPGR.scale < 1 && // Pinch inwards
                     m_pSelectedItemImage.frame.size.height > 10 // Minimum height
                     ) 
@@ -665,13 +631,23 @@ typedef enum
 
 - (void)processRotate: (UIRotationGestureRecognizer*) pRGR
 {
-    NSLog(@"Rotating item with tag %i %f degrees", m_pSelectedItemImage.tag, pRGR.rotation);
     if (m_pSelectedItemImage == nil || !(m_pSelectedItemImage.tag == eitid_Accel || m_pSelectedItemImage.tag == eitid_Wall) || m_bRotating)
         return;
     else
     {
+        NSLog(@"Rotating item with tag %i %f degrees", m_pSelectedItemImage.tag, pRGR.rotation);
         m_bRotating = true;
         m_pSelectedItemImage.transform = CGAffineTransformMakeRotation(pRGR.rotation);   
+        if (m_pSelectedItemImage.tag == eitid_Accel) 
+        {
+            CGFloat pOriginal = ((BoardItem*)m_pSelectedItemImage).m_fOrientation;
+            ((BoardItem*)m_pSelectedItemImage).m_fOrientation = pOriginal + pRGR.rotation;
+        }
+        else
+        {
+            CGFloat pOriginal = ((Wall_Class*)m_pSelectedItemImage).m_fOrientation;
+            ((Wall_Class*)m_pSelectedItemImage).m_fOrientation = pOriginal + pRGR.rotation;
+        }
     }
     m_bRotating = false;
 }
@@ -699,7 +675,6 @@ typedef enum
         [m_pSelectedItemImage release];
     [m_pJupi release];
     [m_pItems release];
-    [m_pOrientations release];
     [m_pAccel release];
     [m_pTrap release];
     [m_pWallImg release];

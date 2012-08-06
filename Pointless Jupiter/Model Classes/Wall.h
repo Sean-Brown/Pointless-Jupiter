@@ -16,6 +16,6 @@
 }
 @property (nonatomic, retain) NSString * a_Frame;
 @property (nonatomic, retain) NSNumber *a_Orientation;
-@property (nonatomic, retain) Level * r_Wall;
+@property (nonatomic, retain) Level * r_Level;
 
 @end

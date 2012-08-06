@@ -16,7 +16,6 @@
 @interface LevelBuilder : UIView <UIGestureRecognizerDelegate,UITextFieldDelegate>
 {
     NSMutableArray* m_pItems;
-    NSMutableArray* m_pOrientations;
     
     UIButton* m_pWallImg;
     UIButton* m_pTrap;
@@ -40,7 +39,7 @@
     bool m_bPinching;
 }
 
-@property (nonatomic, retain) NSMutableArray* m_pItems, * m_pOrientations;
+@property (nonatomic, retain) NSMutableArray* m_pItems;
 
 @property (nonatomic, retain) UIButton* m_pWallImg, * m_pTrap, * m_pAccel,* m_pWhirl,* m_pJupi,* m_pRemove,* m_pDest,* m_pSave,* m_pQuit;
 

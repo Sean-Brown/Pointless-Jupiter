@@ -23,13 +23,19 @@
 #define kGAME_HEIGHT 750.0f
 
 #pragma mark -
-#pragma mark LEVEL_BUILDER
+#pragma mark - LEVEL_BUILDER
 
-typedef struct
+
+typedef enum 
 {
-    NSString* pFrame;
-    NSNumber* pOrientation;
-}stImageOrientation;
+    eitid_Wall,
+    eitid_Trap,
+    eitid_Accel,
+    eitid_Whirl,
+    eitid_Jupiter,
+    eitid_Dest,
+    eitid_Remove
+}eImageTagID;
 
 #pragma mark -
 #pragma mark TIMER

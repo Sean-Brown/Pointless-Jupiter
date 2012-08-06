@@ -12,7 +12,7 @@
 
 @implementation Trap
 @dynamic a_Frame;
-@dynamic r_Trap;
+@dynamic r_Level;
 
 
 @end

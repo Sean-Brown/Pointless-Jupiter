@@ -15,6 +15,6 @@
 @private
 }
 @property (nonatomic, retain) NSString * a_Frame;
-@property (nonatomic, retain) Level * r_Whirl;
+@property (nonatomic, retain) Level * r_Level;
 
 @end

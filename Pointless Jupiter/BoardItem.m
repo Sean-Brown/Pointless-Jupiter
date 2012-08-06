@@ -7,14 +7,13 @@
 //
 
 #import "BoardItem.h"
-#import "Constants.h"
 #import "Pointless_JupiterAppDelegate.h"
 
 @implementation BoardItem
 
-@synthesize m_stItemType;
+@synthesize m_stItemType, m_fOrientation;
 
-- (id) initWithItem:(eMiscItem)mItem inFrame: (CGRect)frame
+- (id) initWithItem:(eImageTagID)mItem inFrame: (CGRect)frame
 {
     // For some reason the x and y get screwed up
     CGRect correctRect = CGRectMake(0, 0, frame.size.width, frame.size.height);
@@ -22,33 +21,34 @@
     {
         self.m_stItemType = mItem;
         self.tag = mItem;
-        UIImageView* item = [[UIImageView alloc] initWithFrame: frame];
+        UIImageView* item = [[UIImageView alloc] initWithFrame: correctRect];
         UIImage* itemImg;
         switch (mItem) 
         {
-            case emi_Accel:
+            case eitid_Accel:
                 itemImg = [[UIImage imageNamed:@"Accelerator.jpg"] autorelease];
                 item.image = itemImg;
-//                NSLog(@"Initializing an Accelerator");
+                item.tag = eitid_Accel;
                 break;
-            case emi_Trap:
+            case eitid_Trap:
                 itemImg = [[UIImage imageNamed:@"Trap.jpg"] autorelease];
                 item.image = itemImg;
-//                NSLog(@"Initializing a Trap");
+                item.tag = eitid_Trap;
                 break;
-            case emi_Whirl:
+            case eitid_Whirl:
                 itemImg = [[UIImage imageNamed:@"Whirl.jpg"] autorelease];
                 item.image = itemImg;
-//                NSLog(@"Initializing a Whirl");
+                item.tag = eitid_Whirl;
                 break;
             default:
                 NSLog(@"WTF ITEM YOU GIVE ME MAN??");
                 break;
         }
-        if (mItem == emi_Trap || mItem == emi_Whirl) 
+        if (mItem == eitid_Trap || mItem == eitid_Whirl) 
             [Pointless_JupiterAppDelegate roundImageCorners:item];
         [self addSubview: item];
     }
+    m_fOrientation = 0.0;
     return self;
 }
 

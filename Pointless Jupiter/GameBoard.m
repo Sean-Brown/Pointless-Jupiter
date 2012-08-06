@@ -10,6 +10,7 @@
 #import "Constants.h"
 #import "GameBoard.h"
 #import "Accel.h"
+#import "Wall.h"
 #import "Pointless_JupiterAppDelegate.h"
 
 #define kMAX_ITEMS 32 // Maximum items the obstacles array can contain
@@ -67,8 +68,8 @@
 
 - (void) initLevel:(Level*)pLevel
 {
-    NSString* pJupiter = [[pLevel valueForKey:@"r_Ball"] valueForKey:@"a_Frame"];
-    NSString* pDest = [[pLevel valueForKey:@"r_Dest"] valueForKey:@"a_Frame"];
+    NSString* pJupiter = [pLevel.r_Ball valueForKey:@"a_Frame"];
+    NSString* pDest = [pLevel.r_Dest valueForKey:@"a_Frame"];
     
     NSArray* pAccels = [[pLevel r_Accels] allObjects];
     NSArray* pTraps = [[pLevel r_Traps] allObjects];
@@ -78,38 +79,43 @@
     UIImageView* dest = [[UIImageView alloc] initWithFrame: CGRectFromString(pDest)];
     dest.image = [UIImage imageNamed: @"Destination.jpg"];
     [Pointless_JupiterAppDelegate roundImageCorners: dest];
+    [dest setFrame: CGRectFromString(pDest)];
     [self addSubview: dest];
     [dest release];
     
     m_pJupiter = [[Jupiter alloc] initWithFrame: CGRectFromString(pJupiter)];
+    [m_pJupiter setFrame: CGRectFromString(pJupiter)];
     [self addSubview: m_pJupiter];
     
     for (int i = 0; i < [pAccels count]; i++) 
     {
         NSString* pFrame = [[pAccels objectAtIndex:i] a_Frame];
-//        NSLog(@"Initializing accel in frame %@",pFrame);
-        BoardItem* pAccel = [[[BoardItem alloc] initWithItem:emi_Accel inFrame: CGRectFromString(pFrame)] autorelease];
+        BoardItem* pAccel = [[[BoardItem alloc] initWithItem:eitid_Accel inFrame: CGRectFromString(pFrame)] autorelease];
+        pAccel.m_fOrientation = (((Accel*)[pAccels objectAtIndex: i]).a_Orientation).floatValue;
+        pAccel.transform = CGAffineTransformMakeRotation(pAccel.m_fOrientation);
+        [pAccel setFrame: CGRectFromString(pFrame)];
         [self addSubview: pAccel];
     }
     for (int i = 0; i < [pTraps count]; i++) 
     {
         NSString* pFrame = [[pTraps objectAtIndex:i] a_Frame];
-//        NSLog(@"Initializing trap in frame %@",pFrame);
-        BoardItem* pTrap = [[[BoardItem alloc] initWithItem:emi_Trap inFrame: CGRectFromString(pFrame)] autorelease];
+        BoardItem* pTrap = [[[BoardItem alloc] initWithItem:eitid_Trap inFrame: CGRectFromString(pFrame)] autorelease];
         [self addSubview: pTrap];
     }
     for (int i = 0; i < [pWhirls count]; i++) 
     {
         NSString* pFrame = [[pWhirls objectAtIndex:i] a_Frame];
-//        NSLog(@"Initializing whirl in frame %@",pFrame);
-        BoardItem* pWhirl = [[[BoardItem alloc] initWithItem:emi_Whirl inFrame: CGRectFromString(pFrame)] autorelease];
+        BoardItem* pWhirl = [[[BoardItem alloc] initWithItem:eitid_Whirl inFrame: CGRectFromString(pFrame)] autorelease];
         [self addSubview: pWhirl];
     }
     for (int i = 0; i < [pWalls count]; i++) 
     {
-        NSString* pFrame = [[pWalls objectAtIndex:i] a_Frame];
-//        NSLog(@"Initializing wall in frame %@",pFrame);
-        Wall_Class* pWall = [[[Wall_Class alloc] initWithFrame: CGRectFromString(pFrame)] autorelease];
+        id wall = [pWalls objectAtIndex: i];
+        CGRect pFrame = CGRectFromString([wall a_Frame]);
+        Wall_Class* pWall = [[[Wall_Class alloc] initWithFrame: pFrame] autorelease];
+        pWall.m_fOrientation = (((Wall*)wall).a_Orientation).floatValue;
+        pWall.transform = CGAffineTransformMakeRotation(pWall.m_fOrientation);
+        [pWall setFrame: pFrame];
         [self addSubview: pWall];
     }
 }

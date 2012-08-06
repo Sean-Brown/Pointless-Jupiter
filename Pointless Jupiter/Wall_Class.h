@@ -11,7 +11,9 @@
 
 @interface Wall_Class : UIImageView <JupiterDelegate>  
 {
-    
+    CGFloat m_fOrientation;
 }
+
+@property (nonatomic, assign) CGFloat m_fOrientation;
 
 @end

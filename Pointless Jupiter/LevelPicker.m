@@ -176,7 +176,7 @@ int nJupiterCenter = 0;
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"Should never get here...");
+//    NSLog(@"Should never get here...");
 }
 
 - (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event

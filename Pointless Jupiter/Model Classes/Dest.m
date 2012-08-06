@@ -12,7 +12,7 @@
 
 @implementation Dest
 @dynamic a_Frame;
-@dynamic r_Dest;
+@dynamic r_Level;
 
 
 @end

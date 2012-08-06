@@ -8,6 +8,8 @@
 
 #import "Pointless_JupiterAppDelegate.h"
 #import "DataManager.h"
+#import "BoardItem.h"
+#import "Wall_Class.h"
 #import "Constants.h"
 
 @implementation DataManager
@@ -99,42 +101,51 @@
     // Optional attributes
     if ([traps count] != 0) 
     {
-        for (NSString* pBounds in traps) 
+        for (BoardItem* pTrap in traps) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Trap" inManagedObjectContext:m_pMOC];
-            NSLog(@"Saving bounds %@ for a trap.",pBounds);
-            [pNewTrap setValue:pBounds forKey:@"a_Frame"];
+            [pNewTrap setValue:NSStringFromCGRect(pTrap.frame) forKey:@"a_Frame"];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
     }
     if ([whirls count] != 0) 
     {
-        for (NSString* pBounds in whirls) 
+        for (BoardItem* pWhirl in whirls) 
         {
-            NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Whirl" inManagedObjectContext:m_pMOC];
-            NSLog(@"Saving bounds %@ for a whirl.",pBounds);
-            [pNewTrap setValue:pBounds forKey:@"a_Frame"];
-            [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
+            NSManagedObject* pNewWhirl = [NSEntityDescription insertNewObjectForEntityForName:@"Whirl" inManagedObjectContext:m_pMOC];
+            [pNewWhirl setValue:NSStringFromCGRect(pWhirl.frame) forKey:@"a_Frame"];
+            [pNewWhirl setValue:pNewLevel forKey:@"r_Level"];
         }
     }
     if ([accels count] != 0) 
     {
-        for (NSString* pBounds in accels) 
+        for (BoardItem* pAccel in accels) 
         {
-            NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Accel" inManagedObjectContext:m_pMOC];
-            NSLog(@"Saving bounds %@ for an accel.",pBounds);
-            [pNewTrap setValue:pBounds forKey:@"a_Frame"];
-            [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
+            NSManagedObject* pNewAccel = [NSEntityDescription insertNewObjectForEntityForName:@"Accel" inManagedObjectContext:m_pMOC];
+            [pNewAccel setValue:NSStringFromCGRect(pAccel.frame) forKey:@"a_Frame"];
+            [pNewAccel setValue:[NSNumber numberWithFloat: pAccel.m_fOrientation] forKey:@"a_Orientation"];
+            [pNewAccel setValue:pNewLevel forKey:@"r_Level"];        
         }
     }
     if ([walls count] != 0) 
     {
-        for (NSString* pBounds in walls) 
+        for (Wall_Class* pWall in walls) 
         {
-            NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Wall" inManagedObjectContext:m_pMOC];
-            NSLog(@"Saving bounds %@ for a wall.",pBounds);
-            [pNewTrap setValue:pBounds forKey:@"a_Frame"];
-            [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
+            NSManagedObject* pNewWall = [NSEntityDescription insertNewObjectForEntityForName:@"Wall" inManagedObjectContext:m_pMOC];
+//            NSLog(@"Saving Wall with frame %@",NSStringFromCGRect(pWall.frame));
+            if (pWall.frame.size.width > 10) 
+            {
+                CGRect newFrame = CGRectMake(pWall.frame.origin.x, 
+                                             pWall.frame.origin.y, 
+                                             10,
+                                             pWall.frame.size.height
+                                             );
+                [pNewWall setValue:NSStringFromCGRect(newFrame) forKey:@"a_Frame"];
+            }
+            else
+                [pNewWall setValue:NSStringFromCGRect(pWall.frame) forKey:@"a_Frame"];
+            [pNewWall setValue:[NSNumber numberWithFloat: pWall.m_fOrientation] forKey:@"a_Orientation"];
+            [pNewWall setValue:pNewLevel forKey:@"r_Level"];
         }
     }
     
