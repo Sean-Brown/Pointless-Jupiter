@@ -20,18 +20,11 @@
 @property (nonatomic, retain) NSManagedObjectContext* m_pMOC;
 @property (nonatomic, retain) NSFetchedResultsController* m_pFetchedResultsController;
 
+- (void)archiveAttsForObject:(NSManagedObject*)pObject withDictionary:(NSDictionary*)pDictionary optionalItem:(id)pItem;
+
 - (NSArray*) getLevels;
 - (NSArray*) getLevelWithID:(NSString*)level;
-- (void)saveLevel:(NSString*)level traps:(NSMutableArray*)traps whirls:(NSMutableArray*)whirls accels:(NSMutableArray*)accels walls:(NSMutableArray*)walls dest:(NSString*)dest jupiter:(NSString*)jupiter rating:(NSNumber*)pRating;
-
-- (NSArray*) getWallsforLevel:(NSString*)level;
-
-- (NSArray*) getBallforLevel:(NSString*)level;
-- (NSArray*) getDestinationforLevel:(NSString*)level;
-
-- (NSArray*) getTrapsforLevel:(NSString*)level;
-- (NSArray*) getAcceleratorsforLevel:(NSString*)level;
-- (NSArray*) getWhirlsforLevel:(NSString*)level;
+- (void)saveLevel:(NSString*)level traps:(NSMutableArray*)traps whirls:(NSMutableArray*)whirls accels:(NSMutableArray*)accels walls:(NSMutableArray*)walls dest:(NSDictionary*)dest jupiter:(NSDictionary*)jupiter rating:(NSNumber*)pRating;
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 

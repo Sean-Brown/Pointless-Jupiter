@@ -7,7 +7,6 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "Constants.h"
 #import "GameBoard.h"
 #import "Accel.h"
 #import "Wall.h"
@@ -66,57 +65,89 @@
     [self addSubview: m_pQuit];
 }
 
+- (void) initObjectWithTagID:(eImageTagID)eitid inLevel:(Level*)pLevel withData:(NSData*)pData
+{
+    NSKeyedUnarchiver* pUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:pData];
+    NSDictionary* pDict = [[pUnarchiver decodeObjectForKey:@"a_ImageAtts"] retain];
+    [pUnarchiver finishDecoding];
+    [pUnarchiver release];
+    CGRect bounds = CGRectFromString([pDict objectForKey:@"a_Bounds"]);
+    CGPoint center = CGPointFromString([pDict objectForKey:@"a_Center"]);
+    CGAffineTransform transform = CGAffineTransformFromString([pDict objectForKey:@"a_Transform"]);   
+    switch (eitid) 
+    {
+        case eitid_Accel:
+        case eitid_Trap:
+        case eitid_Whirl:
+        {
+            BoardItem* pBA = [[BoardItem alloc] initWithItem: eitid inFrame:bounds];
+            [pBA setCenter: center];
+            pBA.transform = transform;
+            [self addSubview: pBA];
+            break;
+        }
+        case eitid_Wall:
+        {
+            Wall_Class* pWall = [[Wall_Class alloc] initWithFrame:bounds];
+            [pWall setCenter: center];
+            pWall.transform = transform;
+            [self addSubview: pWall];
+            break;
+        }
+        case eitid_Dest:
+        {
+            UIImageView* pDest = [[UIImageView alloc] initWithFrame:bounds];
+            [pDest setImage: [UIImage imageNamed:@"Destination.jpg"]];
+            [Pointless_JupiterAppDelegate roundImageCorners: pDest];
+            [pDest setCenter: center];
+            pDest.transform = transform;
+            [self addSubview: pDest];
+            break;
+        }
+        case eitid_Jupiter:
+        {
+            m_pJupiter = [[Jupiter alloc] initWithFrame:bounds];
+            [m_pJupiter setCenter: center];
+            m_pJupiter.transform = transform;
+            [self addSubview: m_pJupiter];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 - (void) initLevel:(Level*)pLevel
 {
-    NSString* pJupiter = [pLevel.r_Ball valueForKey:@"a_Frame"];
-    NSString* pDest = [pLevel.r_Dest valueForKey:@"a_Frame"];
+    NSData* pData = [pLevel.r_Ball valueForKey:@"a_ImageAtts"];
+    [self initObjectWithTagID:eitid_Jupiter inLevel:pLevel withData:pData];
+    pData = [pLevel.r_Dest valueForKey:@"a_ImageAtts"];
+    [self initObjectWithTagID:eitid_Dest inLevel:pLevel withData:pData];
     
     NSArray* pAccels = [[pLevel r_Accels] allObjects];
     NSArray* pTraps = [[pLevel r_Traps] allObjects];
     NSArray* pWalls = [[pLevel r_Walls] allObjects];
     NSArray* pWhirls = [[pLevel r_Whirls] allObjects];
     
-    UIImageView* dest = [[UIImageView alloc] initWithFrame: CGRectFromString(pDest)];
-    dest.image = [UIImage imageNamed: @"Destination.jpg"];
-    [Pointless_JupiterAppDelegate roundImageCorners: dest];
-    [dest setFrame: CGRectFromString(pDest)];
-    [self addSubview: dest];
-    [dest release];
-    
-    m_pJupiter = [[Jupiter alloc] initWithFrame: CGRectFromString(pJupiter)];
-    [m_pJupiter setFrame: CGRectFromString(pJupiter)];
-    [self addSubview: m_pJupiter];
-    
     for (int i = 0; i < [pAccels count]; i++) 
     {
-        NSString* pFrame = [[pAccels objectAtIndex:i] a_Frame];
-        BoardItem* pAccel = [[[BoardItem alloc] initWithItem:eitid_Accel inFrame: CGRectFromString(pFrame)] autorelease];
-        pAccel.m_fOrientation = (((Accel*)[pAccels objectAtIndex: i]).a_Orientation).floatValue;
-        pAccel.transform = CGAffineTransformMakeRotation(pAccel.m_fOrientation);
-        [pAccel setFrame: CGRectFromString(pFrame)];
-        [self addSubview: pAccel];
+        NSData* pData = [[pAccels objectAtIndex:i] a_ImageAtts];
+        [self initObjectWithTagID:eitid_Accel inLevel:pLevel withData:pData];
     }
     for (int i = 0; i < [pTraps count]; i++) 
     {
-        NSString* pFrame = [[pTraps objectAtIndex:i] a_Frame];
-        BoardItem* pTrap = [[[BoardItem alloc] initWithItem:eitid_Trap inFrame: CGRectFromString(pFrame)] autorelease];
-        [self addSubview: pTrap];
+        NSData* pData = [[pTraps objectAtIndex:i] a_ImageAtts];
+        [self initObjectWithTagID:eitid_Trap inLevel:pLevel withData:pData];
     }
     for (int i = 0; i < [pWhirls count]; i++) 
     {
-        NSString* pFrame = [[pWhirls objectAtIndex:i] a_Frame];
-        BoardItem* pWhirl = [[[BoardItem alloc] initWithItem:eitid_Whirl inFrame: CGRectFromString(pFrame)] autorelease];
-        [self addSubview: pWhirl];
+        NSData* pData = [[pWhirls objectAtIndex:i] a_ImageAtts];
+        [self initObjectWithTagID:eitid_Whirl inLevel:pLevel withData:pData];
     }
     for (int i = 0; i < [pWalls count]; i++) 
     {
-        id wall = [pWalls objectAtIndex: i];
-        CGRect pFrame = CGRectFromString([wall a_Frame]);
-        Wall_Class* pWall = [[[Wall_Class alloc] initWithFrame: pFrame] autorelease];
-        pWall.m_fOrientation = (((Wall*)wall).a_Orientation).floatValue;
-        pWall.transform = CGAffineTransformMakeRotation(pWall.m_fOrientation);
-        [pWall setFrame: pFrame];
-        [self addSubview: pWall];
+        NSData* pData = [[pWalls objectAtIndex:i] a_ImageAtts];
+        [self initObjectWithTagID:eitid_Wall inLevel:pLevel withData:pData];
     }
 }
 

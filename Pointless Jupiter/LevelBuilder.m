@@ -246,8 +246,8 @@
     NSMutableArray* accels = [[NSMutableArray alloc] init];
     NSMutableArray* traps = [[NSMutableArray alloc] init];
     NSMutableArray* whirls = [[NSMutableArray alloc] init];
-    NSString* jupiter = [[NSString alloc] init];
-    NSString* dest = [[NSString alloc] init];
+    NSDictionary* pJupiterDict = newItemDictionary();
+    NSDictionary* pDestDict = newItemDictionary();
     for (int i = 0; i < [m_pItems count]; i++) 
     {
         id object = [m_pItems objectAtIndex: i];
@@ -270,17 +270,21 @@
                 [whirls addObject: object];
                 break;
             case eitid_Jupiter:
-                jupiter = NSStringFromCGRect(((UIImageView*)object).frame);
+                [pJupiterDict setValue: NSStringFromCGRect([object bounds]) forKey:@"a_Bounds"];
+                [pJupiterDict setValue: NSStringFromCGPoint([object center]) forKey:@"a_Center"];
+                [pJupiterDict setValue: NSStringFromCGAffineTransform(((UIImageView*)object).transform) forKey:@"a_Transform"];
                 break;
             case eitid_Dest:
-                dest = NSStringFromCGRect(((UIImageView*)object).frame);
+                [pDestDict setValue: NSStringFromCGRect([object bounds]) forKey:@"a_Bounds"];
+                [pDestDict setValue: NSStringFromCGPoint([object center]) forKey:@"a_Center"];
+                [pDestDict setValue: NSStringFromCGAffineTransform(((UIImageView*)object).transform) forKey:@"a_Transform"];
                 break;
             default: 
                 break;
         }
     }
     NSNumber* pRating = [NSNumber numberWithInt: 0];
-    [[DataManager getDataManager] saveLevel:level traps:traps whirls:whirls accels:accels walls:walls dest:dest jupiter:jupiter rating:pRating];
+    [[DataManager getDataManager] saveLevel:level traps:traps whirls:whirls accels:accels walls:walls dest:pDestDict jupiter:pJupiterDict rating:pRating];
 }
 
 - (void) saveLevel

@@ -11,7 +11,7 @@
 
 
 @implementation Trap
-@dynamic a_Frame;
+@dynamic a_ImageAtts;
 @dynamic r_Level;
 
 

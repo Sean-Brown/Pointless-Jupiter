@@ -69,5 +69,12 @@ typedef enum
 #pragma mark -
 #pragma mark OTHER
 
+static NSMutableDictionary* newItemDictionary()
+{
+    return [[NSMutableDictionary alloc] 
+            initWithObjects: [NSArray arrayWithObjects:@"", @"", @"", nil] 
+            forKeys: [NSArray arrayWithObjects:@"a_Bounds",@"a_Center", @"a_Transform", nil]];
+};
+
 #define kMIN_RATING -32768
 #define kMAX_RATIN 32767

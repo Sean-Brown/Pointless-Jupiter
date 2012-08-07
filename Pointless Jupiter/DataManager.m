@@ -67,7 +67,28 @@
     return pLevels;
 }
 
-- (void)saveLevel:(NSString*)level traps:(NSMutableArray*)traps whirls:(NSMutableArray*)whirls accels:(NSMutableArray*)accels walls:(NSMutableArray*)walls dest:(NSString*)dest jupiter:(NSString*)jupiter rating:(NSNumber*)pRating;
+- (void)archiveAttsForObject:(NSManagedObject*)pObject withDictionary:(NSMutableDictionary*)pDictionary optionalItem:(id)pItem
+{
+    if (pItem != nil)
+    {
+        UIImageView* pItemCast = (UIImageView*)pItem;
+        NSString* pBounds = NSStringFromCGRect(pItemCast.bounds);
+        NSString* pCenter = NSStringFromCGPoint(pItemCast.center);
+        NSString* pTransform = NSStringFromCGAffineTransform(pItemCast.transform);
+        [pDictionary setValue:pBounds forKey:@"a_Bounds"];
+        [pDictionary setValue:pCenter forKey:@"a_Center"];
+        [pDictionary setValue:pTransform forKey:@"a_Transform"];
+    }
+    NSMutableData* pData = [[NSMutableData alloc] init];
+    NSKeyedArchiver* pArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData: pData];
+    [pArchiver encodeObject: pDictionary forKey:@"a_ImageAtts"];
+    [pArchiver finishEncoding];
+    [pArchiver release];
+    [pObject setValue:pData forKey:@"a_ImageAtts"];
+    [pData release];
+}
+
+- (void)saveLevel:(NSString*)level traps:(NSMutableArray*)traps whirls:(NSMutableArray*)whirls accels:(NSMutableArray*)accels walls:(NSMutableArray*)walls dest:(NSDictionary*)dest jupiter:(NSDictionary*)jupiter rating:(NSNumber*)pRating
 {   
     if (m_pMOC == nil) 
     {
@@ -77,10 +98,15 @@
         [pDelegate release];
     }
 	NSManagedObject* pNewLevel = [NSEntityDescription insertNewObjectForEntityForName:@"Level" inManagedObjectContext:m_pMOC];
+    
+    // Encode the ball, dest, etc from dictionaries to NSData
     NSManagedObject* pNewBall = [NSEntityDescription insertNewObjectForEntityForName:@"Ball" inManagedObjectContext:m_pMOC];
-    [pNewBall setValue:jupiter forKey:@"a_Frame"];
+    [self archiveAttsForObject:pNewBall withDictionary:jupiter optionalItem:nil];
+    
     NSManagedObject* pNewDest = [NSEntityDescription insertNewObjectForEntityForName:@"Dest" inManagedObjectContext:m_pMOC];
-    [pNewDest setValue:dest forKey:@"a_Frame"];
+    [self archiveAttsForObject:pNewDest withDictionary:dest optionalItem:nil];
+    
+    // Create an arbitrary user for the time being
     NSManagedObject* pNewCreator = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:m_pMOC];
     [pNewCreator setValue:@"Bob Dole" forKey:@"a_Name"];
     [pNewCreator setValue:@"Bobdole" forKey:@"a_Password"];
@@ -101,50 +127,41 @@
     // Optional attributes
     if ([traps count] != 0) 
     {
+        NSMutableDictionary* pDictionary = newItemDictionary();
         for (BoardItem* pTrap in traps) 
         {
             NSManagedObject* pNewTrap = [NSEntityDescription insertNewObjectForEntityForName:@"Trap" inManagedObjectContext:m_pMOC];
-            [pNewTrap setValue:NSStringFromCGRect(pTrap.frame) forKey:@"a_Frame"];
+            [self archiveAttsForObject:pNewTrap withDictionary:pDictionary optionalItem:pTrap];
             [pNewTrap setValue:pNewLevel forKey:@"r_Level"];
         }
     }
     if ([whirls count] != 0) 
     {
+        NSMutableDictionary* pDictionary = newItemDictionary();
         for (BoardItem* pWhirl in whirls) 
         {
             NSManagedObject* pNewWhirl = [NSEntityDescription insertNewObjectForEntityForName:@"Whirl" inManagedObjectContext:m_pMOC];
-            [pNewWhirl setValue:NSStringFromCGRect(pWhirl.frame) forKey:@"a_Frame"];
+            [self archiveAttsForObject:pNewWhirl withDictionary:pDictionary optionalItem:pWhirl];
             [pNewWhirl setValue:pNewLevel forKey:@"r_Level"];
         }
     }
     if ([accels count] != 0) 
     {
+        NSMutableDictionary* pDictionary = newItemDictionary();
         for (BoardItem* pAccel in accels) 
         {
             NSManagedObject* pNewAccel = [NSEntityDescription insertNewObjectForEntityForName:@"Accel" inManagedObjectContext:m_pMOC];
-            [pNewAccel setValue:NSStringFromCGRect(pAccel.frame) forKey:@"a_Frame"];
-            [pNewAccel setValue:[NSNumber numberWithFloat: pAccel.m_fOrientation] forKey:@"a_Orientation"];
-            [pNewAccel setValue:pNewLevel forKey:@"r_Level"];        
+            [self archiveAttsForObject:pNewAccel withDictionary:pDictionary optionalItem:pAccel];
+            [pNewAccel setValue:pNewLevel forKey:@"r_Level"];     
         }
     }
     if ([walls count] != 0) 
     {
+        NSMutableDictionary* pDictionary = newItemDictionary();
         for (Wall_Class* pWall in walls) 
         {
             NSManagedObject* pNewWall = [NSEntityDescription insertNewObjectForEntityForName:@"Wall" inManagedObjectContext:m_pMOC];
-//            NSLog(@"Saving Wall with frame %@",NSStringFromCGRect(pWall.frame));
-            if (pWall.frame.size.width > 10) 
-            {
-                CGRect newFrame = CGRectMake(pWall.frame.origin.x, 
-                                             pWall.frame.origin.y, 
-                                             10,
-                                             pWall.frame.size.height
-                                             );
-                [pNewWall setValue:NSStringFromCGRect(newFrame) forKey:@"a_Frame"];
-            }
-            else
-                [pNewWall setValue:NSStringFromCGRect(pWall.frame) forKey:@"a_Frame"];
-            [pNewWall setValue:[NSNumber numberWithFloat: pWall.m_fOrientation] forKey:@"a_Orientation"];
+            [self archiveAttsForObject:pNewWall withDictionary:pDictionary optionalItem:pWall];
             [pNewWall setValue:pNewLevel forKey:@"r_Level"];
         }
     }
@@ -177,54 +194,6 @@
         [pAlert show];
         [pAlert release];
     }
-}
-
-#pragma mark -
-#pragma mark WALLS
-
-- (NSArray*) getWallsforLevel:(NSString*)level
-{
-    return nil;
-}
-
-#pragma mark -
-#pragma mark BALL
-
-- (NSArray*) getBallforLevel:(NSString*)level
-{
-    return nil;
-}
-
-#pragma mark -
-#pragma mark DESTINATION
-
-- (NSArray*) getDestinationforLevel:(NSString*)level
-{
-    return nil;
-}
-
-#pragma mark -
-#pragma mark TRAPS
-
-- (NSArray*) getTrapsforLevel:(NSString*)level
-{
-    return nil;
-}
-
-#pragma mark -
-#pragma mark ACCELERATION
-
-- (NSArray*) getAcceleratorsforLevel:(NSString*)level
-{
-    return nil;
-}
-
-#pragma mark -
-#pragma mark WHIRLS
-
-- (NSArray*) getWhirlsforLevel:(NSString*)level
-{
-    return nil;
 }
 
 #pragma mark -

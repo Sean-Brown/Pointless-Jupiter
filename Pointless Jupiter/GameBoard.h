@@ -13,6 +13,7 @@
 #import "MyViewController.h"
 #import "DataManager.h"
 #import "LevelPicker.h"
+#import "Constants.h"
 
 @interface GameBoard : UIView 
 {
@@ -27,6 +28,7 @@
 
 @property (nonatomic, retain) UIButton* m_pStart,* m_pRestart,* m_pQuit;
 
+- (void) initObjectWithTagID:(eImageTagID)eitid inLevel:(Level*)pLevel withData:(NSData*)pData;
 - (void) initLevel:(Level*)pLevel;
 - (void) initButtons;
 - (void) startGame;

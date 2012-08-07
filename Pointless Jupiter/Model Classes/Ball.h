@@ -14,7 +14,7 @@
 @interface Ball : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * a_Frame;
+@property (nonatomic, retain) NSData * a_ImageAtts;
 @property (nonatomic, retain) Level * r_Level;
 
 @end

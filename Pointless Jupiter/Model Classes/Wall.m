@@ -11,8 +11,7 @@
 
 
 @implementation Wall
-@dynamic a_Frame;
-@dynamic a_Orientation;
+@dynamic a_ImageAtts;
 @dynamic r_Level;
 
 
