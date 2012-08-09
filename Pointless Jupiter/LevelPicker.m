@@ -63,7 +63,6 @@ int nJupiterCenter = 0;
     pLevelID.backgroundColor = [UIColor clearColor];
     
     [self addSubview: pLevelID];
-    [pLevelID release];
 }
 
 - (void) initJupiterAndDest
@@ -190,13 +189,5 @@ int nJupiterCenter = 0;
     [m_pJupiter setNeedsDisplay];
 }
 
-- (void) dealloc
-{
-    [m_pLevelID release];
-    [m_pRating release];
-    [m_pJupiter release];
-    [m_pDest release];
-    [super dealloc];
-}
 
 @end

@@ -18,9 +18,9 @@
 
 @property (nonatomic, copy) NSString* m_pstrUser;
 
-@property (nonatomic, retain) UIButton* m_pbtNewGame,* m_pbtBestTimes,* m_pbtLevelBuilder,* m_pbtSetUser;
+@property (nonatomic, strong) UIButton* m_pbtNewGame,* m_pbtBestTimes,* m_pbtLevelBuilder,* m_pbtSetUser;
 
 - (void) initLabel: (UILabel*)label withName: (NSString*)name atY: (CGFloat)yCoord;
-- (id) initButton: (UIButton*)button atY:(int)yCoord withTitle: (NSString*)title withColor: (UIColor*)color;
+- (void) addButton: (UIButton*)button atY:(int)yCoord withTitle: (NSString*)title withColor: (UIColor*)color;
 
 @end

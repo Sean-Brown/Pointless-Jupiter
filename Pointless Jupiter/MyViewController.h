@@ -15,7 +15,7 @@
     UIAcceleration* m_pLastAcceleration;
 }
 
-@property (nonatomic, assign) UIAcceleration* m_pLastAcceleration;
+@property (nonatomic) UIAcceleration* m_pLastAcceleration;
 
 - (void)calcNextPosition: fromAcceleration:(UIAcceleration*)acceleration;
 
@@ -28,5 +28,6 @@
 - (void) toMainMenu;
 
 + (MyViewController*)getMVC;
++ (void)removeAllSubviews;
 
 @end

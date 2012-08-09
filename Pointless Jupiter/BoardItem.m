@@ -26,17 +26,17 @@
         switch (mItem) 
         {
             case eitid_Accel:
-                itemImg = [[UIImage imageNamed:@"Accelerator.jpg"] autorelease];
+                itemImg = [UIImage imageNamed:@"Accelerator.jpg"];
                 item.image = itemImg;
                 item.tag = eitid_Accel;
                 break;
             case eitid_Trap:
-                itemImg = [[UIImage imageNamed:@"Trap.jpg"] autorelease];
+                itemImg = [UIImage imageNamed:@"Trap.jpg"];
                 item.image = itemImg;
                 item.tag = eitid_Trap;
                 break;
             case eitid_Whirl:
-                itemImg = [[UIImage imageNamed:@"Whirl.jpg"] autorelease];
+                itemImg = [UIImage imageNamed:@"Whirl.jpg"];
                 item.image = itemImg;
                 item.tag = eitid_Whirl;
                 break;
@@ -57,9 +57,5 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [super dealloc];
-}
 
 @end

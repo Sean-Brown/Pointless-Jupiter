@@ -30,12 +30,10 @@
         // Initialization code
         UIImageView* pBuddha = [[UIImageView alloc] initWithFrame: self.frame];
         pBuddha.image = [UIImage imageNamed:@"Buddha.jpg"];
-        pBuddha.contentMode = UIViewContentModeScaleAspectFit;
         [pBuddha setUserInteractionEnabled: NO];
         [pBuddha setMultipleTouchEnabled: NO];
         pBuddha.tag = kBUDDHA_TAG;
-        [self insertSubview:pBuddha atIndex:0];
-        [pBuddha release];
+        [self addSubview: pBuddha];
         
         [self initTitle];
         [self initBackButton];
@@ -222,16 +220,5 @@
 }
 */
 
-- (void)dealloc
-{
-// ** Objects returned by the DM are autoreleased, fool! **
-//    [m_pLevelIDs release];
-// ** Not sure why, but m_pPickers gives me issues, so leave it alone **
-//    [m_pPickers release];
-    [m_pTitle release];
-// ** Something's screwy with releasing the back button, so leave it alone **
-//    [m_pBack release];
-    [super dealloc];
-}
 
 @end

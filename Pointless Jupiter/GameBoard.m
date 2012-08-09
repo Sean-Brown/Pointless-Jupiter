@@ -26,7 +26,6 @@
         UIImageView* pBackground = [[UIImageView alloc] initWithFrame: frame];
         pBackground.image = [UIImage imageNamed:@"Night.jpg"];
         [self addSubview:pBackground];
-        [pBackground release];
         
         m_pStart = [[UIButton alloc] init];
         m_pRestart = [[UIButton alloc] init];
@@ -68,9 +67,8 @@
 - (void) initObjectWithTagID:(eImageTagID)eitid inLevel:(Level*)pLevel withData:(NSData*)pData
 {
     NSKeyedUnarchiver* pUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:pData];
-    NSDictionary* pDict = [[pUnarchiver decodeObjectForKey:@"a_ImageAtts"] retain];
+    NSDictionary* pDict = [pUnarchiver decodeObjectForKey:@"a_ImageAtts"];
     [pUnarchiver finishDecoding];
-    [pUnarchiver release];
     CGRect bounds = CGRectFromString([pDict objectForKey:@"a_Bounds"]);
     CGPoint center = CGPointFromString([pDict objectForKey:@"a_Center"]);
     CGAffineTransform transform = CGAffineTransformFromString([pDict objectForKey:@"a_Transform"]);   
@@ -191,13 +189,5 @@
     return newTraj;
 }
 
-- (void) dealloc
-{
-    [m_pJupiter release];
-    [m_pStart release];     
-    [m_pRestart release];
-    [m_pQuit release];
-    [super dealloc];
-}
 
 @end

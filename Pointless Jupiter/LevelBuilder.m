@@ -63,7 +63,6 @@
         [self addSubview: pLabel];
         [self addSubview: m_pLevelID];
         [pLabel setNeedsDisplay];
-        [pLabel release];
         
         m_bRotating = false;
         m_bPinching = false;
@@ -229,12 +228,10 @@
     UIPinchGestureRecognizer *pPinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(processPinch:)];
     [pPinch setDelegate: self];
     [self addGestureRecognizer: pPinch];
-    [pPinch release];
     
     UIRotationGestureRecognizer *pRot = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(processRotate:)];
     [pRot setDelegate: self];
     [self addGestureRecognizer: pRot];
-    [pRot release];
 }
 
 #pragma mark -
@@ -301,7 +298,6 @@
                                   kLANDSCAPE_HEIGHT / 3
                                   );
         [pAlert show];
-        [pAlert release];
     }
     else if (m_nJupiCount == 0 || m_nDestCount == 0)
     { 
@@ -313,7 +309,6 @@
                                   kLANDSCAPE_HEIGHT / 3
                                   );
         [pAlert show];
-        [pAlert release];
     }
     else
     { // Try and save it
@@ -673,19 +668,5 @@
     m_pSelectedItemImage = nil;
 }
 
-- (void)dealloc
-{
-    if (m_pSelectedItemImage != nil)
-        [m_pSelectedItemImage release];
-    [m_pJupi release];
-    [m_pItems release];
-    [m_pAccel release];
-    [m_pTrap release];
-    [m_pWallImg release];
-    [m_pWhirl release];
-    [m_pDest release];
-    [m_pLevelID release];
-    [super dealloc];
-}
 
 @end

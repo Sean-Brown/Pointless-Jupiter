@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "Jupiter.h"
 #import "BoardItem.h"
+#include "Ball.h"
+#include "Dest.h"
 #import "Wall_Class.h"
 #import "MyViewController.h"
 #import "DataManager.h"
@@ -24,9 +26,9 @@
     UIButton* m_pQuit;
 }
 
-@property (nonatomic, retain) Jupiter* m_pJupiter;
+@property (nonatomic, strong) Jupiter* m_pJupiter;
 
-@property (nonatomic, retain) UIButton* m_pStart,* m_pRestart,* m_pQuit;
+@property (nonatomic, strong) UIButton* m_pStart,* m_pRestart,* m_pQuit;
 
 - (void) initObjectWithTagID:(eImageTagID)eitid inLevel:(Level*)pLevel withData:(NSData*)pData;
 - (void) initLevel:(Level*)pLevel;

@@ -17,8 +17,8 @@
     NSManagedObjectContext* m_pMOC;
 }
 
-@property (nonatomic, retain) NSManagedObjectContext* m_pMOC;
-@property (nonatomic, retain) NSFetchedResultsController* m_pFetchedResultsController;
+@property (nonatomic, strong) NSManagedObjectContext* m_pMOC;
+@property (nonatomic, strong) NSFetchedResultsController* m_pFetchedResultsController;
 
 - (void)archiveAttsForObject:(NSManagedObject*)pObject withDictionary:(NSDictionary*)pDictionary optionalItem:(id)pItem;
 

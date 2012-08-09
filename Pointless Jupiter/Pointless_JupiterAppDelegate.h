@@ -20,11 +20,11 @@
     NSPersistentStoreCoordinator* m_pCoordinator;
 }
 
-@property (nonatomic, retain) UIWindow* window;
+@property (nonatomic, strong) UIWindow* window;
 
-@property (nonatomic, retain, readonly) NSManagedObjectContext* m_pMOC;
-@property (nonatomic, retain, readonly) NSManagedObjectModel* m_pMOM;
-@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator* m_pCoordinator;
+@property (nonatomic, strong, readonly) NSManagedObjectContext* m_pMOC;
+@property (nonatomic, strong, readonly) NSManagedObjectModel* m_pMOM;
+@property (nonatomic, strong, readonly) NSPersistentStoreCoordinator* m_pCoordinator;
 
 void uncaughtExceptionHandler(NSException *exception);
 -(void)saveContext;

@@ -206,15 +206,6 @@ void uncaughtExceptionHandler(NSException *exception)
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-- (void)dealloc
-{
-    [m_pMOC release];
-    [m_pMOM release];
-    [m_pCoordinator release];
-    
-    [window release];
-    [super dealloc];
-}
 
 // Only round square images
 + (void)roundImageCorners:(UIImageView*)pImageView

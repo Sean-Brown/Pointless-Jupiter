@@ -44,7 +44,6 @@
     
 	MainView* mv = [[MainView alloc] initWithFrame: newFrame];
 	self.view = mv;
-    [mv release];
 }
 
 - (void)accelerometer:(UIAccelerometer* )accelerometer didAccelerate:(UIAcceleration* )acceleration {
@@ -90,7 +89,6 @@
                                   kLANDSCAPE_HEIGHT / 3 
                                   );
         [pAlert show];
-        [pAlert release];
         return;
     }
     else
@@ -99,20 +97,17 @@
         GameBoard* pGB = [[GameBoard alloc] initWithFrame: newFrame];
         [pGB initLevel: [pLevel objectAtIndex:0]];
         [self.view addSubview: (UIView*)pGB];
-//        [pGB release];
     }
 }
 
 - (void) chooseLevel
 {
-    // NSLog(@"Start New Game");
-    
+    [MyViewController removeAllSubviews];
     // Initialize the new view w/ view controller
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
     CustomTable* pCT = [[CustomTable alloc] initWithFrame: newFrame];
     [pCT initLevels];
     [self.view addSubview: (UIView*)pCT];
-    [pCT release];
 }
 
 - (void) viewHighScores
@@ -123,12 +118,10 @@
 
 - (void) buildLevel
 {
-    // NSLog(@"Level Builder");
+    [MyViewController removeAllSubviews];  
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
     LevelBuilder* pLB = [[LevelBuilder alloc] initWithFrame:newFrame];
-    
     [self.view addSubview: (UIView*)pLB];
-    [pLB release];
 }
 
 - (void) setUserAccount
@@ -143,10 +136,18 @@
 
 - (void) toMainMenu
 {
+    [MyViewController removeAllSubviews];
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
     MainView* mv = [[MainView alloc] initWithFrame: newFrame];
     [self.view addSubview:(UIView*)mv];
-    [mv release];
+}
+
++ (void)removeAllSubviews
+{
+    for (UIView* pSubviews in [MyViewController getMVC].view.subviews)
+    {
+        [pSubviews removeFromSuperview];
+    }
 }
 
 + (MyViewController*)getMVC
@@ -162,10 +163,5 @@
     }
 }
 
-- (void) dealloc
-{
-    [super dealloc];
-//    [m_pLastAcceleration dealloc];
-}
 
 @end

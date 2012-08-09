@@ -37,7 +37,7 @@
     }
     
     NSEntityDescription *pEntityDescription = [NSEntityDescription entityForName:@"Level" inManagedObjectContext:m_pMOC];
-    NSFetchRequest *pRequest = [[[NSFetchRequest alloc] init] autorelease];
+    NSFetchRequest *pRequest = [[NSFetchRequest alloc] init];
     [pRequest setEntity:pEntityDescription];
     
     NSError* pError;
@@ -51,7 +51,7 @@
 - (NSArray*) getLevelWithID:(NSString*)level
 {
     NSEntityDescription *pEntityDescription = [NSEntityDescription entityForName:@"Level" inManagedObjectContext:m_pMOC];
-    NSFetchRequest *pRequest = [[[NSFetchRequest alloc] init] autorelease];
+    NSFetchRequest *pRequest = [[NSFetchRequest alloc] init];
     [pRequest setEntity:pEntityDescription];
     NSPredicate* pPredicate = [NSPredicate predicateWithFormat:@"a_Level_ID == %@", level];
     [pRequest setPredicate: pPredicate];
@@ -83,9 +83,7 @@
     NSKeyedArchiver* pArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData: pData];
     [pArchiver encodeObject: pDictionary forKey:@"a_ImageAtts"];
     [pArchiver finishEncoding];
-    [pArchiver release];
     [pObject setValue:pData forKey:@"a_ImageAtts"];
-    [pData release];
 }
 
 - (void)saveLevel:(NSString*)level traps:(NSMutableArray*)traps whirls:(NSMutableArray*)whirls accels:(NSMutableArray*)accels walls:(NSMutableArray*)walls dest:(NSDictionary*)dest jupiter:(NSDictionary*)jupiter rating:(NSNumber*)pRating
@@ -95,7 +93,6 @@
         Pointless_JupiterAppDelegate* pDelegate = [[UIApplication sharedApplication] delegate];
         
         self.m_pMOC = [pDelegate managedObjectContext];
-        [pDelegate release];
     }
 	NSManagedObject* pNewLevel = [NSEntityDescription insertNewObjectForEntityForName:@"Level" inManagedObjectContext:m_pMOC];
     
@@ -178,7 +175,6 @@
                                   kLANDSCAPE_HEIGHT / 3
                                   );
         [pAlert show];
-        [pAlert release];
     }
     else
     {
@@ -192,7 +188,6 @@
                                   kLANDSCAPE_HEIGHT / 3
                                   );
         [pAlert show];
-        [pAlert release];
     }
 }
 
@@ -219,9 +214,5 @@
     }
 }
 
-- (void) dealloc
-{
-    [super dealloc];
-}
 
 @end

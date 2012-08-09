@@ -24,7 +24,6 @@
     [self willChangeValueForKey:@"Creator" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
     [[self primitiveValueForKey:@"Creator"] addObject:value];
     [self didChangeValueForKey:@"Creator" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
-    [changedObjects release];
 }
 
 - (void)removeCreatorObject:(Level *)value 
@@ -33,7 +32,6 @@
     [self willChangeValueForKey:@"Creator" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
     [[self primitiveValueForKey:@"Creator"] removeObject:value];
     [self didChangeValueForKey:@"Creator" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
-    [changedObjects release];
 }
 
 - (void)addCreator:(NSSet *)value 
@@ -57,7 +55,6 @@
     [self willChangeValueForKey:@"BestTime" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
     [[self primitiveValueForKey:@"BestTime"] addObject:value];
     [self didChangeValueForKey:@"BestTime" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
-    [changedObjects release];
 }
 
 - (void)removeBestTimeObject:(BestTimes *)value 
@@ -66,7 +63,6 @@
     [self willChangeValueForKey:@"BestTime" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
     [[self primitiveValueForKey:@"BestTime"] removeObject:value];
     [self didChangeValueForKey:@"BestTime" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
-    [changedObjects release];
 }
 
 - (void)addBestTime:(NSSet *)value 
@@ -90,7 +86,6 @@
     [self willChangeValueForKey:@"LevelRated" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
     [[self primitiveValueForKey:@"LevelRated"] addObject:value];
     [self didChangeValueForKey:@"LevelRated" withSetMutation:NSKeyValueUnionSetMutation usingObjects:changedObjects];
-    [changedObjects release];
 }
 
 - (void)removeLevelRatedObject:(Level *)value 
@@ -99,7 +94,6 @@
     [self willChangeValueForKey:@"LevelRated" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
     [[self primitiveValueForKey:@"LevelRated"] removeObject:value];
     [self didChangeValueForKey:@"LevelRated" withSetMutation:NSKeyValueMinusSetMutation usingObjects:changedObjects];
-    [changedObjects release];
 }
 
 - (void)addLevelRated:(NSSet *)value 

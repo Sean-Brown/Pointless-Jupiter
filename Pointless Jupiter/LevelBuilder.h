@@ -39,13 +39,13 @@
     bool m_bPinching;
 }
 
-@property (nonatomic, retain) NSMutableArray* m_pItems;
+@property (nonatomic, strong) NSMutableArray* m_pItems;
 
-@property (nonatomic, retain) UIButton* m_pWallImg, * m_pTrap, * m_pAccel,* m_pWhirl,* m_pJupi,* m_pRemove,* m_pDest,* m_pSave,* m_pQuit;
+@property (nonatomic, strong) UIButton* m_pWallImg, * m_pTrap, * m_pAccel,* m_pWhirl,* m_pJupi,* m_pRemove,* m_pDest,* m_pSave,* m_pQuit;
 
-@property (nonatomic, retain) UIImageView* m_pSelectedItemImage;
+@property (nonatomic, strong) UIImageView* m_pSelectedItemImage;
 
-@property (nonatomic, retain) UITextField* m_pLevelID;
+@property (nonatomic, strong) UITextField* m_pLevelID;
 
 - (void)initImages:(id)sender;
 - (void)initSaveQuit;
