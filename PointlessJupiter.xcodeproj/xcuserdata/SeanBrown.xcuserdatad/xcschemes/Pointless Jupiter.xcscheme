@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
+   LastUpgradeVersion = "0440"
    version = "1.8">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "18CDA9171594C7AC0057BC94"
-               BuildableName = "Pointless Jupiter.app"
+               BlueprintIdentifier = "1805686415D460330098DC58"
+               BuildableName = "PointlessJupiter.app"
                BlueprintName = "PointlessJupiter"
                ReferencedContainer = "container:PointlessJupiter.xcodeproj">
             </BuildableReference>
@@ -32,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "18CDA9351594C7AC0057BC94"
-               BuildableName = "Pointless JupiterTests.octest"
+               BuildableName = "PointlessJupiterTests.octest"
                BlueprintName = "PointlessJupiterTests"
                ReferencedContainer = "container:PointlessJupiter.xcodeproj">
             </BuildableReference>
@@ -40,7 +41,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.GDB"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
       displayScaleIsEnabled = "NO"
       displayScale = "1.00"
@@ -54,8 +55,8 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18CDA9171594C7AC0057BC94"
-            BuildableName = "Pointless Jupiter.app"
+            BlueprintIdentifier = "1805686415D460330098DC58"
+            BuildableName = "PointlessJupiter.app"
             BlueprintName = "PointlessJupiter"
             ReferencedContainer = "container:PointlessJupiter.xcodeproj">
          </BuildableReference>
@@ -74,8 +75,8 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "18CDA9171594C7AC0057BC94"
-            BuildableName = "Pointless Jupiter.app"
+            BlueprintIdentifier = "1805686415D460330098DC58"
+            BuildableName = "PointlessJupiter.app"
             BlueprintName = "PointlessJupiter"
             ReferencedContainer = "container:PointlessJupiter.xcodeproj">
          </BuildableReference>
