@@ -14,10 +14,10 @@
 @interface User : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSString * a_Name;
-@property (nonatomic, retain) NSString * a_Password;
-@property (nonatomic, retain) NSSet* r_Creator;
-@property (nonatomic, retain) NSSet* r_BestTime;
-@property (nonatomic, retain) NSSet* r_LevelRated;
+@property (nonatomic, strong) NSString * a_Name;
+@property (nonatomic, strong) NSString * a_Password;
+@property (nonatomic, strong) NSSet* r_Creator;
+@property (nonatomic, strong) NSSet* r_BestTime;
+@property (nonatomic, strong) NSSet* r_LevelRated;
 
 @end

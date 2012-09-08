@@ -16,7 +16,3 @@
 }
 
 @end
-
-@protocol JupiterDelegate <NSObject>
-
-@end

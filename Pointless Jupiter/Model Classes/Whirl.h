@@ -14,7 +14,7 @@
 @interface Whirl : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSData * a_ImageAtts;
-@property (nonatomic, retain) Level * r_Level;
+@property (nonatomic, strong) NSData * a_ImageAtts;
+@property (nonatomic, strong) Level * r_Level;
 
 @end

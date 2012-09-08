@@ -25,9 +25,9 @@
     bool bJupiterActive;
 }
 
-@property (nonatomic, assign) CustomTable* m_pCT;
+@property (nonatomic, strong) CustomTable* m_pCT;
 @property (nonatomic, copy) NSString* m_pLevelID;
-@property (nonatomic, retain) NSNumber* m_pRating;
+@property (nonatomic, strong) NSNumber* m_pRating;
 
 - (void) setLevelID:(NSString*)levelID withRating:(NSNumber*)pRating;
 - (void) makeLevelLabel:(NSString*)levelID;

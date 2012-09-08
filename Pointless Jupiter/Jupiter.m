@@ -15,10 +15,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) 
-    {
-        // Initialize the game ball
+    { // Initialize the game ball
         self.image = [UIImage imageNamed:@"Jupiter.jpg"];
-        [Pointless_JupiterAppDelegate roundImageCorners: self];
     }
     return self;
 }
@@ -31,10 +29,5 @@
     // Drawing code
 }
 */
-
-- (void)dealloc
-{
-    [super dealloc];
-}
 
 @end

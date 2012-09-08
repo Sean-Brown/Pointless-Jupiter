@@ -11,14 +11,14 @@
 #import "Jupiter.h"
 #import "Constants.h"
 
-@interface BoardItem : UIView <JupiterDelegate>
+@interface BoardItem : UIImageView
 {
     eImageTagID m_stItemType;
     CGFloat m_fOrientation;
 }
 
-@property (nonatomic, assign) eImageTagID m_stItemType;
-@property (nonatomic, assign) CGFloat m_fOrientation;
+@property (nonatomic) eImageTagID m_stItemType;
+@property (nonatomic) CGFloat m_fOrientation;
 
 - (id) initWithItem:(eImageTagID)mItem inFrame: (CGRect)frame;
 

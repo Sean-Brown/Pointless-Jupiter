@@ -27,7 +27,7 @@
     label.frame = CGRectMake(150, yCoord, 300, 100);
 }
 
-- (id) initButton: (UIButton*)button atY:(int)yCoord withTitle: (NSString*)title withColor: (UIColor*)color
++ (id) initButton: (UIButton*)button atY:(int)yCoord withTitle: (NSString*)title withColor: (UIColor*)color inView:(UIView*)pView
 {
     button = [UIButton buttonWithType: UIButtonTypeCustom];
     button.frame = CGRectMake(666, yCoord, 300, 50);
@@ -41,7 +41,7 @@
     [[button titleLabel] setFont: [UIFont fontWithName:@"Arial-BoldMT" size:36]];
     [[button titleLabel] setShadowOffset: CGSizeMake(1,1)];
     [[button titleLabel] setShadowColor: [UIColor yellowColor]];
-    [self addSubview: button];
+    [pView addSubview: button];
     return button;
 }
 
@@ -53,7 +53,6 @@
     {
         UIImageView* pBackground = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"Night.jpg"]];
         [self addSubview: pBackground];
-        [pBackground release];
         
         UILabel* pointless = [[UILabel alloc] init];
         [self initLabel: pointless withName: @"Pointless" atY:(CGFloat)100];
@@ -61,22 +60,17 @@
         [self initLabel: jupi withName: @"Jupiter" atY:(CGFloat)500];
         [self addSubview: pointless];
         [self addSubview: jupi];
-        [pointless release];
-        [jupi release];
         
         UIImageView* jupiter = [[UIImageView alloc] initWithFrame: CGRectMake(150, 200, 300, 300)];
         UIImage* img = [UIImage imageNamed:@"Jupiter.jpg"];
         jupiter.image = img;
-        [Pointless_JupiterAppDelegate roundImageCorners: jupiter];
         [self addSubview: jupiter];
-        [jupiter release];
-        [img release];
         
         float height = kLANDSCAPE_HEIGHT/6.0;
-        m_pbtNewGame = [self initButton: m_pbtNewGame atY:height withTitle:@"New Game" withColor: [UIColor greenColor]];
-        m_pbtBestTimes = [self initButton: m_pbtBestTimes atY:height*2 withTitle:@"Best Times" withColor: [UIColor redColor]];
-        m_pbtLevelBuilder = [self initButton: m_pbtLevelBuilder atY:height*3 withTitle:@"Level Builder" withColor: [UIColor cyanColor]];
-        m_pbtSetUser = [self initButton: m_pbtSetUser atY:height*4 withTitle:@"My Account" withColor: [UIColor orangeColor]];
+        m_pbtNewGame = [MainView initButton: m_pbtNewGame atY:height withTitle:@"New Game" withColor:[UIColor greenColor] inView:self];
+        m_pbtBestTimes = [MainView initButton: m_pbtBestTimes atY:height*2 withTitle:@"Best Times" withColor:[UIColor redColor] inView:self];
+        m_pbtLevelBuilder = [MainView initButton: m_pbtLevelBuilder atY:height*3 withTitle:@"Level Builder" withColor:[UIColor cyanColor] inView:self];
+        m_pbtSetUser = [MainView initButton: m_pbtSetUser atY:height*4 withTitle:@"My Account" withColor:[UIColor orangeColor] inView:self];
         
         // Add press event handlers
         [m_pbtNewGame addTarget:[MyViewController getMVC] action:@selector(chooseLevel) forControlEvents:UIControlEventTouchUpInside];
@@ -85,15 +79,6 @@
         [m_pbtSetUser addTarget:[MyViewController getMVC] action:@selector(setUserAccount) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
-}
-
-- (void)dealloc
-{
-    // NSLog(@"Dealloc'ing MainView");
-    [m_pbtSetUser release];
-    [m_pbtBestTimes release];
-    [m_pbtLevelBuilder release];
-    [super dealloc];
 }
 
 @end

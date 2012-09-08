@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Pointless_JupiterAppDelegate.h"
 
 int main(int argc, char* argv[])
 {
-    NSLog(@"Beginning from main");
-    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, nil);
-    [pool release];
-    return retVal;
+    @autoreleasepool
+    {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([Pointless_JupiterAppDelegate class]));
+    }
 }

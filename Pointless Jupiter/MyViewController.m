@@ -44,10 +44,10 @@
     
 	MainView* mv = [[MainView alloc] initWithFrame: newFrame];
 	self.view = mv;
-    [mv release];
 }
 
-- (void)accelerometer:(UIAccelerometer* )accelerometer didAccelerate:(UIAcceleration* )acceleration {
+- (void)accelerometer:(UIAccelerometer* )accelerometer didAccelerate:(UIAcceleration* )acceleration
+{
     float prevX = m_pLastAcceleration.x;
     float prevY = m_pLastAcceleration.y;
     
@@ -65,7 +65,7 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
+    // Release any stronged subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
@@ -78,7 +78,7 @@
 - (void) startGameWithLevelID:(NSString*)pLevelID
 {
     NSLog(@"MyViewController - beginGameWithLevelID");
-    NSArray* pLevel = [[DataManager getDataManager] getLevelWithID:pLevelID];
+    NSArray* pLevel = [[DataManager sharedDataManager] getLevelWithID:pLevelID];
     
     if (pLevel == nil || [pLevel count] == 0) 
     {
@@ -90,7 +90,6 @@
                                   kLANDSCAPE_HEIGHT / 3 
                                   );
         [pAlert show];
-        [pAlert release];
         return;
     }
     else
@@ -112,7 +111,6 @@
     CustomTable* pCT = [[CustomTable alloc] initWithFrame: newFrame];
     [pCT initLevels];
     [self.view addSubview: (UIView*)pCT];
-    [pCT release];
 }
 
 - (void) viewHighScores
@@ -128,7 +126,6 @@
     LevelBuilder* pLB = [[LevelBuilder alloc] initWithFrame:newFrame];
     
     [self.view addSubview: (UIView*)pLB];
-    [pLB release];
 }
 
 - (void) setUserAccount
@@ -146,7 +143,6 @@
     CGRect newFrame = makeScreen([UIScreen mainScreen].applicationFrame);
     MainView* mv = [[MainView alloc] initWithFrame: newFrame];
     [self.view addSubview:(UIView*)mv];
-    [mv release];
 }
 
 + (MyViewController*)getMVC
@@ -160,12 +156,6 @@
         
         return pSharedMVC;
     }
-}
-
-- (void) dealloc
-{
-    [super dealloc];
-//    [m_pLastAcceleration dealloc];
 }
 
 @end

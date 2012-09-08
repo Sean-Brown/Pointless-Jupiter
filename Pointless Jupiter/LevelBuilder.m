@@ -30,7 +30,8 @@
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
         m_nDestCount = 0;
         self.backgroundColor = [UIColor blackColor];
         m_pItems = [[NSMutableArray alloc] init];
@@ -63,7 +64,6 @@
         [self addSubview: pLabel];
         [self addSubview: m_pLevelID];
         [pLabel setNeedsDisplay];
-        [pLabel release];
         
         m_bRotating = false;
         m_bPinching = false;
@@ -200,12 +200,6 @@
     [m_pJupi setImage: [UIImage imageNamed:@"Jupiter.jpg"] forState: UIControlStateHighlighted];
     [m_pDest setImage: [UIImage imageNamed:@"Destination.jpg"] forState: UIControlStateNormal];
     [m_pRemove setImage: [UIImage imageNamed:@"Remove.jpg"] forState:UIControlStateHighlighted];
-    
-    // Clip the corners
-    [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pJupi];
-    [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pTrap];
-    [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pWhirl];
-    [Pointless_JupiterAppDelegate roundImageCorners: (UIImageView*)m_pDest];
         
     [sender addSubview: m_pWallImg];
     [sender addSubview: m_pTrap];
@@ -229,12 +223,10 @@
     UIPinchGestureRecognizer *pPinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(processPinch:)];
     [pPinch setDelegate: self];
     [self addGestureRecognizer: pPinch];
-    [pPinch release];
     
     UIRotationGestureRecognizer *pRot = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(processRotate:)];
     [pRot setDelegate: self];
     [self addGestureRecognizer: pRot];
-    [pRot release];
 }
 
 #pragma mark -
@@ -255,19 +247,19 @@
         {
             case eitid_Wall:
             {
-                [walls addObject: object];
+                [walls addObject:object];
                 break;
             }
             case eitid_Trap:
-                [traps addObject: object];
+                [traps addObject:object];
                 break;
             case eitid_Accel:
             {
-                [accels addObject: object];
+                [accels addObject:object];
                 break;
             }
             case eitid_Whirl:
-                [whirls addObject: object];
+                [whirls addObject:object];
                 break;
             case eitid_Jupiter:
                 [pJupiterDict setValue: NSStringFromCGRect([object bounds]) forKey:@"a_Bounds"];
@@ -284,7 +276,7 @@
         }
     }
     NSNumber* pRating = [NSNumber numberWithInt: 0];
-    [[DataManager getDataManager] saveLevel:level traps:traps whirls:whirls accels:accels walls:walls dest:pDestDict jupiter:pJupiterDict rating:pRating];
+    [[DataManager sharedDataManager] saveLevel:level traps:traps whirls:whirls accels:accels walls:walls dest:pDestDict jupiter:pJupiterDict rating:pRating];
 }
 
 - (void) saveLevel
@@ -301,7 +293,6 @@
                                   kLANDSCAPE_HEIGHT / 3
                                   );
         [pAlert show];
-        [pAlert release];
     }
     else if (m_nJupiCount == 0 || m_nDestCount == 0)
     { 
@@ -313,7 +304,6 @@
                                   kLANDSCAPE_HEIGHT / 3
                                   );
         [pAlert show];
-        [pAlert release];
     }
     else
     { // Try and save it
@@ -348,7 +338,6 @@
         case eitid_Trap:
             pNewImage = [[BoardItem alloc] initWithItem: eitid_Trap inFrame: kTRAP_RECT];
             [pNewImage setFrame: kTRAP_RECT];
-            [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
         case eitid_Accel:
             pNewImage = [[BoardItem alloc] initWithItem: eitid_Accel inFrame: kACCEL_RECT];
@@ -359,7 +348,6 @@
         case eitid_Whirl:
             pNewImage = [[BoardItem alloc] initWithItem: eitid_Whirl inFrame: kWHIRL_RECT];
             [pNewImage setFrame: kWHIRL_RECT];
-            [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             break;
         case eitid_Jupiter:
             if (m_nJupiCount == 0) 
@@ -368,7 +356,6 @@
                 [pNewImage setImage: [UIImage imageNamed:@"Jupiter.jpg"]];
                 ++m_nJupiCount;
                 [pNewImage setTag: eitid_Jupiter];
-                [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
                 break;
             }
             else
@@ -380,7 +367,6 @@
                 [pNewImage setImage: [UIImage imageNamed: @"Destination.jpg"]];
                 ++m_nDestCount;
                 [pNewImage setTag: eitid_Dest];
-                [Pointless_JupiterAppDelegate roundImageCorners: pNewImage];
             }
             else
                 return;
@@ -671,21 +657,6 @@
 //    NSLog(@"Removing %@",pIV);
     [pIV removeFromSuperview];
     m_pSelectedItemImage = nil;
-}
-
-- (void)dealloc
-{
-    if (m_pSelectedItemImage != nil)
-        [m_pSelectedItemImage release];
-    [m_pJupi release];
-    [m_pItems release];
-    [m_pAccel release];
-    [m_pTrap release];
-    [m_pWallImg release];
-    [m_pWhirl release];
-    [m_pDest release];
-    [m_pLevelID release];
-    [super dealloc];
 }
 
 @end

@@ -19,18 +19,23 @@
 {
     Jupiter* m_pJupiter; // The game Jupiter
     
+    NSDate* m_pStartTime; // The time will be given by the current time minus the start time
+    UILabel* m_pTimeLabel;
+    NSTimer* m_pTimer;
+    
     UIButton* m_pStart;
     UIButton* m_pRestart;
     UIButton* m_pQuit;
 }
 
-@property (nonatomic, retain) Jupiter* m_pJupiter;
-
-@property (nonatomic, retain) UIButton* m_pStart,* m_pRestart,* m_pQuit;
+@property (nonatomic, strong) Jupiter* m_pJupiter;
+@property (nonatomic, strong) NSDate* m_pStartTime;
+@property (nonatomic, strong) UIButton* m_pStart,* m_pRestart,* m_pQuit;
 
 - (void) initObjectWithTagID:(eImageTagID)eitid inLevel:(Level*)pLevel withData:(NSData*)pData;
 - (void) initLevel:(Level*)pLevel;
 - (void) initButtons;
+- (void) initLabel;
 - (void) startGame;
 - (void) quitPlaying;
 - (void) redraw:(int)levelID; // Redraw the board with the given id, usually in response to a Restart

@@ -9,14 +9,15 @@
 #import <QuartzCore/QuartzCore.h>
 #import "GameBoard.h"
 #import "Accel.h"
+#import "Ball.h"
+#import "Dest.h"
 #import "Wall.h"
 #import "Pointless_JupiterAppDelegate.h"
 
 #define kMAX_ITEMS 32 // Maximum items the obstacles array can contain
 
-@implementation GameBoard
-
-@synthesize m_pJupiter, m_pStart, m_pRestart, m_pQuit;
+@implementation GameBoard;
+@synthesize m_pJupiter, m_pStart, m_pRestart, m_pQuit, m_pStartTime;
 
 - (id) initWithFrame:(CGRect)frame
 {
@@ -26,12 +27,9 @@
         UIImageView* pBackground = [[UIImageView alloc] initWithFrame: frame];
         pBackground.image = [UIImage imageNamed:@"Night.jpg"];
         [self addSubview:pBackground];
-        [pBackground release];
         
-        m_pStart = [[UIButton alloc] init];
-        m_pRestart = [[UIButton alloc] init];
-        m_pQuit = [[UIButton alloc] init];
         [self initButtons];
+        [self initLabel];
     }
     
     return self;
@@ -39,9 +37,8 @@
 
 - (void)initButtons
 {
-    m_pStart = [UIButton buttonWithType: UIButtonTypeCustom];
-    m_pStart.frame = CGRectMake(
-                                kLANDSCAPE_WIDTH - 100, 
+    m_pStart = [UIButton buttonWithType:UIButtonTypeCustom];
+    m_pStart.frame = CGRectMake(kLANDSCAPE_WIDTH - 100,
                                 0, 
                                 100, 
                                 30
@@ -50,10 +47,19 @@
     [m_pStart setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     [m_pStart addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
     
+    m_pRestart = [UIButton buttonWithType:UIButtonTypeCustom];
+    m_pRestart.frame = CGRectMake(kLANDSCAPE_WIDTH - 100,
+                                  30,
+                                  100,
+                                  30
+                                  );
+    [m_pRestart setTitle:@"Restart" forState:UIControlStateNormal];
+    [m_pRestart setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+    [m_pRestart addTarget:self action:@selector(RestartGame) forControlEvents:UIControlEventTouchUpInside];
+    
     m_pQuit = [UIButton buttonWithType: UIButtonTypeCustom];
-    m_pQuit.frame = CGRectMake(
-                               kLANDSCAPE_WIDTH - 100, 
-                               30, 
+    m_pQuit.frame = CGRectMake(kLANDSCAPE_WIDTH - 100, 
+                               60,
                                100, 
                                30
                                );
@@ -61,16 +67,26 @@
     [m_pQuit setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [m_pQuit addTarget:self action:@selector(quitPlaying) forControlEvents:UIControlEventTouchUpInside];
     
-    [self addSubview: m_pStart];
-    [self addSubview: m_pQuit];
+    [self addSubview:m_pStart];
+    [self addSubview:m_pRestart];
+    [self addSubview:m_pQuit];
+}
+
+- (void) initLabel
+{
+    m_pTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 200,
+                                                             kLANDSCAPE_HEIGHT - 100,
+                                                             200,
+                                                             100)];
+    [m_pTimeLabel setText:@"00:000"]; // Note, the time will be in minutes and seconds (1/1000 of a second precision, if possible)
+    [self addSubview:m_pTimeLabel];
 }
 
 - (void) initObjectWithTagID:(eImageTagID)eitid inLevel:(Level*)pLevel withData:(NSData*)pData
 {
     NSKeyedUnarchiver* pUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:pData];
-    NSDictionary* pDict = [[pUnarchiver decodeObjectForKey:@"a_ImageAtts"] retain];
+    NSDictionary* pDict = [pUnarchiver decodeObjectForKey:@"a_ImageAtts"];
     [pUnarchiver finishDecoding];
-    [pUnarchiver release];
     CGRect bounds = CGRectFromString([pDict objectForKey:@"a_Bounds"]);
     CGPoint center = CGPointFromString([pDict objectForKey:@"a_Center"]);
     CGAffineTransform transform = CGAffineTransformFromString([pDict objectForKey:@"a_Transform"]);   
@@ -98,7 +114,6 @@
         {
             UIImageView* pDest = [[UIImageView alloc] initWithFrame:bounds];
             [pDest setImage: [UIImage imageNamed:@"Destination.jpg"]];
-            [Pointless_JupiterAppDelegate roundImageCorners: pDest];
             [pDest setCenter: center];
             pDest.transform = transform;
             [self addSubview: pDest];
@@ -189,15 +204,6 @@
     double newTraj = 0.0;
     
     return newTraj;
-}
-
-- (void) dealloc
-{
-    [m_pJupiter release];
-    [m_pStart release];     
-    [m_pRestart release];
-    [m_pQuit release];
-    [super dealloc];
 }
 
 @end

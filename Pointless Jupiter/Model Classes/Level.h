@@ -17,18 +17,18 @@
 @interface Level : NSManagedObject {
 @private
 }
-@property (nonatomic, retain) NSNumber * a_Rating;
-@property (nonatomic, retain) NSDate * a_Creation_Date;
-@property (nonatomic, retain) NSString * a_Level_ID;
-@property (nonatomic, retain) NSString * a_CreatedBy;
-@property (nonatomic, retain) NSSet* r_Walls;
-@property (nonatomic, retain) NSSet* r_Accels;
-@property (nonatomic, retain) NSSet* r_Traps;
-@property (nonatomic, retain) Ball * r_Ball;
-@property (nonatomic, retain) Dest * r_Dest;
-@property (nonatomic, retain) NSSet* r_Whirls;
-@property (nonatomic, retain) User * r_Creator;
-@property (nonatomic, retain) BestTimes * r_Level;
-@property (nonatomic, retain) NSSet* r_RatedBy;
+@property (nonatomic, strong) NSNumber * a_Rating;
+@property (nonatomic, strong) NSDate * a_Creation_Date;
+@property (nonatomic, strong) NSString * a_Level_ID;
+@property (nonatomic, strong) NSString * a_CreatedBy;
+@property (nonatomic, strong) NSSet* r_Walls;
+@property (nonatomic, strong) NSSet* r_Accels;
+@property (nonatomic, strong) NSSet* r_Traps;
+@property (nonatomic, strong) Ball * r_Ball;
+@property (nonatomic, strong) Dest * r_Dest;
+@property (nonatomic, strong) NSSet* r_Whirls;
+@property (nonatomic, strong) User * r_Creator;
+@property (nonatomic, strong) BestTimes * r_Level;
+@property (nonatomic, strong) NSSet* r_RatedBy;
 
 @end

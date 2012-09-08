@@ -35,7 +35,6 @@
         [pBuddha setMultipleTouchEnabled: NO];
         pBuddha.tag = kBUDDHA_TAG;
         [self insertSubview:pBuddha atIndex:0];
-        [pBuddha release];
         
         [self initTitle];
         [self initBackButton];
@@ -45,7 +44,7 @@
 
 - (void)initLevels
 {
-    DataManager* pDataManager = [DataManager getDataManager];
+    DataManager* pDataManager = [DataManager sharedDataManager];
     m_pLevelIDs = [pDataManager getLevels];
     if ([m_pLevelIDs count] < 1) 
         return;
@@ -79,7 +78,7 @@
 {
     m_pBack = [UIButton buttonWithType: UIButtonTypeCustom];
     m_pBack.frame = CGRectMake(0, 0, 100, 30);
-    [m_pBack setTitle:@"Back" forState:UIControlStateNormal];
+    [m_pBack setTitle:@"Home" forState:UIControlStateNormal];
     [m_pBack.titleLabel setFont: [UIFont fontWithName:@"Arial-BoldMT" size:24]];
     [m_pBack setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [m_pBack addTarget:self action:@selector(quitGame) forControlEvents:UIControlEventTouchUpInside];
@@ -221,17 +220,5 @@
     // Drawing code
 }
 */
-
-- (void)dealloc
-{
-// ** Objects returned by the DM are autoreleased, fool! **
-//    [m_pLevelIDs release];
-// ** Not sure why, but m_pPickers gives me issues, so leave it alone **
-//    [m_pPickers release];
-    [m_pTitle release];
-// ** Something's screwy with releasing the back button, so leave it alone **
-//    [m_pBack release];
-    [super dealloc];
-}
 
 @end

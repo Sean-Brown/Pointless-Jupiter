@@ -10,7 +10,6 @@
 
 @implementation Pointless_JupiterAppDelegate
 
-
 @synthesize window, m_pMOC, m_pMOM, m_pCoordinator;
 
 // Credit to Zane Claes - http://stackoverflow.com/questions/7841610/xcode-4-2-debug-doesnt-symbolicate-stack-call
@@ -204,26 +203,6 @@ void uncaughtExceptionHandler(NSException *exception)
 - (NSURL*)applicationDocumentsDirectory 
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
-- (void)dealloc
-{
-    [m_pMOC release];
-    [m_pMOM release];
-    [m_pCoordinator release];
-    
-    [window release];
-    [super dealloc];
-}
-
-// Only round square images
-+ (void)roundImageCorners:(UIImageView*)pImageView
-{
-    float fRadius = pImageView.layer.frame.size.width/2.0;
-    pImageView.layer.cornerRadius = fRadius;
-    pImageView.layer.masksToBounds = YES;
-    pImageView.layer.borderColor = [UIColor blackColor].CGColor;
-    pImageView.layer.borderWidth = 1.0;
 }
 
 @end

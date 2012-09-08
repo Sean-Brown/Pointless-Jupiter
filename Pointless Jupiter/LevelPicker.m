@@ -63,7 +63,6 @@ int nJupiterCenter = 0;
     pLevelID.backgroundColor = [UIColor clearColor];
     
     [self addSubview: pLevelID];
-    [pLevelID release];
 }
 
 - (void) initJupiterAndDest
@@ -72,25 +71,21 @@ int nJupiterCenter = 0;
     int nW = self.bounds.size.width;
     int nH = self.bounds.size.height;
     
-    m_pJupiter = [[UIImageView alloc] initWithFrame: CGRectMake(
-                                                                nX + kPADDING + 75, 
+    m_pJupiter = [[UIImageView alloc] initWithFrame: CGRectMake(nX + kPADDING + 75,
                                                                 ((nH / 3.0) * 2.0) - kPADDING,
                                                                 50, 
                                                                 50
                                                                 )];
     m_pJupiter.image = [UIImage imageNamed:@"Jupiter.jpg"];
-    [Pointless_JupiterAppDelegate roundImageCorners: m_pJupiter];
     [m_pJupiter setUserInteractionEnabled: YES];
     [m_pJupiter setMultipleTouchEnabled: NO];
     
-    m_pDest = [[UIImageView alloc] initWithFrame: CGRectMake(
-                                                             (nW - 125 - kPADDING),
+    m_pDest = [[UIImageView alloc] initWithFrame: CGRectMake((nW - 125 - kPADDING),
                                                              ((nH / 3.0) * 2.0) - kPADDING,
                                                              50,
                                                              50
                                                              )];
     m_pDest.image = [UIImage imageNamed:@"Destination.jpg"];
-    [Pointless_JupiterAppDelegate roundImageCorners: m_pDest];
     [m_pDest setUserInteractionEnabled: NO];
     [m_pDest setMultipleTouchEnabled: NO];
     
@@ -188,15 +183,6 @@ int nJupiterCenter = 0;
                                      50
                                      )];
     [m_pJupiter setNeedsDisplay];
-}
-
-- (void) dealloc
-{
-    [m_pLevelID release];
-    [m_pRating release];
-    [m_pJupiter release];
-    [m_pDest release];
-    [super dealloc];
 }
 
 @end

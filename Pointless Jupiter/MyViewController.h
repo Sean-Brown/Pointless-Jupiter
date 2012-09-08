@@ -15,7 +15,7 @@
     UIAcceleration* m_pLastAcceleration;
 }
 
-@property (nonatomic, assign) UIAcceleration* m_pLastAcceleration;
+@property (nonatomic, strong) UIAcceleration* m_pLastAcceleration;
 
 - (void)calcNextPosition: fromAcceleration:(UIAcceleration*)acceleration;
 

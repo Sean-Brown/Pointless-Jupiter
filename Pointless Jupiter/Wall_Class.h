@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "Jupiter.h"
 
-@interface Wall_Class : UIImageView <JupiterDelegate>  
+@interface Wall_Class : UIImageView
 {
     CGFloat m_fOrientation;
 }
 
-@property (nonatomic, assign) CGFloat m_fOrientation;
+@property (nonatomic) CGFloat m_fOrientation;
 
 @end

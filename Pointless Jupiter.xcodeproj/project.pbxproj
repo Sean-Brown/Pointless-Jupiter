@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1803DDB815C809160074C6EA /* PointlessModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1803DDB615C809160074C6EA /* PointlessModel.xcdatamodeld */; };
-		1814840B15C4010700C86651 /* Buddha_Table.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1814840A15C4010700C86651 /* Buddha_Table.jpg */; };
 		18232F0B15A9DD15005A27AD /* Pointless_JupiterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F0A15A9DD15005A27AD /* Pointless_JupiterAppDelegate.m */; };
 		18232F0E15A9DD1F005A27AD /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F0D15A9DD1F005A27AD /* MyViewController.m */; };
 		18232F1815A9DD33005A27AD /* BoardItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 18232F1215A9DD33005A27AD /* BoardItem.m */; };
@@ -24,6 +23,9 @@
 		18253F2015C89A27001A9814 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1515C89A27001A9814 /* User.m */; };
 		18253F2115C89A27001A9814 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1715C89A27001A9814 /* Wall.m */; };
 		18253F2215C89A27001A9814 /* Whirl.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1915C89A27001A9814 /* Whirl.m */; };
+		1840DDAD15F6A0B0007300BF /* PhysicsEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1840DDAC15F6A0B0007300BF /* PhysicsEngine.m */; };
+		1844211215FBAF3E00CE10A2 /* Jupiter.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7FC15F6937600D9F235 /* Jupiter.png */; };
+		1844211315FBAF4D00CE10A2 /* Accelerator.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F215F6937600D9F235 /* Accelerator.png */; };
 		1877B08715C4B4B100A451B6 /* CustomTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 1877B08615C4B4B000A451B6 /* CustomTable.m */; };
 		18A8762915AC9D3B00C924E3 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A8762815AC9D3B00C924E3 /* MainView.m */; };
 		18A8763915AEFC0000C924E3 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18A8763815AEFC0000C924E3 /* MainWindow.xib */; };
@@ -38,37 +40,34 @@
 		18CDA9211594C7AC0057BC94 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18CDA9201594C7AC0057BC94 /* CoreGraphics.framework */; };
 		18CDA9271594C7AC0057BC94 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18CDA9251594C7AC0057BC94 /* InfoPlist.strings */; };
 		18CDA92A1594C7AC0057BC94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CDA9291594C7AC0057BC94 /* main.m */; };
-		18CDA9371594C7AD0057BC94 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18CDA91C1594C7AC0057BC94 /* UIKit.framework */; };
-		18CDA9381594C7AD0057BC94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18CDA91E1594C7AC0057BC94 /* Foundation.framework */; };
-		18CDA9391594C7AD0057BC94 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18CDA9201594C7AC0057BC94 /* CoreGraphics.framework */; };
-		18CDA9411594C7AD0057BC94 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18CDA93F1594C7AD0057BC94 /* InfoPlist.strings */; };
-		18CDA9441594C7AD0057BC94 /* Pointless_JupiterTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 18CDA9431594C7AD0057BC94 /* Pointless_JupiterTests.h */; };
-		18CDA9461594C7AD0057BC94 /* Pointless_JupiterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 18CDA9451594C7AD0057BC94 /* Pointless_JupiterTests.m */; };
-		18DF5EC015C032A000A0AFF3 /* Accelerator.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EB815C032A000A0AFF3 /* Accelerator.jpg */; };
-		18DF5EC115C032A000A0AFF3 /* Destination.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EB915C032A000A0AFF3 /* Destination.jpg */; };
-		18DF5EC215C032A000A0AFF3 /* Jupiter.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EBA15C032A000A0AFF3 /* Jupiter.jpg */; };
-		18DF5EC315C032A000A0AFF3 /* Night.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EBB15C032A000A0AFF3 /* Night.jpg */; };
-		18DF5EC415C032A000A0AFF3 /* Remove.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EBC15C032A000A0AFF3 /* Remove.jpg */; };
-		18DF5EC515C032A000A0AFF3 /* Trap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EBD15C032A000A0AFF3 /* Trap.jpg */; };
-		18DF5EC615C032A000A0AFF3 /* Wall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EBE15C032A000A0AFF3 /* Wall.jpg */; };
-		18DF5EC715C032A000A0AFF3 /* Whirl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5EBF15C032A000A0AFF3 /* Whirl.jpg */; };
+		18D0C7F015F6935400D9F235 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7EF15F6935400D9F235 /* Default-Portrait~ipad.png */; };
+		18D0C80B15F6937600D9F235 /* AccountLabelImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F315F6937600D9F235 /* AccountLabelImage.png */; };
+		18D0C80C15F6937600D9F235 /* BestTimesLabelImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F415F6937600D9F235 /* BestTimesLabelImage.png */; };
+		18D0C80D15F6937600D9F235 /* Buddha.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F515F6937600D9F235 /* Buddha.png */; };
+		18D0C80E15F6937600D9F235 /* Collision.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F615F6937600D9F235 /* Collision.png */; };
+		18D0C80F15F6937600D9F235 /* Destination.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F715F6937600D9F235 /* Destination.png */; };
+		18D0C81015F6937600D9F235 /* Ending.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F815F6937600D9F235 /* Ending.png */; };
+		18D0C81115F6937600D9F235 /* Epic.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F915F6937600D9F235 /* Epic.png */; };
+		18D0C81215F6937600D9F235 /* GoldStar.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7FA15F6937600D9F235 /* GoldStar.png */; };
+		18D0C81315F6937600D9F235 /* Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7FB15F6937600D9F235 /* Grid.png */; };
+		18D0C81515F6937600D9F235 /* LevelBuilderLabelImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7FD15F6937600D9F235 /* LevelBuilderLabelImage.png */; };
+		18D0C81615F6937600D9F235 /* Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7FE15F6937600D9F235 /* Menu.png */; };
+		18D0C81715F6937600D9F235 /* NewGameLabelImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7FF15F6937600D9F235 /* NewGameLabelImage.png */; };
+		18D0C81815F6937600D9F235 /* Night.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80015F6937600D9F235 /* Night.png */; };
+		18D0C81915F6937600D9F235 /* QuitImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80115F6937600D9F235 /* QuitImage.png */; };
+		18D0C81A15F6937600D9F235 /* Remove.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80215F6937600D9F235 /* Remove.png */; };
+		18D0C81B15F6937600D9F235 /* Saturn.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80315F6937600D9F235 /* Saturn.png */; };
+		18D0C81C15F6937600D9F235 /* SaveImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80415F6937600D9F235 /* SaveImage.png */; };
+		18D0C81D15F6937600D9F235 /* Ship-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80515F6937600D9F235 /* Ship-hd.png */; };
+		18D0C81E15F6937600D9F235 /* Ship.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80615F6937600D9F235 /* Ship.png */; };
+		18D0C81F15F6937600D9F235 /* Trap.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80715F6937600D9F235 /* Trap.png */; };
+		18D0C82015F6937600D9F235 /* Wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80815F6937600D9F235 /* Wall.png */; };
+		18D0C82115F6937600D9F235 /* Whirl.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C80915F6937600D9F235 /* Whirl.png */; };
 		18DF5ECA15C0AF8500A0AFF3 /* LevelPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DF5EC915C0AF8500A0AFF3 /* LevelPicker.m */; };
-		18DF5ECC15C0BB9700A0AFF3 /* GoldStar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18DF5ECB15C0BB9700A0AFF3 /* GoldStar.jpg */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		18CDA93A1594C7AD0057BC94 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18CDA90F1594C7AC0057BC94 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 18CDA9171594C7AC0057BC94;
-			remoteInfo = "Pointless Jupiter";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1803DDB715C809160074C6EA /* PointlessModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PointlessModel.xcdatamodel; sourceTree = "<group>"; };
-		1814840A15C4010700C86651 /* Buddha_Table.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Buddha_Table.jpg; path = Images/Buddha_Table.jpg; sourceTree = SOURCE_ROOT; };
 		18232F0915A9DD15005A27AD /* Pointless_JupiterAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pointless_JupiterAppDelegate.h; sourceTree = "<group>"; };
 		18232F0A15A9DD15005A27AD /* Pointless_JupiterAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pointless_JupiterAppDelegate.m; sourceTree = "<group>"; };
 		18232F0C15A9DD1F005A27AD /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
@@ -77,7 +76,7 @@
 		18232F1215A9DD33005A27AD /* BoardItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoardItem.m; sourceTree = "<group>"; };
 		18232F1315A9DD33005A27AD /* GameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameBoard.h; sourceTree = "<group>"; };
 		18232F1415A9DD33005A27AD /* GameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameBoard.m; sourceTree = "<group>"; };
-		18232F1515A9DD33005A27AD /* Wall_Class.h */ = {isa = PBXFileReference; fileEncoding = 4; path = Wall_Class.h; sourceTree = "<group>"; };
+		18232F1515A9DD33005A27AD /* Wall_Class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wall_Class.h; sourceTree = "<group>"; };
 		18232F1615A9DD33005A27AD /* Wall_Class.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wall_Class.m; sourceTree = "<group>"; };
 		1824C79415BDE11D00A54048 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		1824C79515BDE11D00A54048 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
@@ -99,6 +98,9 @@
 		18253F1715C89A27001A9814 /* Wall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Wall.m; path = "Model Classes/Wall.m"; sourceTree = "<group>"; };
 		18253F1815C89A27001A9814 /* Whirl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Whirl.h; path = "Model Classes/Whirl.h"; sourceTree = "<group>"; };
 		18253F1915C89A27001A9814 /* Whirl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Whirl.m; path = "Model Classes/Whirl.m"; sourceTree = "<group>"; };
+		1840DDAB15F6A0B0007300BF /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
+		1840DDAC15F6A0B0007300BF /* PhysicsEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsEngine.m; sourceTree = "<group>"; };
+		1840DDB315F917C0007300BF /* AnimationLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationLib.h; sourceTree = "<group>"; };
 		1877B08515C4B4B000A451B6 /* CustomTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTable.h; sourceTree = "<group>"; };
 		1877B08615C4B4B000A451B6 /* CustomTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTable.m; sourceTree = "<group>"; };
 		18A8762715AC9D3A00C924E3 /* MainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView.h; sourceTree = "<group>"; };
@@ -122,23 +124,33 @@
 		18CDA9261594C7AC0057BC94 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		18CDA9281594C7AC0057BC94 /* Pointless Jupiter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pointless Jupiter-Prefix.pch"; sourceTree = "<group>"; };
 		18CDA9291594C7AC0057BC94 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		18CDA9361594C7AD0057BC94 /* Pointless JupiterTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pointless JupiterTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		18CDA93E1594C7AD0057BC94 /* Pointless JupiterTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pointless JupiterTests-Info.plist"; sourceTree = "<group>"; };
-		18CDA9401594C7AD0057BC94 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		18CDA9421594C7AD0057BC94 /* Pointless JupiterTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pointless JupiterTests-Prefix.pch"; sourceTree = "<group>"; };
-		18CDA9431594C7AD0057BC94 /* Pointless_JupiterTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pointless_JupiterTests.h; sourceTree = "<group>"; };
-		18CDA9451594C7AD0057BC94 /* Pointless_JupiterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pointless_JupiterTests.m; sourceTree = "<group>"; };
-		18DF5EB815C032A000A0AFF3 /* Accelerator.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Accelerator.jpg; path = Images/Accelerator.jpg; sourceTree = SOURCE_ROOT; };
-		18DF5EB915C032A000A0AFF3 /* Destination.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Destination.jpg; path = Images/Destination.jpg; sourceTree = SOURCE_ROOT; };
-		18DF5EBA15C032A000A0AFF3 /* Jupiter.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Jupiter.jpg; path = Images/Jupiter.jpg; sourceTree = SOURCE_ROOT; };
-		18DF5EBB15C032A000A0AFF3 /* Night.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Night.jpg; path = Images/Night.jpg; sourceTree = SOURCE_ROOT; };
-		18DF5EBC15C032A000A0AFF3 /* Remove.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Remove.jpg; path = Images/Remove.jpg; sourceTree = SOURCE_ROOT; };
-		18DF5EBD15C032A000A0AFF3 /* Trap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Trap.jpg; path = Images/Trap.jpg; sourceTree = SOURCE_ROOT; };
-		18DF5EBE15C032A000A0AFF3 /* Wall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Wall.jpg; path = Images/Wall.jpg; sourceTree = SOURCE_ROOT; };
-		18DF5EBF15C032A000A0AFF3 /* Whirl.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Whirl.jpg; path = Images/Whirl.jpg; sourceTree = SOURCE_ROOT; };
+		18D0C7EF15F6935400D9F235 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = SOURCE_ROOT; };
+		18D0C7F215F6937600D9F235 /* Accelerator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Accelerator.png; path = Images/Accelerator.png; sourceTree = SOURCE_ROOT; };
+		18D0C7F315F6937600D9F235 /* AccountLabelImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AccountLabelImage.png; path = Images/AccountLabelImage.png; sourceTree = SOURCE_ROOT; };
+		18D0C7F415F6937600D9F235 /* BestTimesLabelImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BestTimesLabelImage.png; path = Images/BestTimesLabelImage.png; sourceTree = SOURCE_ROOT; };
+		18D0C7F515F6937600D9F235 /* Buddha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Buddha.png; path = Images/Buddha.png; sourceTree = SOURCE_ROOT; };
+		18D0C7F615F6937600D9F235 /* Collision.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Collision.png; path = Images/Collision.png; sourceTree = SOURCE_ROOT; };
+		18D0C7F715F6937600D9F235 /* Destination.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Destination.png; path = Images/Destination.png; sourceTree = SOURCE_ROOT; };
+		18D0C7F815F6937600D9F235 /* Ending.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ending.png; path = Images/Ending.png; sourceTree = SOURCE_ROOT; };
+		18D0C7F915F6937600D9F235 /* Epic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Epic.png; path = Images/Epic.png; sourceTree = SOURCE_ROOT; };
+		18D0C7FA15F6937600D9F235 /* GoldStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GoldStar.png; path = Images/GoldStar.png; sourceTree = SOURCE_ROOT; };
+		18D0C7FB15F6937600D9F235 /* Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grid.png; path = Images/Grid.png; sourceTree = SOURCE_ROOT; };
+		18D0C7FC15F6937600D9F235 /* Jupiter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Jupiter.png; path = Images/Jupiter.png; sourceTree = SOURCE_ROOT; };
+		18D0C7FD15F6937600D9F235 /* LevelBuilderLabelImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LevelBuilderLabelImage.png; path = Images/LevelBuilderLabelImage.png; sourceTree = SOURCE_ROOT; };
+		18D0C7FE15F6937600D9F235 /* Menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Menu.png; path = Images/Menu.png; sourceTree = SOURCE_ROOT; };
+		18D0C7FF15F6937600D9F235 /* NewGameLabelImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NewGameLabelImage.png; path = Images/NewGameLabelImage.png; sourceTree = SOURCE_ROOT; };
+		18D0C80015F6937600D9F235 /* Night.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Night.png; path = Images/Night.png; sourceTree = SOURCE_ROOT; };
+		18D0C80115F6937600D9F235 /* QuitImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuitImage.png; path = Images/QuitImage.png; sourceTree = SOURCE_ROOT; };
+		18D0C80215F6937600D9F235 /* Remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Remove.png; path = Images/Remove.png; sourceTree = SOURCE_ROOT; };
+		18D0C80315F6937600D9F235 /* Saturn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Saturn.png; path = Images/Saturn.png; sourceTree = SOURCE_ROOT; };
+		18D0C80415F6937600D9F235 /* SaveImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SaveImage.png; path = Images/SaveImage.png; sourceTree = SOURCE_ROOT; };
+		18D0C80515F6937600D9F235 /* Ship-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Ship-hd.png"; path = "Images/Ship-hd.png"; sourceTree = SOURCE_ROOT; };
+		18D0C80615F6937600D9F235 /* Ship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Ship.png; path = Images/Ship.png; sourceTree = SOURCE_ROOT; };
+		18D0C80715F6937600D9F235 /* Trap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Trap.png; path = Images/Trap.png; sourceTree = SOURCE_ROOT; };
+		18D0C80815F6937600D9F235 /* Wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Wall.png; path = Images/Wall.png; sourceTree = SOURCE_ROOT; };
+		18D0C80915F6937600D9F235 /* Whirl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Whirl.png; path = Images/Whirl.png; sourceTree = SOURCE_ROOT; };
 		18DF5EC815C0AF8500A0AFF3 /* LevelPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelPicker.h; sourceTree = "<group>"; };
 		18DF5EC915C0AF8500A0AFF3 /* LevelPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelPicker.m; sourceTree = "<group>"; };
-		18DF5ECB15C0BB9700A0AFF3 /* GoldStar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = GoldStar.jpg; path = Images/GoldStar.jpg; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,22 +166,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		18CDA9321594C7AC0057BC94 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				18CDA9371594C7AD0057BC94 /* UIKit.framework in Frameworks */,
-				18CDA9381594C7AD0057BC94 /* Foundation.framework in Frameworks */,
-				18CDA9391594C7AD0057BC94 /* CoreGraphics.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		1824C79315BDE0DA00A54048 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				1840DDB315F917C0007300BF /* AnimationLib.h */,
 				18232F1115A9DD33005A27AD /* BoardItem.h */,
 				18AE26F515B9A7E9006369F6 /* Constants.h */,
 				1877B08515C4B4B000A451B6 /* CustomTable.h */,
@@ -178,6 +181,7 @@
 				18A8763A15B389BF00C924E3 /* LevelBuilder.h */,
 				18DF5EC815C0AF8500A0AFF3 /* LevelPicker.h */,
 				18A8762715AC9D3A00C924E3 /* MainView.h */,
+				1840DDAB15F6A0B0007300BF /* PhysicsEngine.h */,
 				18A8764915B7133E00C924E3 /* Util.h */,
 				18232F1515A9DD33005A27AD /* Wall_Class.h */,
 			);
@@ -196,7 +200,7 @@
 		18A8763F15B4201600C924E3 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				18D68F2C15BDCAB400DEB9AE /* Classes */,
+				18D68F2C15BDCAB400DEB9AE /* Sources */,
 				18D68F2B15BDCAAC00DEB9AE /* Headers */,
 				1877B08815C71DAC00A451B6 /* Manager */,
 				18D68F2D15BDCAD200DEB9AE /* Model */,
@@ -209,8 +213,8 @@
 			children = (
 				18AE271D15BDABCC006369F6 /* Default-Landscape~ipad.png */,
 				18AE271B15BDABBD006369F6 /* JupiterIcon.png */,
+				18D0C7EF15F6935400D9F235 /* Default-Portrait~ipad.png */,
 				18CDA9221594C7AC0057BC94 /* Pointless Jupiter */,
-				18CDA93C1594C7AD0057BC94 /* Pointless JupiterTests */,
 				18CDA91B1594C7AC0057BC94 /* Frameworks */,
 				18CDA9191594C7AC0057BC94 /* Products */,
 			);
@@ -220,7 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				18CDA9181594C7AC0057BC94 /* Pointless Jupiter.app */,
-				18CDA9361594C7AD0057BC94 /* Pointless JupiterTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -240,7 +243,7 @@
 		18CDA9221594C7AC0057BC94 /* Pointless Jupiter */ = {
 			isa = PBXGroup;
 			children = (
-				18CDA94F1594C8270057BC94 /* Classes */,
+				18CDA94F1594C8270057BC94 /* Sources */,
 				1824C79315BDE0DA00A54048 /* Headers */,
 				18CDA96A1594DE6B0057BC94 /* Controller */,
 				18A8763F15B4201600C924E3 /* Data */,
@@ -263,27 +266,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		18CDA93C1594C7AD0057BC94 /* Pointless JupiterTests */ = {
-			isa = PBXGroup;
-			children = (
-				18CDA9431594C7AD0057BC94 /* Pointless_JupiterTests.h */,
-				18CDA9451594C7AD0057BC94 /* Pointless_JupiterTests.m */,
-				18CDA93D1594C7AD0057BC94 /* Supporting Files */,
-			);
-			path = "Pointless JupiterTests";
-			sourceTree = "<group>";
-		};
-		18CDA93D1594C7AD0057BC94 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				18CDA93E1594C7AD0057BC94 /* Pointless JupiterTests-Info.plist */,
-				18CDA93F1594C7AD0057BC94 /* InfoPlist.strings */,
-				18CDA9421594C7AD0057BC94 /* Pointless JupiterTests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		18CDA94F1594C8270057BC94 /* Classes */ = {
+		18CDA94F1594C8270057BC94 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				18232F1215A9DD33005A27AD /* BoardItem.m */,
@@ -293,9 +276,10 @@
 				18A8763B15B389C300C924E3 /* LevelBuilder.m */,
 				18DF5EC915C0AF8500A0AFF3 /* LevelPicker.m */,
 				18A8762815AC9D3B00C924E3 /* MainView.m */,
+				1840DDAC15F6A0B0007300BF /* PhysicsEngine.m */,
 				18232F1615A9DD33005A27AD /* Wall_Class.m */,
 			);
-			name = Classes;
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		18CDA9691594DE490057BC94 /* Delegate */ = {
@@ -310,7 +294,7 @@
 		18CDA96A1594DE6B0057BC94 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				18DF5ED015C14F6E00A0AFF3 /* Classes */,
+				18DF5ED015C14F6E00A0AFF3 /* Sources */,
 				18DF5ED115C14F7B00A0AFF3 /* Headers */,
 			);
 			name = Controller;
@@ -327,16 +311,30 @@
 		18CDA97715950CA70057BC94 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				18DF5EB815C032A000A0AFF3 /* Accelerator.jpg */,
-				1814840A15C4010700C86651 /* Buddha_Table.jpg */,
-				18DF5EB915C032A000A0AFF3 /* Destination.jpg */,
-				18DF5ECB15C0BB9700A0AFF3 /* GoldStar.jpg */,
-				18DF5EBA15C032A000A0AFF3 /* Jupiter.jpg */,
-				18DF5EBB15C032A000A0AFF3 /* Night.jpg */,
-				18DF5EBC15C032A000A0AFF3 /* Remove.jpg */,
-				18DF5EBD15C032A000A0AFF3 /* Trap.jpg */,
-				18DF5EBE15C032A000A0AFF3 /* Wall.jpg */,
-				18DF5EBF15C032A000A0AFF3 /* Whirl.jpg */,
+				18D0C7F215F6937600D9F235 /* Accelerator.png */,
+				18D0C7F315F6937600D9F235 /* AccountLabelImage.png */,
+				18D0C7F415F6937600D9F235 /* BestTimesLabelImage.png */,
+				18D0C7F515F6937600D9F235 /* Buddha.png */,
+				18D0C7F615F6937600D9F235 /* Collision.png */,
+				18D0C7F715F6937600D9F235 /* Destination.png */,
+				18D0C7F815F6937600D9F235 /* Ending.png */,
+				18D0C7F915F6937600D9F235 /* Epic.png */,
+				18D0C7FA15F6937600D9F235 /* GoldStar.png */,
+				18D0C7FB15F6937600D9F235 /* Grid.png */,
+				18D0C7FC15F6937600D9F235 /* Jupiter.png */,
+				18D0C7FD15F6937600D9F235 /* LevelBuilderLabelImage.png */,
+				18D0C7FE15F6937600D9F235 /* Menu.png */,
+				18D0C7FF15F6937600D9F235 /* NewGameLabelImage.png */,
+				18D0C80015F6937600D9F235 /* Night.png */,
+				18D0C80115F6937600D9F235 /* QuitImage.png */,
+				18D0C80215F6937600D9F235 /* Remove.png */,
+				18D0C80315F6937600D9F235 /* Saturn.png */,
+				18D0C80415F6937600D9F235 /* SaveImage.png */,
+				18D0C80515F6937600D9F235 /* Ship-hd.png */,
+				18D0C80615F6937600D9F235 /* Ship.png */,
+				18D0C80715F6937600D9F235 /* Trap.png */,
+				18D0C80815F6937600D9F235 /* Wall.png */,
+				18D0C80915F6937600D9F235 /* Whirl.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -357,7 +355,7 @@
 			name = Headers;
 			sourceTree = "<group>";
 		};
-		18D68F2C15BDCAB400DEB9AE /* Classes */ = {
+		18D68F2C15BDCAB400DEB9AE /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				18253F0915C89A27001A9814 /* Accel.m */,
@@ -370,7 +368,7 @@
 				18253F1715C89A27001A9814 /* Wall.m */,
 				18253F1915C89A27001A9814 /* Whirl.m */,
 			);
-			name = Classes;
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		18D68F2D15BDCAD200DEB9AE /* Model */ = {
@@ -381,12 +379,12 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		18DF5ED015C14F6E00A0AFF3 /* Classes */ = {
+		18DF5ED015C14F6E00A0AFF3 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				18232F0D15A9DD1F005A27AD /* MyViewController.m */,
 			);
-			name = Classes;
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		18DF5ED115C14F7B00A0AFF3 /* Headers */ = {
@@ -417,30 +415,14 @@
 			productReference = 18CDA9181594C7AC0057BC94 /* Pointless Jupiter.app */;
 			productType = "com.apple.product-type.application";
 		};
-		18CDA9351594C7AC0057BC94 /* Pointless JupiterTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 18CDA94C1594C7AD0057BC94 /* Build configuration list for PBXNativeTarget "Pointless JupiterTests" */;
-			buildPhases = (
-				18CDA9311594C7AC0057BC94 /* Sources */,
-				18CDA9321594C7AC0057BC94 /* Frameworks */,
-				18CDA9331594C7AC0057BC94 /* Resources */,
-				18CDA9341594C7AC0057BC94 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				18CDA93B1594C7AD0057BC94 /* PBXTargetDependency */,
-			);
-			name = "Pointless JupiterTests";
-			productName = "Pointless JupiterTests";
-			productReference = 18CDA9361594C7AD0057BC94 /* Pointless JupiterTests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		18CDA90F1594C7AC0057BC94 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0440;
+			};
 			buildConfigurationList = 18CDA9121594C7AC0057BC94 /* Build configuration list for PBXProject "Pointless Jupiter" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -455,7 +437,6 @@
 			projectRoot = "";
 			targets = (
 				18CDA9171594C7AC0057BC94 /* Pointless Jupiter */,
-				18CDA9351594C7AC0057BC94 /* Pointless JupiterTests */,
 			);
 		};
 /* End PBXProject section */
@@ -469,45 +450,35 @@
 				18A8763915AEFC0000C924E3 /* MainWindow.xib in Resources */,
 				18AE271C15BDABBE006369F6 /* JupiterIcon.png in Resources */,
 				18AE271E15BDABCD006369F6 /* Default-Landscape~ipad.png in Resources */,
-				18DF5EC015C032A000A0AFF3 /* Accelerator.jpg in Resources */,
-				18DF5EC115C032A000A0AFF3 /* Destination.jpg in Resources */,
-				18DF5EC215C032A000A0AFF3 /* Jupiter.jpg in Resources */,
-				18DF5EC315C032A000A0AFF3 /* Night.jpg in Resources */,
-				18DF5EC415C032A000A0AFF3 /* Remove.jpg in Resources */,
-				18DF5EC515C032A000A0AFF3 /* Trap.jpg in Resources */,
-				18DF5EC615C032A000A0AFF3 /* Wall.jpg in Resources */,
-				18DF5EC715C032A000A0AFF3 /* Whirl.jpg in Resources */,
-				18DF5ECC15C0BB9700A0AFF3 /* GoldStar.jpg in Resources */,
-				1814840B15C4010700C86651 /* Buddha_Table.jpg in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		18CDA9331594C7AC0057BC94 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				18CDA9411594C7AD0057BC94 /* InfoPlist.strings in Resources */,
-				18CDA9441594C7AD0057BC94 /* Pointless_JupiterTests.h in Resources */,
+				18D0C7F015F6935400D9F235 /* Default-Portrait~ipad.png in Resources */,
+				1844211315FBAF4D00CE10A2 /* Accelerator.png in Resources */,
+				18D0C80B15F6937600D9F235 /* AccountLabelImage.png in Resources */,
+				18D0C80C15F6937600D9F235 /* BestTimesLabelImage.png in Resources */,
+				18D0C80D15F6937600D9F235 /* Buddha.png in Resources */,
+				18D0C80E15F6937600D9F235 /* Collision.png in Resources */,
+				18D0C80F15F6937600D9F235 /* Destination.png in Resources */,
+				18D0C81015F6937600D9F235 /* Ending.png in Resources */,
+				18D0C81115F6937600D9F235 /* Epic.png in Resources */,
+				18D0C81215F6937600D9F235 /* GoldStar.png in Resources */,
+				18D0C81315F6937600D9F235 /* Grid.png in Resources */,
+				1844211215FBAF3E00CE10A2 /* Jupiter.png in Resources */,
+				18D0C81515F6937600D9F235 /* LevelBuilderLabelImage.png in Resources */,
+				18D0C81615F6937600D9F235 /* Menu.png in Resources */,
+				18D0C81715F6937600D9F235 /* NewGameLabelImage.png in Resources */,
+				18D0C81815F6937600D9F235 /* Night.png in Resources */,
+				18D0C81915F6937600D9F235 /* QuitImage.png in Resources */,
+				18D0C81A15F6937600D9F235 /* Remove.png in Resources */,
+				18D0C81B15F6937600D9F235 /* Saturn.png in Resources */,
+				18D0C81C15F6937600D9F235 /* SaveImage.png in Resources */,
+				18D0C81D15F6937600D9F235 /* Ship-hd.png in Resources */,
+				18D0C81E15F6937600D9F235 /* Ship.png in Resources */,
+				18D0C81F15F6937600D9F235 /* Trap.png in Resources */,
+				18D0C82015F6937600D9F235 /* Wall.png in Resources */,
+				18D0C82115F6937600D9F235 /* Whirl.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		18CDA9341594C7AC0057BC94 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		18CDA9141594C7AC0057BC94 /* Sources */ = {
@@ -536,40 +507,17 @@
 				18253F2015C89A27001A9814 /* User.m in Sources */,
 				18253F2115C89A27001A9814 /* Wall.m in Sources */,
 				18253F2215C89A27001A9814 /* Whirl.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		18CDA9311594C7AC0057BC94 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				18CDA9461594C7AD0057BC94 /* Pointless_JupiterTests.m in Sources */,
+				1840DDAD15F6A0B0007300BF /* PhysicsEngine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		18CDA93B1594C7AD0057BC94 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 18CDA9171594C7AC0057BC94 /* Pointless Jupiter */;
-			targetProxy = 18CDA93A1594C7AD0057BC94 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		18CDA9251594C7AC0057BC94 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				18CDA9261594C7AC0057BC94 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		18CDA93F1594C7AD0057BC94 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				18CDA9401594C7AD0057BC94 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -589,7 +537,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -605,7 +553,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
@@ -617,10 +565,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pointless Jupiter/Pointless Jupiter-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Pointless Jupiter/Pointless Jupiter-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -637,9 +588,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pointless Jupiter/Pointless Jupiter-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Pointless Jupiter/Pointless Jupiter-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -649,52 +603,6 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		18CDA94D1594C7AD0057BC94 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pointless Jupiter.app/Pointless Jupiter";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pointless JupiterTests/Pointless JupiterTests-Prefix.pch";
-				INFOPLIST_FILE = "Pointless JupiterTests/Pointless JupiterTests-Info.plist";
-				OTHER_LDFLAGS = (
-					"-framework",
-					SenTestingKit,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		18CDA94E1594C7AD0057BC94 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Pointless Jupiter.app/Pointless Jupiter";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Pointless JupiterTests/Pointless JupiterTests-Prefix.pch";
-				INFOPLIST_FILE = "Pointless JupiterTests/Pointless JupiterTests-Info.plist";
-				OTHER_LDFLAGS = (
-					"-framework",
-					SenTestingKit,
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -715,15 +623,6 @@
 			buildConfigurations = (
 				18CDA94A1594C7AD0057BC94 /* Debug */,
 				18CDA94B1594C7AD0057BC94 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		18CDA94C1594C7AD0057BC94 /* Build configuration list for PBXNativeTarget "Pointless JupiterTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				18CDA94D1594C7AD0057BC94 /* Debug */,
-				18CDA94E1594C7AD0057BC94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

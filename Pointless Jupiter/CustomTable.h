@@ -10,7 +10,8 @@
 #import "DataManager.h"
 #import "MyViewController.h"
 
-@interface CustomTable : UIView {
+@interface CustomTable : UIView
+{
     NSArray* m_pLevelIDs;
     NSMutableArray* m_pPickers;
     
@@ -20,10 +21,10 @@
     int m_nCurrentIndex;
 }
 
-@property (nonatomic, retain) NSArray* m_pLevelIDs;
-@property (nonatomic, retain) NSMutableArray* m_pPickers;
-@property (nonatomic, retain) UILabel* m_pTitle;
-@property (nonatomic, retain) UIButton* m_pBack;
+@property (nonatomic, strong) NSArray* m_pLevelIDs;
+@property (nonatomic, strong) NSMutableArray* m_pPickers;
+@property (nonatomic, strong) UILabel* m_pTitle;
+@property (nonatomic, strong) UIButton* m_pBack;
 
 - (void) beginGameWithLevelID:(NSString*)pLevelID;
 - (void) initLevels;
