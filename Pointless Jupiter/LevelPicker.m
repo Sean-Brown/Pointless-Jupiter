@@ -76,7 +76,7 @@ int nJupiterCenter = 0;
                                                                 50, 
                                                                 50
                                                                 )];
-    m_pJupiter.image = [UIImage imageNamed:@"Jupiter.jpg"];
+    m_pJupiter.image = [UIImage imageNamed:@"Jupiter.png"];
     [m_pJupiter setUserInteractionEnabled: YES];
     [m_pJupiter setMultipleTouchEnabled: NO];
     
@@ -85,7 +85,7 @@ int nJupiterCenter = 0;
                                                              50,
                                                              50
                                                              )];
-    m_pDest.image = [UIImage imageNamed:@"Destination.jpg"];
+    m_pDest.image = [UIImage imageNamed:@"Destination.png"];
     [m_pDest setUserInteractionEnabled: NO];
     [m_pDest setMultipleTouchEnabled: NO];
     
@@ -104,7 +104,7 @@ int nJupiterCenter = 0;
                                                                               50, 
                                                                               50
                                                                               )];
-    pRatingView.image = [UIImage imageNamed:@"GoldStar.jpg"];
+    pRatingView.image = [UIImage imageNamed:@"GoldStar.png"];
     [m_pJupiter setUserInteractionEnabled: NO];
     [m_pJupiter setMultipleTouchEnabled: NO];
     // TODO: Query to find out if the user has already rated the level, if not, insert cevrons

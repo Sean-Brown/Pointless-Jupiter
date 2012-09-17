@@ -16,7 +16,7 @@
     self = [super initWithFrame:frame];
     if (self) 
     { // Initialize the game ball
-        self.image = [UIImage imageNamed:@"Jupiter.jpg"];
+        self.image = [UIImage imageNamed:@"Jupiter.png"];
     }
     return self;
 }

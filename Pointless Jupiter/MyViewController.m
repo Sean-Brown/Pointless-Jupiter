@@ -98,7 +98,6 @@
         GameBoard* pGB = [[GameBoard alloc] initWithFrame: newFrame];
         [pGB initLevel: [pLevel objectAtIndex:0]];
         [self.view addSubview: (UIView*)pGB];
-//        [pGB release];
     }
 }
 

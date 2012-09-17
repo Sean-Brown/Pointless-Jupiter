@@ -29,7 +29,7 @@
     {
         // Initialization code
         UIImageView* pBuddha = [[UIImageView alloc] initWithFrame: self.frame];
-        pBuddha.image = [UIImage imageNamed:@"Buddha.jpg"];
+        pBuddha.image = [UIImage imageNamed:@"Buddha.png"];
         pBuddha.contentMode = UIViewContentModeScaleAspectFit;
         [pBuddha setUserInteractionEnabled: NO];
         [pBuddha setMultipleTouchEnabled: NO];

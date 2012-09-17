@@ -18,7 +18,7 @@
     if (self == [super initWithFrame:correctRect])
     {
         UIImageView* wall = [[UIImageView alloc] initWithFrame: correctRect];
-        UIImage* wallImage = [UIImage imageNamed: @"Wall.jpg"];
+        UIImage* wallImage = [UIImage imageNamed: @"Wall.png"];
         wall.image = wallImage;
         [self addSubview: wall];
     }

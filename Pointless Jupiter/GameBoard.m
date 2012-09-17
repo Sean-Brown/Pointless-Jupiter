@@ -12,6 +12,7 @@
 #import "Ball.h"
 #import "Dest.h"
 #import "Wall.h"
+#import "PhysicsEngine.h"
 #import "Pointless_JupiterAppDelegate.h"
 
 #define kMAX_ITEMS 32 // Maximum items the obstacles array can contain
@@ -19,23 +20,30 @@
 @implementation GameBoard;
 @synthesize m_pJupiter, m_pStart, m_pRestart, m_pQuit, m_pStartTime;
 
+static void* pObservationContext = (void*)@"pObservationContext";
+
 - (id) initWithFrame:(CGRect)frame
 {
     if (self == [super initWithFrame:frame]) 
     {
 //        NSLog(@"Initializing GameBoard with frame = %@", NSStringFromCGRect(frame));
         UIImageView* pBackground = [[UIImageView alloc] initWithFrame: frame];
-        pBackground.image = [UIImage imageNamed:@"Night.jpg"];
+        pBackground.image = [UIImage imageNamed:@"Night.png"];
         [self addSubview:pBackground];
         
         [self initButtons];
         [self initLabel];
+        
+        [[PhysicsEngine sharedPhysicsEngine] addObserver:self
+                                              forKeyPath:@"m_JupiterFrame"
+                                                 options:NSKeyValueObservingOptionNew
+                                                 context:&pObservationContext];
     }
     
     return self;
 }
 
-- (void)initButtons
+- (void) initButtons
 {
     m_pStart = [UIButton buttonWithType:UIButtonTypeCustom];
     m_pStart.frame = CGRectMake(kLANDSCAPE_WIDTH - 100,
@@ -113,7 +121,7 @@
         case eitid_Dest:
         {
             UIImageView* pDest = [[UIImageView alloc] initWithFrame:bounds];
-            [pDest setImage: [UIImage imageNamed:@"Destination.jpg"]];
+            [pDest setImage: [UIImage imageNamed:@"Destination.png"]];
             [pDest setCenter: center];
             pDest.transform = transform;
             [self addSubview: pDest];
@@ -123,7 +131,12 @@
         {
             m_pJupiter = [[Jupiter alloc] initWithFrame:bounds];
             [m_pJupiter setCenter: center];
+            CGRect jupiterRect = CGRectMake(center.x,
+                                            center.y,
+                                            bounds.size.width,
+                                             bounds.size.height);
             m_pJupiter.transform = transform;
+            [PhysicsEngine sharedPhysicsEngine].m_JupiterFrame = jupiterRect;
             [self addSubview: m_pJupiter];
             break;
         }
@@ -164,11 +177,17 @@
         NSData* pData = [[pWalls objectAtIndex:i] a_ImageAtts];
         [self initObjectWithTagID:eitid_Wall inLevel:pLevel withData:pData];
     }
+    
+    NSArray* pStaticObjects = [NSArray arrayWithObjects:pAccels, pTraps, pWalls, pWhirls, pLevel.r_Dest, nil];
+    NSArray* pKeys = [NSArray arrayWithObjects:@"kAccels", @"kTraps", @"kWalls", @"kWhirls", @"kDest", nil];
+    
+    [PhysicsEngine sharedPhysicsEngine].m_pStaticObjects = [NSDictionary dictionaryWithObjects:pStaticObjects forKeys:pKeys];
 }
 
 - (void) startGame
 {
-    
+    NSLog(@"Starting the game");
+    [[PhysicsEngine sharedPhysicsEngine] startTimer];
 }
 
 - (void) quitPlaying
@@ -185,6 +204,22 @@
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation 
 {
     NSLog(@"GameBoard has finished rotating");
+}
+
+- (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context
+{
+//    NSLog(@"Observed value change for key path %@", keyPath);
+    if ([keyPath isEqual:@"m_JupiterFrame"] && context == &pObservationContext)
+    {
+        CGRect newFrame = [[change objectForKey:NSKeyValueChangeNewKey] CGRectValue];
+//        NSLog(@"Observed frame change to %@", NSStringFromCGRect(newFrame));
+        [m_pJupiter setFrame:newFrame];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+        
 }
 
 - (void) redraw:(int)levelID

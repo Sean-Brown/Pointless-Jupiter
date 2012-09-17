@@ -39,6 +39,7 @@
 - (void) startGame;
 - (void) quitPlaying;
 - (void) redraw:(int)levelID; // Redraw the board with the given id, usually in response to a Restart
+- (void) observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void*)context;
 
 -(BOOL) JupiterHitWall:(Point) JupiterPos; // Tells if the Jupiter hits a wall
 -(double) calcNewTrajectory:(Wall_Class* ) wall: (Jupiter* ) Jupiter; // Calculates the Jupiter's new trajectory

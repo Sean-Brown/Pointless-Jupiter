@@ -56,6 +56,9 @@
 - (void)saveLevel;
 - (void)quitLevelBuilder;
 
+- (int)radiansToDegrees:(CGFloat)dRadians;
+- (CGFloat)degreesToRadians:(CGFloat)dDegrees;
+
 // UITextFieldDelegate protocol
 - (BOOL)textFieldShouldReturn:(UITextField *)textField;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField;

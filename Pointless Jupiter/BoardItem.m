@@ -26,17 +26,17 @@
         switch (mItem) 
         {
             case eitid_Accel:
-                itemImg = [UIImage imageNamed:@"Accelerator.jpg"];
+                itemImg = [UIImage imageNamed:@"Accelerator.png"];
                 item.image = itemImg;
                 item.tag = eitid_Accel;
                 break;
             case eitid_Trap:
-                itemImg = [UIImage imageNamed:@"Trap.jpg"];
+                itemImg = [UIImage imageNamed:@"Trap.png"];
                 item.image = itemImg;
                 item.tag = eitid_Trap;
                 break;
             case eitid_Whirl:
-                itemImg = [UIImage imageNamed:@"Whirl.jpg"];
+                itemImg = [UIImage imageNamed:@"Whirl.png"];
                 item.image = itemImg;
                 item.tag = eitid_Whirl;
                 break;

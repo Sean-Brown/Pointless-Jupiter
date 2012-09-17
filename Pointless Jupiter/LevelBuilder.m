@@ -20,6 +20,8 @@
 #define kJUPI_RECT CGRectMake(300,300,50,50)
 #define kDEST_RECT CGRectMake(300,300,50,50)
 
+#define ROTATION_TESTING 1
+
 @implementation LevelBuilder
 
 @synthesize m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID;
@@ -185,21 +187,21 @@
     [m_pDest setTag: eitid_Dest];
     [m_pRemove setTag: eitid_Remove];
     
-    [m_pWallImg setImage: [UIImage imageNamed: @"Wall.jpg"] forState: UIControlStateNormal];
-    [m_pTrap setImage: [UIImage imageNamed: @"Trap.jpg"] forState:UIControlStateNormal];
-    [m_pAccel setImage:[UIImage imageNamed: @"Accelerator.jpg"] forState: UIControlStateNormal];
-    [m_pWhirl setImage:[UIImage imageNamed: @"Whirl.jpg"] forState:UIControlStateNormal];
-    [m_pJupi setImage: [UIImage imageNamed:@"Jupiter.jpg"] forState:UIControlStateNormal];
-    [m_pDest setImage: [UIImage imageNamed:@"Destination.jpg"] forState: UIControlStateNormal];
-    [m_pRemove setImage: [UIImage imageNamed:@"Remove.jpg"] forState:UIControlStateNormal];
+    [m_pWallImg setImage: [UIImage imageNamed: @"Wall.png"] forState: UIControlStateNormal];
+    [m_pTrap setImage: [UIImage imageNamed: @"Trap.png"] forState:UIControlStateNormal];
+    [m_pAccel setImage:[UIImage imageNamed: @"Accelerator.png"] forState: UIControlStateNormal];
+    [m_pWhirl setImage:[UIImage imageNamed: @"Whirl.png"] forState:UIControlStateNormal];
+    [m_pJupi setImage: [UIImage imageNamed:@"Jupiter.png"] forState:UIControlStateNormal];
+    [m_pDest setImage: [UIImage imageNamed:@"Destination.png"] forState: UIControlStateNormal];
+    [m_pRemove setImage: [UIImage imageNamed:@"Remove.png"] forState:UIControlStateNormal];
     
-    [m_pWallImg setImage: [UIImage imageNamed: @"Wall.jpg"] forState: UIControlStateHighlighted];
-    [m_pTrap setImage:[UIImage imageNamed: @"Trap.jpg"] forState:UIControlStateHighlighted];
-    [m_pAccel setImage:[UIImage imageNamed: @"Accelerator.jpg"] forState: UIControlStateHighlighted];
-    [m_pWhirl setImage:[UIImage imageNamed: @"Whirl.jpg"] forState: UIControlStateHighlighted];
-    [m_pJupi setImage: [UIImage imageNamed:@"Jupiter.jpg"] forState: UIControlStateHighlighted];
-    [m_pDest setImage: [UIImage imageNamed:@"Destination.jpg"] forState: UIControlStateNormal];
-    [m_pRemove setImage: [UIImage imageNamed:@"Remove.jpg"] forState:UIControlStateHighlighted];
+    [m_pWallImg setImage: [UIImage imageNamed: @"Wall.png"] forState: UIControlStateHighlighted];
+    [m_pTrap setImage:[UIImage imageNamed: @"Trap.png"] forState:UIControlStateHighlighted];
+    [m_pAccel setImage:[UIImage imageNamed: @"Accelerator.png"] forState: UIControlStateHighlighted];
+    [m_pWhirl setImage:[UIImage imageNamed: @"Whirl.png"] forState: UIControlStateHighlighted];
+    [m_pJupi setImage: [UIImage imageNamed:@"Jupiter.png"] forState: UIControlStateHighlighted];
+    [m_pDest setImage: [UIImage imageNamed:@"Destination.png"] forState: UIControlStateNormal];
+    [m_pRemove setImage: [UIImage imageNamed:@"Remove.png"] forState:UIControlStateHighlighted];
         
     [sender addSubview: m_pWallImg];
     [sender addSubview: m_pTrap];
@@ -353,7 +355,7 @@
             if (m_nJupiCount == 0) 
             {
                 pNewImage = [[UIImageView alloc] initWithFrame: kJUPI_RECT];
-                [pNewImage setImage: [UIImage imageNamed:@"Jupiter.jpg"]];
+                [pNewImage setImage: [UIImage imageNamed:@"Jupiter.png"]];
                 ++m_nJupiCount;
                 [pNewImage setTag: eitid_Jupiter];
                 break;
@@ -364,7 +366,7 @@
             if (m_nDestCount < 1) 
             {
                 pNewImage = [[UIImageView alloc] initWithFrame: kDEST_RECT];
-                [pNewImage setImage: [UIImage imageNamed: @"Destination.jpg"]];
+                [pNewImage setImage: [UIImage imageNamed: @"Destination.png"]];
                 ++m_nDestCount;
                 [pNewImage setTag: eitid_Dest];
             }
@@ -390,7 +392,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // NSLog(@"Touches began");
+#ifndef ROTATION_TESTING
     CGPoint touchPoint = [[touches anyObject] locationInView:self];
     
     UIView *v = [self hitTest:touchPoint withEvent:event];
@@ -406,15 +408,19 @@
     m_pSelectedItemImage = (UIImageView *)v;
     [m_pSelectedItemImage.layer setBorderColor: [UIColor yellowColor].CGColor];
     [m_pSelectedItemImage.layer setBorderWidth: 2.0];
+#endif
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#ifndef ROTATION_TESTING
     m_pSelectedItemImage.center = [[touches anyObject] locationInView: self];
+#endif
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#ifndef ROTATION_TESTING
     if (m_pSelectedItemImage.tag == eitid_Wall)
     { // Walls are special
         int heightRadius = m_pSelectedItemImage.frame.size.height / 2;
@@ -448,11 +454,11 @@
     }
     // if ([m_pItems count] > 1)
         // [self checkOverlap];
+#endif
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    m_pSelectedItemImage = nil;
 }
 
 
@@ -502,7 +508,7 @@
 // scale and rotation transforms are applied relative to the layer's anchor point
 // this method moves a gesture recognizer's view's anchor point between the user's fingers
 // Taken directly from the Apple example: https://developer.apple.com/library/ios/#samplecode/Touches/Listings/Touches_GestureRecognizers_Classes_MyViewController_m.html#//apple_ref/doc/uid/DTS40007435-Touches_GestureRecognizers_Classes_MyViewController_m-DontLinkElementID_11
-- (void)adjustAnchorPointForGestureRecognizer:(UIGestureRecognizer *)pGestureRecognizer
+- (void) adjustAnchorPointForGestureRecognizer:(UIGestureRecognizer *)pGestureRecognizer
 {
     if (pGestureRecognizer.state == UIGestureRecognizerStateBegan) 
     {
@@ -515,7 +521,7 @@
     }
 }
 
-- (void)snapToGrid
+- (void) snapToGrid
 {
     int x = m_pSelectedItemImage.center.x;
     int y = m_pSelectedItemImage.center.y;
@@ -550,7 +556,7 @@
     m_pSelectedItemImage.center = center;
 }
 
-- (void)processPinch: (UIPinchGestureRecognizer*)pPGR
+- (void) processPinch: (UIPinchGestureRecognizer*)pPGR
 {
     if (m_pSelectedItemImage == nil || m_bRotating)
         return;
@@ -619,24 +625,55 @@
     m_bPinching = false;
 }
 
-- (void)processRotate: (UIRotationGestureRecognizer*) pRGR
+- (void) processRotate: (UIRotationGestureRecognizer*)pRGR
 {
     if (m_pSelectedItemImage == nil || !(m_pSelectedItemImage.tag == eitid_Accel || m_pSelectedItemImage.tag == eitid_Wall) || m_bRotating)
         return;
-    else
+    else if ([pRGR state] == UIGestureRecognizerStateBegan || [pRGR state] == UIGestureRecognizerStateChanged) 
     {
-        NSLog(@"Rotating item with tag %i %f degrees", m_pSelectedItemImage.tag, pRGR.rotation);
+        // Correct for outrageous rotations
+        CGFloat fRotation = pRGR.rotation;
+        while(fRotation < -M_PI)
+            fRotation += M_PI*2;
+        
+        while(fRotation > M_PI)
+            fRotation -= M_PI*2;
+        
+        NSLog(@"Rotation is %f", pRGR.rotation);
+        NSLog(@"Rotating item with tag %i %d degrees", m_pSelectedItemImage.tag, [self radiansToDegrees:pRGR.rotation]);
+        CGFloat rotation = [self radiansToDegrees:pRGR.rotation];
         m_bRotating = true;
-        m_pSelectedItemImage.transform = CGAffineTransformMakeRotation(pRGR.rotation);   
-        if (m_pSelectedItemImage.tag == eitid_Accel) 
+        if (m_pSelectedItemImage.tag == eitid_Accel)
         {
-            CGFloat pOriginal = ((BoardItem*)m_pSelectedItemImage).m_fOrientation;
-            ((BoardItem*)m_pSelectedItemImage).m_fOrientation = pOriginal + pRGR.rotation;
+            if ((((BoardItem*)m_pSelectedItemImage).m_fOrientation > 180.0 && rotation > 0) ||
+                (((BoardItem*)m_pSelectedItemImage).m_fOrientation < -180.0 && rotation < 0))
+            {
+                NSLog(@"Orientation too high (= %f), returning", ((BoardItem*)m_pSelectedItemImage).m_fOrientation);
+                return;
+            }
+            else
+            {
+                NSLog(@"New orientation = %f)", ((BoardItem*)m_pSelectedItemImage).m_fOrientation);
+                m_pSelectedItemImage.transform = CGAffineTransformMakeRotation([self radiansToDegrees:pRGR.rotation]);
+                ((BoardItem*)m_pSelectedItemImage).m_fOrientation += [self radiansToDegrees:pRGR.rotation];
+                NSLog(@"New orientation = %f)", ((BoardItem*)m_pSelectedItemImage).m_fOrientation);
+            }
         }
         else
         {
-            CGFloat pOriginal = ((Wall_Class*)m_pSelectedItemImage).m_fOrientation;
-            ((Wall_Class*)m_pSelectedItemImage).m_fOrientation = pOriginal + pRGR.rotation;
+            if ((((Wall_Class*)m_pSelectedItemImage).m_fOrientation > 180.0 && rotation > 0)
+                || (((Wall_Class*)m_pSelectedItemImage).m_fOrientation < -180.0 && rotation < 0))
+            {
+                NSLog(@"Orientation too high (= %f), returning", ((Wall_Class*)m_pSelectedItemImage).m_fOrientation);
+                return;
+            }
+            else
+            {
+                NSLog(@"Old orientation = %f)", ((Wall_Class*)m_pSelectedItemImage).m_fOrientation);
+                m_pSelectedItemImage.transform = CGAffineTransformMakeRotation([self radiansToDegrees:pRGR.rotation]);            
+                ((Wall_Class*)m_pSelectedItemImage).m_fOrientation += [self radiansToDegrees:pRGR.rotation];
+                NSLog(@"New orientation = %f)", ((Wall_Class*)m_pSelectedItemImage).m_fOrientation);
+            }
         }
     }
     m_bRotating = false;
@@ -657,6 +694,16 @@
 //    NSLog(@"Removing %@",pIV);
     [pIV removeFromSuperview];
     m_pSelectedItemImage = nil;
+}
+
+- (int) radiansToDegrees:(CGFloat)fRadians
+{
+    return (fRadians * 180 / M_PI);
+}
+
+- (CGFloat) degreesToRadians:(CGFloat)fDegrees
+{
+    return (fDegrees * M_PI / 180.0);
 }
 
 @end

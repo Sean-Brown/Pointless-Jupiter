@@ -51,7 +51,7 @@
     self = [super initWithFrame:frame];
     if (self) 
     {
-        UIImageView* pBackground = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"Night.jpg"]];
+        UIImageView* pBackground = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"Night.png"]];
         [self addSubview: pBackground];
         
         UILabel* pointless = [[UILabel alloc] init];
@@ -62,7 +62,7 @@
         [self addSubview: jupi];
         
         UIImageView* jupiter = [[UIImageView alloc] initWithFrame: CGRectMake(150, 200, 300, 300)];
-        UIImage* img = [UIImage imageNamed:@"Jupiter.jpg"];
+        UIImage* img = [UIImage imageNamed:@"Jupiter.png"];
         jupiter.image = img;
         [self addSubview: jupiter];
         
