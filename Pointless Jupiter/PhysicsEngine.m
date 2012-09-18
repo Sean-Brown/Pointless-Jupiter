@@ -111,4 +111,14 @@
     }
 }
 
+- (int) radiansToDegrees:(CGFloat)fRadians
+{
+    return (fRadians * 180 / M_PI);
+}
+
+- (CGFloat) degreesToRadians:(CGFloat)fDegrees
+{
+    return (fDegrees * M_PI / 180.0);
+}
+
 @end

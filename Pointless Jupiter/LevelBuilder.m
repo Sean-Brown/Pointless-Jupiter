@@ -1,4 +1,3 @@
-//
 //  LevelBuilder.m
 //  Pointless Jupiter
 //
@@ -11,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "LevelBuilder.h"
 #import "Pointless_JupiterAppDelegate.h"
+#import "PhysicsEngine.h"
 #import "Constants.h"
 
 #define kWALL_RECT CGRectMake(300,200,10,500)
@@ -20,11 +20,12 @@
 #define kJUPI_RECT CGRectMake(300,300,50,50)
 #define kDEST_RECT CGRectMake(300,300,50,50)
 
-#define ROTATION_TESTING 1
+//#define ROTATION_TESTING 1
 
 @implementation LevelBuilder
 
-@synthesize m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage, m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID;
+@synthesize m_pItems, m_pTrap, m_pAccel, m_pWhirl, m_pWallImg, m_pJupi, m_pSelectedItemImage,
+            m_pRemove, m_pDest, m_pSave, m_pQuit, m_pLevelID, m_pRotateButton;
 
 #pragma mark -
 #pragma mark INIT
@@ -43,23 +44,20 @@
         [self initImages:self];
         [self initGestures];
         [self initSaveQuit];
+        [self initRotateButton];
         
-        UILabel* pLabel = [[UILabel alloc] initWithFrame:CGRectMake(
-                                                                    kLANDSCAPE_WIDTH - 100, 
-                                                                    kLANDSCAPE_HEIGHT - 150, 
+        UILabel* pLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 130,
+                                                                    kLANDSCAPE_HEIGHT - 150,
                                                                     100, 
-                                                                    10
-                                                                    )];
+                                                                    10)];
         pLabel.textColor = [UIColor purpleColor];
         pLabel.backgroundColor = [UIColor clearColor];
         pLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:14];
         pLabel.text = @"Level Name";
-        m_pLevelID = [[UITextField alloc] initWithFrame:CGRectMake(
-                                                                   kLANDSCAPE_WIDTH - 100, 
-                                                                   kLANDSCAPE_HEIGHT - 120, 
+        m_pLevelID = [[UITextField alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 135,
+                                                                   kLANDSCAPE_HEIGHT - 130,
                                                                    100, 
-                                                                   20
-                                                                   )];
+                                                                   20)];
         m_pLevelID.backgroundColor = [UIColor whiteColor];
         m_pLevelID.delegate = self;
         m_pLevelID.font = [UIFont fontWithName:@"AmericanTypewriter" size:14];
@@ -67,6 +65,7 @@
         [self addSubview: m_pLevelID];
         [pLabel setNeedsDisplay];
         
+        m_bDoRotate = false;
         m_bRotating = false;
         m_bPinching = false;
     }
@@ -81,12 +80,10 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    m_pLevelID.frame = CGRectMake(
-                                  0, 
+    m_pLevelID.frame = CGRectMake(0,
                                   0, 
                                   kLANDSCAPE_WIDTH, 
-                                  kLANDSCAPE_HEIGHT - kLANDSCAPE_KEYBOARD_HEIGHT
-                                  );
+                                  kLANDSCAPE_HEIGHT - kLANDSCAPE_KEYBOARD_HEIGHT);
     [m_pLevelID setBackgroundColor:[UIColor whiteColor]];
     [m_pLevelID setText: textField.text];
     [m_pLevelID setFont: [UIFont fontWithName:@"AmericanTypewriter" size:60]];
@@ -100,12 +97,10 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    m_pLevelID.frame = CGRectMake(
-                                  kLANDSCAPE_WIDTH - 100, 
+    m_pLevelID.frame = CGRectMake(kLANDSCAPE_WIDTH - 100,
                                   kLANDSCAPE_HEIGHT - 150, 
                                   100, 
-                                  20
-                                  );
+                                  20);
     [m_pLevelID setFont: [UIFont fontWithName:@"AmericanTypeWriter" size:18]];
     [m_pLevelID setNeedsDisplay];
 }
@@ -113,29 +108,66 @@
 - (void)initSaveQuit
 {
     m_pSave = [UIButton buttonWithType: UIButtonTypeCustom];
-    m_pSave.frame = CGRectMake(
-                               kLANDSCAPE_WIDTH - 100, 
-                               kLANDSCAPE_HEIGHT - 100, 
+    m_pSave.frame = CGRectMake(kLANDSCAPE_WIDTH - 140,
+                               kLANDSCAPE_HEIGHT - 100,
                                100, 
-                               30
-                               );
+                               30);
     [m_pSave setTitle:@"Save" forState:UIControlStateNormal];
     [m_pSave setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
     [m_pSave addTarget:self action:@selector(saveLevel) forControlEvents:UIControlEventTouchUpInside];
     
     m_pQuit = [UIButton buttonWithType: UIButtonTypeCustom];
-    m_pQuit.frame = CGRectMake(
-                               kLANDSCAPE_WIDTH - 100, 
+    m_pQuit.frame = CGRectMake(kLANDSCAPE_WIDTH - 140,
                                kLANDSCAPE_HEIGHT - 50, 
                                100, 
-                               30
-                               );
+                               30);
     [m_pQuit setTitle:@"Quit" forState:UIControlStateNormal];
     [m_pQuit setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [m_pQuit addTarget:self action:@selector(quitLevelBuilder) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview: m_pSave];
     [self addSubview: m_pQuit];
+}
+
+- (void) initRotateButton
+{
+    m_pRotateButton = [[UIButton alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 55,
+                                                                 kLANDSCAPE_HEIGHT - 350,
+                                                                 20,
+                                                                 20)];
+    [m_pRotateButton setImage:[UIImage imageNamed:@"RotateUnchecked.png"] forState:UIControlStateNormal];
+    [m_pRotateButton addTarget:self action:@selector(checkBox) forControlEvents:UIControlEventTouchUpInside];
+    m_bDoRotate = false;
+    
+    UILabel* pRotateLabel = [[UILabel alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 150,
+                                                                      kLANDSCAPE_HEIGHT - 350,
+                                                                      85,
+                                                                      20)];
+    [pRotateLabel setText:@"Rotate Item"];
+    pRotateLabel.textColor = [UIColor purpleColor];
+    pRotateLabel.backgroundColor = [UIColor clearColor];
+    pRotateLabel.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:14];
+
+    UITapGestureRecognizer* pTGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(checkBox)];
+    pTGR.numberOfTapsRequired = 1;
+    pTGR.numberOfTouchesRequired = 1;
+    
+    [m_pRotateButton addGestureRecognizer:pTGR];
+    [self addSubview:m_pRotateButton];
+    [self addSubview:pRotateLabel];
+}
+
+- (void) checkBox
+{
+    m_bDoRotate = !m_bDoRotate;
+    if (!m_bDoRotate)
+    {
+        [m_pRotateButton setImage:[UIImage imageNamed:@"RotateUnchecked.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [m_pRotateButton setImage:[UIImage imageNamed:@"RotateChecked.png"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)drawRect:(CGRect)rect
@@ -155,13 +187,13 @@
 
 - (void)initImages: (id)sender
 {
-    m_pWallImg     = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100,  0, 50, 50)];
-    m_pTrap        = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 50, 50, 50)];
-    m_pAccel       = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 100, 50, 50)];
-    m_pWhirl       = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 150, 50, 50)];
-    m_pJupi        = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 200, 50, 50)];
-    m_pDest        = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 250, 50, 50)];
-    m_pRemove      = [[UIButton alloc] initWithFrame: CGRectMake(kLANDSCAPE_WIDTH - 100, 350, 50, 50)];
+    m_pWallImg = [[UIButton alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 120,   0, 50, 50)];
+    m_pTrap    = [[UIButton alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 120,  50, 50, 50)];
+    m_pAccel   = [[UIButton alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 120, 115, 50, 25)];
+    m_pWhirl   = [[UIButton alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 120, 150, 50, 50)];
+    m_pJupi    = [[UIButton alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 115, 205, 40, 40)];
+    m_pDest    = [[UIButton alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 120, 250, 50, 50)];
+    m_pRemove  = [[UIButton alloc] initWithFrame:CGRectMake(kLANDSCAPE_WIDTH - 120, 350, 50, 50)];
     
     [m_pWallImg setUserInteractionEnabled: YES];
     [m_pTrap setUserInteractionEnabled: YES];
@@ -225,10 +257,6 @@
     UIPinchGestureRecognizer *pPinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(processPinch:)];
     [pPinch setDelegate: self];
     [self addGestureRecognizer: pPinch];
-    
-    UIRotationGestureRecognizer *pRot = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(processRotate:)];
-    [pRot setDelegate: self];
-    [self addGestureRecognizer: pRot];
 }
 
 #pragma mark -
@@ -250,6 +278,7 @@
             case eitid_Wall:
             {
                 [walls addObject:object];
+                [self printTransform:((Wall_Class*)object).transform];
                 break;
             }
             case eitid_Trap:
@@ -258,6 +287,7 @@
             case eitid_Accel:
             {
                 [accels addObject:object];
+                [self printTransform:((BoardItem*)object).transform];
                 break;
             }
             case eitid_Whirl:
@@ -281,6 +311,23 @@
     [[DataManager sharedDataManager] saveLevel:level traps:traps whirls:whirls accels:accels walls:walls dest:pDestDict jupiter:pJupiterDict rating:pRating];
 }
 
+- (void) printTransform:(CGAffineTransform)transform
+{
+    PhysicsEngine* pPE = [PhysicsEngine sharedPhysicsEngine];
+    int aDegs = [pPE radiansToDegrees:transform.a];
+    NSLog(@"Transform \"a\" radians = %f, degrees = %d", transform.a, aDegs);
+    int bDegs = [pPE radiansToDegrees:transform.b];
+    NSLog(@"Transform \"b\" radians = %f, degrees = %d", transform.b, bDegs);
+    int cDegs = [pPE radiansToDegrees:transform.c];
+    NSLog(@"Transform \"c\" radians = %f, degrees = %d", transform.c, cDegs);
+    int dDegs = [pPE radiansToDegrees:transform.d];
+    NSLog(@"Transform \"d\" radians = %f, degrees = %d", transform.a, dDegs);
+    int txDegs = [pPE radiansToDegrees:transform.tx];
+    NSLog(@"Transform \"tx\" radians = %f, degrees = %d", transform.a, txDegs);
+    int tyDegs = [pPE radiansToDegrees:transform.ty];
+    NSLog(@"Transform \"ty\" radians = %f, degrees = %d", transform.a, tyDegs);
+}
+
 - (void) saveLevel
 {
 //    NSString* pText = [m_pLevelID.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -288,23 +335,19 @@
     if ([pText length] < 1) 
     { 
         UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Enter A Name" message:@"You must first enter a (unique) name for your level" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
-        pAlert.frame = CGRectMake(
-                                  kLANDSCAPE_WIDTH / 3, 
+        pAlert.frame = CGRectMake(kLANDSCAPE_WIDTH / 3,
                                   kLANDSCAPE_HEIGHT / 3, 
                                   kLANDSCAPE_WIDTH / 3, 
-                                  kLANDSCAPE_HEIGHT / 3
-                                  );
+                                  kLANDSCAPE_HEIGHT / 3);
         [pAlert show];
     }
     else if (m_nJupiCount == 0 || m_nDestCount == 0)
     { 
         UIAlertView* pAlert = [[UIAlertView alloc] initWithTitle:@"Incomplete Map" message:@"You must have Jupiter and a Sun" delegate:nil cancelButtonTitle:@"Return" otherButtonTitles:nil];
-        pAlert.frame = CGRectMake(
-                                  kLANDSCAPE_WIDTH / 3, 
+        pAlert.frame = CGRectMake(kLANDSCAPE_WIDTH / 3,
                                   kLANDSCAPE_HEIGHT / 3, 
                                   kLANDSCAPE_WIDTH / 3, 
-                                  kLANDSCAPE_HEIGHT / 3
-                                  );
+                                  kLANDSCAPE_HEIGHT / 3);
         [pAlert show];
     }
     else
@@ -392,73 +435,116 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-#ifndef ROTATION_TESTING
-    CGPoint touchPoint = [[touches anyObject] locationInView:self];
-    
-    UIView *v = [self hitTest:touchPoint withEvent:event];
-    if ([v isKindOfClass: [UIWindow class]] || [v isKindOfClass: [MyViewController class]] || [v isKindOfClass: [self class]]) 
+    if (m_bDoRotate)
     {
+        if (m_pRGR == nil)
+        {
+            if (m_pSelectedItemImage != nil)
+            {
+                m_pRGR = [[KTOneFingerRotationGestureRecognizer alloc] initWithTarget:self action:@selector(processRotate:) view:self items:m_pItems angle:atan2(m_pSelectedItemImage.transform.b, m_pSelectedItemImage.transform.a)];
+            }
+            else
+            {
+                m_pRGR = [[KTOneFingerRotationGestureRecognizer alloc] initWithTarget:self action:@selector(processRotate:) view:self items:m_pItems angle:0.0f];
+            }
+            [self addGestureRecognizer:m_pRGR];
+        }
+        [m_pRGR touchesBegan:touches withEvent:event];
+
         return;
     }
-    if (m_pSelectedItemImage != nil) 
+    else
     {
-        [m_pSelectedItemImage.layer setBorderColor: [UIColor clearColor].CGColor];
-        [m_pSelectedItemImage.layer setBorderWidth: 0];
-    }
-    m_pSelectedItemImage = (UIImageView *)v;
-    [m_pSelectedItemImage.layer setBorderColor: [UIColor yellowColor].CGColor];
-    [m_pSelectedItemImage.layer setBorderWidth: 2.0];
+#ifndef ROTATION_TESTING
+        CGPoint touchPoint = [[touches anyObject] locationInView:self];
+        
+        UIView *v = [self hitTest:touchPoint withEvent:event];
+        if ([v isKindOfClass: [UIWindow class]] || [v isKindOfClass: [MyViewController class]] || [v isKindOfClass: [self class]]) 
+        {
+            return;
+        }
+        if (m_pSelectedItemImage != nil) 
+        {
+            [m_pSelectedItemImage.layer setBorderColor: [UIColor clearColor].CGColor];
+            [m_pSelectedItemImage.layer setBorderWidth: 0];
+        }
+        m_pSelectedItemImage = (UIImageView *)v;
+        [m_pSelectedItemImage.layer setBorderColor: [UIColor yellowColor].CGColor];
+        [m_pSelectedItemImage.layer setBorderWidth: 2.0];
 #endif
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (m_bDoRotate)
+    {
+        NSAssert(m_pRGR != nil, @"Rotation gesture recognizer is nil!");
+        [m_pRGR touchesMoved:touches withEvent:event];
+    }
+    else
+    {
 #ifndef ROTATION_TESTING
-    m_pSelectedItemImage.center = [[touches anyObject] locationInView: self];
+        m_pSelectedItemImage.center = [[touches anyObject] locationInView: self];
 #endif
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-#ifndef ROTATION_TESTING
-    if (m_pSelectedItemImage.tag == eitid_Wall)
-    { // Walls are special
-        int heightRadius = m_pSelectedItemImage.frame.size.height / 2;
-        int widthRadius = m_pSelectedItemImage.frame.size.width / 2;
-        if (m_pSelectedItemImage.center.x < widthRadius || 
-            m_pSelectedItemImage.center.x > (kGAME_WIDTH - widthRadius) ||
-            m_pSelectedItemImage.center.y < heightRadius ||
-            m_pSelectedItemImage.center.y > (kGAME_HEIGHT - heightRadius))
-        {
-            [self snapToGrid];
-        }
-        else
-        {
-            // NSLog(@"Center is at (%f,%f)", m_pSelectedItemImage.center.x, m_pSelectedItemImage.center.y);
-        }
+    if (m_bDoRotate)
+    {
+        NSAssert(m_pRGR != nil, @"Rotation gesture recognizer is nil!");
+        [m_pRGR touchesEnded:touches withEvent:event];
+        [self removeGestureRecognizer:m_pRGR];
+        m_pRGR = nil;
     }
     else
     {
-        int radius = m_pSelectedItemImage.frame.size.width/2;
-        if (m_pSelectedItemImage.center.x < radius || 
-            m_pSelectedItemImage.center.x > (kGAME_WIDTH - radius) ||
-            m_pSelectedItemImage.center.y < radius ||
-            m_pSelectedItemImage.center.y > (kGAME_HEIGHT - radius))
-        {
-            [self snapToGrid];
+#ifndef ROTATION_TESTING
+        if (m_pSelectedItemImage.tag == eitid_Wall)
+        { // Walls are special
+            int heightRadius = m_pSelectedItemImage.frame.size.height / 2;
+            int widthRadius = m_pSelectedItemImage.frame.size.width / 2;
+            if (m_pSelectedItemImage.center.x < widthRadius || 
+                m_pSelectedItemImage.center.x > (kGAME_WIDTH - widthRadius) ||
+                m_pSelectedItemImage.center.y < heightRadius ||
+                m_pSelectedItemImage.center.y > (kGAME_HEIGHT - heightRadius))
+            {
+                [self snapToGrid];
+            }
+            else
+            {
+                // NSLog(@"Center is at (%f,%f)", m_pSelectedItemImage.center.x, m_pSelectedItemImage.center.y);
+            }
         }
         else
         {
-            // NSLog(@"Center is at (%f,%f)", m_pSelectedItemImage.center.x, m_pSelectedItemImage.center.y);
+            int radius = m_pSelectedItemImage.frame.size.width/2;
+            if (m_pSelectedItemImage.center.x < radius || 
+                m_pSelectedItemImage.center.x > (kGAME_WIDTH - radius) ||
+                m_pSelectedItemImage.center.y < radius ||
+                m_pSelectedItemImage.center.y > (kGAME_HEIGHT - radius))
+            {
+                [self snapToGrid];
+            }
+            else
+            {
+                // NSLog(@"Center is at (%f,%f)", m_pSelectedItemImage.center.x, m_pSelectedItemImage.center.y);
+            }
         }
+        // if ([m_pItems count] > 1)
+            // [self checkOverlap];
     }
-    // if ([m_pItems count] > 1)
-        // [self checkOverlap];
 #endif
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (m_bDoRotate && m_pRGR != nil)
+    {
+        [m_pRGR touchesCancelled:touches withEvent:event];
+    }
 }
 
 
@@ -625,56 +711,34 @@
     m_bPinching = false;
 }
 
-- (void) processRotate: (UIRotationGestureRecognizer*)pRGR
+- (void) processRotate: (KTOneFingerRotationGestureRecognizer*)pRGR
 {
     if (m_pSelectedItemImage == nil || !(m_pSelectedItemImage.tag == eitid_Accel || m_pSelectedItemImage.tag == eitid_Wall) || m_bRotating)
         return;
     else if ([pRGR state] == UIGestureRecognizerStateBegan || [pRGR state] == UIGestureRecognizerStateChanged) 
     {
-        // Correct for outrageous rotations
-        CGFloat fRotation = pRGR.rotation;
-        while(fRotation < -M_PI)
-            fRotation += M_PI*2;
-        
-        while(fRotation > M_PI)
-            fRotation -= M_PI*2;
-        
-        NSLog(@"Rotation is %f", pRGR.rotation);
-        NSLog(@"Rotating item with tag %i %d degrees", m_pSelectedItemImage.tag, [self radiansToDegrees:pRGR.rotation]);
-        CGFloat rotation = [self radiansToDegrees:pRGR.rotation];
+        NSLog(@"Rotation is %f radians", pRGR.rotation);
+        CGFloat rotation = pRGR.rotation;
         m_bRotating = true;
-        if (m_pSelectedItemImage.tag == eitid_Accel)
+        CGFloat oldOrientation = atan2(m_pSelectedItemImage.transform.b, m_pSelectedItemImage.transform.a);
+        CGFloat newOrientation;
+        NSLog(@"Old orientation = %f radians", oldOrientation);
+        oldOrientation += rotation;
+        if (oldOrientation >= M_PI * 2)
         {
-            if ((((BoardItem*)m_pSelectedItemImage).m_fOrientation > 180.0 && rotation > 0) ||
-                (((BoardItem*)m_pSelectedItemImage).m_fOrientation < -180.0 && rotation < 0))
-            {
-                NSLog(@"Orientation too high (= %f), returning", ((BoardItem*)m_pSelectedItemImage).m_fOrientation);
-                return;
-            }
-            else
-            {
-                NSLog(@"New orientation = %f)", ((BoardItem*)m_pSelectedItemImage).m_fOrientation);
-                m_pSelectedItemImage.transform = CGAffineTransformMakeRotation([self radiansToDegrees:pRGR.rotation]);
-                ((BoardItem*)m_pSelectedItemImage).m_fOrientation += [self radiansToDegrees:pRGR.rotation];
-                NSLog(@"New orientation = %f)", ((BoardItem*)m_pSelectedItemImage).m_fOrientation);
-            }
+            newOrientation = oldOrientation - (M_PI * 2);
+            m_pSelectedItemImage.transform = CGAffineTransformMakeRotation(newOrientation);
+        }
+        else if (oldOrientation <= -(M_PI * 2))
+        {
+            newOrientation = oldOrientation + (M_PI * 2);
+            m_pSelectedItemImage.transform = CGAffineTransformMakeRotation(newOrientation);
         }
         else
         {
-            if ((((Wall_Class*)m_pSelectedItemImage).m_fOrientation > 180.0 && rotation > 0)
-                || (((Wall_Class*)m_pSelectedItemImage).m_fOrientation < -180.0 && rotation < 0))
-            {
-                NSLog(@"Orientation too high (= %f), returning", ((Wall_Class*)m_pSelectedItemImage).m_fOrientation);
-                return;
-            }
-            else
-            {
-                NSLog(@"Old orientation = %f)", ((Wall_Class*)m_pSelectedItemImage).m_fOrientation);
-                m_pSelectedItemImage.transform = CGAffineTransformMakeRotation([self radiansToDegrees:pRGR.rotation]);            
-                ((Wall_Class*)m_pSelectedItemImage).m_fOrientation += [self radiansToDegrees:pRGR.rotation];
-                NSLog(@"New orientation = %f)", ((Wall_Class*)m_pSelectedItemImage).m_fOrientation);
-            }
+            m_pSelectedItemImage.transform = CGAffineTransformMakeRotation(oldOrientation);
         }
+        NSLog(@"New orientation = %f radians", ((BoardItem*)m_pSelectedItemImage).m_fOrientation);
     }
     m_bRotating = false;
 }
@@ -694,16 +758,6 @@
 //    NSLog(@"Removing %@",pIV);
     [pIV removeFromSuperview];
     m_pSelectedItemImage = nil;
-}
-
-- (int) radiansToDegrees:(CGFloat)fRadians
-{
-    return (fRadians * 180 / M_PI);
-}
-
-- (CGFloat) degreesToRadians:(CGFloat)fDegrees
-{
-    return (fDegrees * M_PI / 180.0);
 }
 
 @end

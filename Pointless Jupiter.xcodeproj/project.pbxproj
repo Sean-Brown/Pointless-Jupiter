@@ -23,6 +23,9 @@
 		18253F2015C89A27001A9814 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1515C89A27001A9814 /* User.m */; };
 		18253F2115C89A27001A9814 /* Wall.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1715C89A27001A9814 /* Wall.m */; };
 		18253F2215C89A27001A9814 /* Whirl.m in Sources */ = {isa = PBXBuildFile; fileRef = 18253F1915C89A27001A9814 /* Whirl.m */; };
+		1825B5A116077617002857C0 /* KTOneFingerRotationGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825B5A016077617002857C0 /* KTOneFingerRotationGestureRecognizer.m */; };
+		1825B5A516077B03002857C0 /* RotateChecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 1825B5A316077B03002857C0 /* RotateChecked.png */; };
+		1825B5A616077B03002857C0 /* RotateUnchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 1825B5A416077B03002857C0 /* RotateUnchecked.png */; };
 		1840DDAD15F6A0B0007300BF /* PhysicsEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1840DDAC15F6A0B0007300BF /* PhysicsEngine.m */; };
 		1844211215FBAF3E00CE10A2 /* Jupiter.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7FC15F6937600D9F235 /* Jupiter.png */; };
 		1844211315FBAF4D00CE10A2 /* Accelerator.png in Resources */ = {isa = PBXBuildFile; fileRef = 18D0C7F215F6937600D9F235 /* Accelerator.png */; };
@@ -98,6 +101,10 @@
 		18253F1715C89A27001A9814 /* Wall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Wall.m; path = "Model Classes/Wall.m"; sourceTree = "<group>"; };
 		18253F1815C89A27001A9814 /* Whirl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Whirl.h; path = "Model Classes/Whirl.h"; sourceTree = "<group>"; };
 		18253F1915C89A27001A9814 /* Whirl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Whirl.m; path = "Model Classes/Whirl.m"; sourceTree = "<group>"; };
+		1825B59F16077617002857C0 /* KTOneFingerRotationGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOneFingerRotationGestureRecognizer.h; sourceTree = "<group>"; };
+		1825B5A016077617002857C0 /* KTOneFingerRotationGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOneFingerRotationGestureRecognizer.m; sourceTree = "<group>"; };
+		1825B5A316077B03002857C0 /* RotateChecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RotateChecked.png; path = Images/RotateChecked.png; sourceTree = SOURCE_ROOT; };
+		1825B5A416077B03002857C0 /* RotateUnchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RotateUnchecked.png; path = Images/RotateUnchecked.png; sourceTree = SOURCE_ROOT; };
 		1840DDAB15F6A0B0007300BF /* PhysicsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsEngine.h; sourceTree = "<group>"; };
 		1840DDAC15F6A0B0007300BF /* PhysicsEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhysicsEngine.m; sourceTree = "<group>"; };
 		1840DDB315F917C0007300BF /* AnimationLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationLib.h; sourceTree = "<group>"; };
@@ -178,6 +185,7 @@
 				1877B08515C4B4B000A451B6 /* CustomTable.h */,
 				18232F1315A9DD33005A27AD /* GameBoard.h */,
 				18AE273715BDAF14006369F6 /* Jupiter.h */,
+				1825B59F16077617002857C0 /* KTOneFingerRotationGestureRecognizer.h */,
 				18A8763A15B389BF00C924E3 /* LevelBuilder.h */,
 				18DF5EC815C0AF8500A0AFF3 /* LevelPicker.h */,
 				18A8762715AC9D3A00C924E3 /* MainView.h */,
@@ -273,6 +281,7 @@
 				1877B08615C4B4B000A451B6 /* CustomTable.m */,
 				18232F1415A9DD33005A27AD /* GameBoard.m */,
 				18AE273815BDAF15006369F6 /* Jupiter.m */,
+				1825B5A016077617002857C0 /* KTOneFingerRotationGestureRecognizer.m */,
 				18A8763B15B389C300C924E3 /* LevelBuilder.m */,
 				18DF5EC915C0AF8500A0AFF3 /* LevelPicker.m */,
 				18A8762815AC9D3B00C924E3 /* MainView.m */,
@@ -328,6 +337,8 @@
 				18D0C80015F6937600D9F235 /* Night.png */,
 				18D0C80115F6937600D9F235 /* QuitImage.png */,
 				18D0C80215F6937600D9F235 /* Remove.png */,
+				1825B5A316077B03002857C0 /* RotateChecked.png */,
+				1825B5A416077B03002857C0 /* RotateUnchecked.png */,
 				18D0C80315F6937600D9F235 /* Saturn.png */,
 				18D0C80415F6937600D9F235 /* SaveImage.png */,
 				18D0C80515F6937600D9F235 /* Ship-hd.png */,
@@ -475,6 +486,8 @@
 				18D0C81F15F6937600D9F235 /* Trap.png in Resources */,
 				18D0C82015F6937600D9F235 /* Wall.png in Resources */,
 				18D0C82115F6937600D9F235 /* Whirl.png in Resources */,
+				1825B5A516077B03002857C0 /* RotateChecked.png in Resources */,
+				1825B5A616077B03002857C0 /* RotateUnchecked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +521,7 @@
 				18253F2115C89A27001A9814 /* Wall.m in Sources */,
 				18253F2215C89A27001A9814 /* Whirl.m in Sources */,
 				1840DDAD15F6A0B0007300BF /* PhysicsEngine.m in Sources */,
+				1825B5A116077617002857C0 /* KTOneFingerRotationGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

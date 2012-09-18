@@ -39,4 +39,7 @@
 - (void) beginTimerInMainThread;
 - (void) stopTimer;
 
+- (int)radiansToDegrees:(CGFloat)dRadians;
+- (CGFloat)degreesToRadians:(CGFloat)dDegrees;
+
 @end
